@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "motion/react";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 import { EASE } from "./shared";
 
 const HEADLINE_LINES = [
@@ -77,6 +78,33 @@ export function Hero() {
           experiences that help brands communicate with clarity and
           character.
         </motion.p>
+
+        {/* CTA row */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 1.3, ease: EASE }}
+          className="mt-12 flex flex-wrap items-center gap-4 md:mt-14"
+        >
+          <a
+            href="#work"
+            className="inline-flex items-center gap-2.5 rounded-full bg-white px-7 py-4 text-[10px] uppercase tracking-[0.2em] text-black transition-all duration-500 hover:bg-white/85 md:px-8 md:text-[11px]"
+          >
+            View Selected Work
+            <ArrowDown size={13} aria-hidden="true" />
+          </a>
+          <Link
+            href="/contact"
+            className="group inline-flex items-center gap-2.5 rounded-full border border-white/25 px-7 py-4 text-[10px] uppercase tracking-[0.2em] text-white/85 transition-all duration-500 hover:border-white hover:bg-white/10 md:px-8 md:text-[11px]"
+          >
+            Start a Project
+            <ArrowRight
+              size={13}
+              aria-hidden="true"
+              className="transition-transform duration-500 group-hover:translate-x-1"
+            />
+          </Link>
+        </motion.div>
 
         {/* Secondary meta row */}
         <motion.div

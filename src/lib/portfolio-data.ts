@@ -31,6 +31,8 @@ export interface Project {
   services: string[];
   role: string;
   description: string;
+  /** concrete deliverables listed on the case study page */
+  deliverables: string[];
   /** floating preview shown while hovering the brand index */
   preview: { type: MediaKind; src: string; poster?: string; alt: string };
   media: MediaItem[];
@@ -50,6 +52,12 @@ export const projects: Project[] = [
     role: "Creative Director",
     description:
       "Developed an autumn campaign designed to reintroduce the house to a younger international audience. The visual language pairs the brand's couture heritage with a raw, nocturnal Paris — deep blacks, sculptural silhouettes and street-cast energy. Every frame was built to feel like the beginning of a film rather than the end of a lookbook.",
+    deliverables: [
+      "60-second campaign film — NOIRE/SS25",
+      "18 campaign photographs — full key visual set",
+      "Social content system — 40+ assets",
+      "Campaign photography book — 48 pages",
+    ],
     preview: {
       type: "image",
       src: "/media/fashion-portrait-01.jpg",
@@ -135,6 +143,12 @@ export const projects: Project[] = [
     role: "Creative Director & Brand Strategist",
     description:
       "A complete identity and content system for a collection of boutique hotels moving away from decor-led luxury toward atmosphere-led hospitality. We built a restrained visual world — warm low light, honest materials, and rooms photographed as they are meant to be felt. The campaign rolled out across print, digital and in-house touchpoints in fourteen properties.",
+    deliverables: [
+      "Brand identity & art direction guidelines",
+      "Brand film — The Quiet Hours",
+      "Print campaign — rolled out in 14 properties",
+      "Content system & photography library",
+    ],
     preview: {
       type: "image",
       src: "/media/hotel-lobby.jpg",
@@ -201,6 +215,12 @@ export const projects: Project[] = [
     role: "Creative Director",
     description:
       "Positioning and full creative direction for a research-driven technology house entering the consumer market. The identity is deliberately silent: monochrome surfaces, generous negative space and product imagery treated like sculpture. A launch film and modular design system carried the brand from landing page to keynote stage without a single stock visual.",
+    deliverables: [
+      "Positioning & brand narrative",
+      "Complete visual identity system",
+      "Launch film — Silent Machines",
+      "Keynote & digital launch visuals",
+    ],
     preview: {
       type: "image",
       src: "/media/tech-detail-01.webp",
@@ -267,6 +287,12 @@ export const projects: Project[] = [
     role: "Creative Director",
     description:
       "A night-drive campaign for a performance marque that wanted to trade daylight gloss for cinematic realism. Shot over three nights in Turin with available light and a single rigged car, the imagery leans on reflection, speed and restraint. The launch content outperformed every benchmark in the brand's previous campaign history.",
+    deliverables: [
+      "Campaign film — Night Drive",
+      "Key visual set — Asfalt",
+      "12 campaign photographs",
+      "Social launch kit — teaser & rollout",
+    ],
     preview: {
       type: "image",
       src: "/media/auto-front.jpg",
@@ -327,6 +353,12 @@ export const projects: Project[] = [
     role: "Creative Director",
     description:
       "Naming, identity and launch campaign for a slow-living fragrance house. The world we built is deliberately still — stone, smoke and low northern light — so the product becomes the only moving element. Art direction extended across packaging, unboxing ritual and a social system built on negative space rather than product repetition.",
+    deliverables: [
+      "Naming & brand identity",
+      "Packaging & unboxing system",
+      "Launch campaign — First Light",
+      "Social system — Rituals",
+    ],
     preview: {
       type: "image",
       src: "/media/fragrance-detail.jpg",
@@ -393,8 +425,9 @@ export const capabilities: Capability[] = [
 ];
 
 export const navLinks = [
-  { label: "Work", href: "#work" },
-  { label: "Brands", href: "#brands" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Work", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ] as const;
+
+export const EMAIL = "hello@adlenebenmechta.com";

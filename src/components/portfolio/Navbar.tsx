@@ -1,12 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { navLinks } from "@/lib/portfolio-data";
 import { EASE } from "./shared";
 
 export function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -16,6 +19,9 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
     <motion.header
@@ -37,10 +43,10 @@ export function Navbar() {
         className="liquid-glass flex items-center justify-between gap-4 rounded-full px-4 py-3 md:px-6"
       >
         {/* Monogram + name */}
-        <a
-          href="#top"
+        <Link
+          href="/"
           className="group flex items-center gap-3"
-          aria-label="Adlene Benmechta — back to top"
+          aria-label="Adlene Benmechta — home"
         >
           <span
             aria-hidden="true"
@@ -51,30 +57,43 @@ export function Navbar() {
           <span className="hidden text-[11px] uppercase tracking-[0.22em] text-white/80 transition-colors duration-500 group-hover:text-white sm:block">
             Adlene Benmechta
           </span>
-        </a>
+        </Link>
 
         {/* Desktop links + CTA */}
         <div className="flex items-center gap-6 md:gap-8">
-          <ul className="hidden items-center gap-7 text-[11px] uppercase tracking-[0.18em] text-white/55 md:flex">
+          <ul className="hidden items-center gap-7 text-[11px] uppercase tracking-[0.18em] md:flex">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a
+                <Link
                   href={link.href}
-                  className="transition-colors duration-300 hover:text-white focus-visible:text-white focus-visible:outline-none"
+                  aria-current={isActive(link.href) ? "page" : undefined}
+                  className={`relative transition-colors duration-300 focus-visible:outline-none ${
+                    isActive(link.href)
+                      ? "text-white"
+                      : "text-white/55 hover:text-white"
+                  }`}
                 >
                   {link.label}
-                </a>
+                  {isActive(link.href) && (
+                    <motion.span
+                      layoutId="nav-dot"
+                      transition={{ duration: 0.5, ease: EASE }}
+                      className="absolute -bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-white"
+                      aria-hidden="true"
+                    />
+                  )}
+                </Link>
               </li>
             ))}
           </ul>
 
-          <a
-            href="#contact"
+          <Link
+            href="/contact"
             className="hidden items-center gap-1.5 rounded-full border border-white/20 px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-white/85 transition-all duration-500 hover:border-white hover:bg-white hover:text-black md:inline-flex"
           >
             Let&apos;s Work Together
             <ArrowUpRight size={12} aria-hidden="true" />
-          </a>
+          </Link>
 
           {/* Mobile toggle */}
           <button
@@ -108,7 +127,7 @@ export function Navbar() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.08 * i + 0.1, duration: 0.5, ease: EASE }}
                 >
-                  <a
+                  <Link
                     href={link.href}
                     onClick={() => setOpen(false)}
                     className="flex items-baseline justify-between py-4 text-lg font-medium tracking-tight text-white/85 transition-colors hover:text-white"
@@ -117,18 +136,18 @@ export function Navbar() {
                     <span className="text-[10px] tabular-nums text-white/30">
                       0{i + 1}
                     </span>
-                  </a>
+                  </Link>
                 </motion.li>
               ))}
             </ul>
-            <a
-              href="#contact"
+            <Link
+              href="/contact"
               onClick={() => setOpen(false)}
               className="mt-6 flex items-center justify-center gap-2 rounded-full bg-white px-4 py-3 text-[11px] uppercase tracking-[0.18em] text-black"
             >
               Let&apos;s Work Together
               <ArrowUpRight size={13} aria-hidden="true" />
-            </a>
+            </Link>
           </motion.div>
         )}
       </AnimatePresence>

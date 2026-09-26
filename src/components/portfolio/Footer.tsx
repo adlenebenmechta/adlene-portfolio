@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "motion/react";
 import {
   Facebook,
@@ -8,39 +9,21 @@ import {
   Twitter,
   Youtube,
 } from "lucide-react";
+import { projects, EMAIL } from "@/lib/portfolio-data";
 
-const COLUMNS: { title: string; links: string[] }[] = [
-  {
-    title: "Discover",
-    links: [
-      "Labs & Workshops",
-      "Deep Dive Series",
-      "Global Circle",
-      "Resource Vault",
-      "Future Roadmap",
-    ],
-  },
-  {
-    title: "The Mission",
-    links: [
-      "Origin Story",
-      "The Collective",
-      "Newsroom Hub",
-      "Join the Team",
-    ],
-  },
-  {
-    title: "Concierge",
-    links: [
-      "Get in Touch",
-      "Legal Privacy",
-      "User Agreement",
-      "Report Concern",
-    ],
-  },
+const STUDIO_LINKS = [
+  { label: "Home", href: "/" },
+  { label: "Selected Work", href: "/#work" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
-const SOCIALS = [Music2, Facebook, Twitter, Youtube, Instagram];
+const CONNECT_LINKS = [
+  { label: "Start a Project", href: "/contact" },
+  { label: "Email", href: `mailto:${EMAIL}` },
+  { label: "Instagram", href: "#top" },
+  { label: "TikTok", href: "#top" },
+];
 
 export function Footer() {
   return (
@@ -75,25 +58,59 @@ export function Footer() {
 
             {/* Link columns */}
             <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-7">
-              {COLUMNS.map((column) => (
-                <nav key={column.title} aria-label={column.title}>
-                  <h4 className="text-sm uppercase tracking-wider text-white font-medium mb-4">
-                    {column.title}
-                  </h4>
-                  <ul className="text-xs space-y-2">
-                    {column.links.map((link) => (
-                      <li key={link}>
-                        <a
-                          href="#top"
-                          className="text-white/60 hover:text-white transition-colors"
-                        >
-                          {link}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-              ))}
+              <nav aria-label="Work">
+                <h4 className="text-sm uppercase tracking-wider text-white font-medium mb-4">
+                  Work
+                </h4>
+                <ul className="text-xs space-y-2">
+                  {projects.map((project) => (
+                    <li key={project.id}>
+                      <Link
+                        href={`/work/${project.id}`}
+                        className="text-white/60 hover:text-white transition-colors"
+                      >
+                        {project.brand}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+
+              <nav aria-label="Studio">
+                <h4 className="text-sm uppercase tracking-wider text-white font-medium mb-4">
+                  Studio
+                </h4>
+                <ul className="text-xs space-y-2">
+                  {STUDIO_LINKS.map((link) => (
+                    <li key={link.label}>
+                      <Link
+                        href={link.href}
+                        className="text-white/60 hover:text-white transition-colors"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+
+              <nav aria-label="Connect">
+                <h4 className="text-sm uppercase tracking-wider text-white font-medium mb-4">
+                  Concierge
+                </h4>
+                <ul className="text-xs space-y-2">
+                  {CONNECT_LINKS.map((link) => (
+                    <li key={link.label}>
+                      <a
+                        href={link.href}
+                        className="text-white/60 hover:text-white transition-colors"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </div>
           </div>
 
@@ -107,7 +124,7 @@ export function Footer() {
                 Join the Journey:
               </span>
               <div className="flex items-center gap-5">
-                {SOCIALS.map((Icon, i) => (
+                {[Music2, Facebook, Twitter, Youtube, Instagram].map((Icon, i) => (
                   <a
                     key={i}
                     href="#top"

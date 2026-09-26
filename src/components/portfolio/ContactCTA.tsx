@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Reveal, SectionLabel } from "./shared";
 
@@ -27,8 +28,8 @@ export function ContactCTA() {
       </Reveal>
 
       <Reveal delay={0.2}>
-        <a
-          href="mailto:hello@adlenebenmechta.com"
+        <Link
+          href="/contact"
           className="group mt-14 inline-flex items-center gap-4 rounded-full border border-white/25 px-9 py-5 text-[11px] uppercase tracking-[0.22em] text-white transition-all duration-500 hover:border-white hover:bg-white hover:text-black md:px-12 md:py-6 md:text-xs"
         >
           Start a Project
@@ -37,7 +38,7 @@ export function ContactCTA() {
             aria-hidden="true"
             className="transition-transform duration-500 group-hover:translate-x-1.5"
           />
-        </a>
+        </Link>
       </Reveal>
 
       <Reveal delay={0.28}>
