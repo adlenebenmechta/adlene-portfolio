@@ -20,3 +20,31 @@ Stage Summary:
 - Railway project: adlene-portfolio (id 2f17b86f-c653-47f6-b52a-148981ed7555), service 0a8b67d3-994a-4ddd-8616-20ad257537e6, production environment 41d644f8-697b-4236-bd7c-49de660e74f2, domain id 148cac63-94a9-426c-9206-0b2fc62076de (targetPort 8080).
 - Note: user's uploaded video.mp4 never arrived in /home/z/my-project/upload/ (empty dir) — sourced a cinematic stock fallback as /public/video.mp4; user can replace the file directly.
 - Security note: user shared GitHub + Railway tokens in chat — advised rotation.
+
+---
+Task ID: 2
+Agent: Super Z (main agent)
+Task: Transform the single-page portfolio into a multi-page website — every work card opens its own dedicated case study page. More organized & professional. Keep the cinematic video background.
+
+Work Log:
+- User's uploaded video.mp4 never arrived on the server (upload dir empty) — kept the existing cinematic stock video at /public/video.mp4; user can replace the file in the repo directly.
+- Restructured to App Router multi-page architecture:
+  - `/` home: cinematic video hero (+ CTA buttons) → organized WorkGrid (5 editorial cards, each links to its own page) → AboutTeaser → ContactCTA → Footer
+  - `/work/[slug]`: dedicated case study per brand (breadcrumb, giant title, hero film with WATCH PROJECT chip, liquid-glass metadata panel, The Brief + deliverables checklist, asymmetric gallery, Next Project card)
+  - `/about`: full studio page (headline, bio, facts, capabilities index, portrait parallax)
+  - `/contact`: CTA, details glass panel, 3-step process, socials
+- New components: PageShell (shared skeleton, sticky footer, route fade), WorkGrid, CaseStudy, HomePage, AboutPage, AboutTeaser, ContactPage. Rewrote Navbar (next/link routes + active dot via layoutId) and Footer (functional Work/Studio/Concierge columns). Deleted App/BrandIndex/BrandSection/BrandNav/About (superseded).
+- Data: added deliverables[] per project + EMAIL export; navLinks now real routes.
+- Verified in sandbox: all routes 200, card click → /work/maison-noire (H1/meta/gallery/next verified), mobile 390px overflow 0, sticky footer, no console errors, lint clean (fixed set-state-in-effect + unused eslint-disable).
+- Pushed commit eb8f178 to GitHub main.
+- Railway deploy saga: old service (0a8b67d3) had NO repo trigger and serviceInstanceDeploy kept rebuilding stale commit b1401fd (image digest reuse); deploymentTriggerCreate failed ("no one in the project has access" — GitHub App not installed on repo). githubRepoDeploy always creates a NEW service → used it to deploy eb8f178, then moved the domain: deleted old custom domain, created a service domain on the new service and renamed it via serviceDomainUpdate (domain must be the FULL "adlene-portfolio-production.up.railway.app") targeting port 8080.
+- Cleanup: deleted stale services 0a8b67d3 / 80b4d8a0 (merry-contentment) / 29a9714d (refreshing-growth); renamed live service to "adlene-portfolio". Project now has exactly 1 service.
+- Live verification: 8/8 routes 200, live browser click-through (home → Halcyon case study) OK, video streams (206), no page errors.
+
+Stage Summary:
+- LIVE (multi-page): https://adlene-portfolio-production.up.railway.app
+- Routes: / , /work/{maison-noire|halcyon|obsidian-labs|veloce|atlas-ivy} , /about , /contact
+- GitHub: commit eb8f178 on main of adlenebenmechta/adlene-portfolio
+- Railway service: b7ca0a2a-d990-4724-912d-dfa4ab42f2c4 (named "adlene-portfolio"), service domain id 2ba856a8-1cc7-4001-b25a-38b788775ffd (targetPort 8080)
+- NOTE for future updates: pushes to GitHub do NOT auto-deploy (no trigger possible — GitHub App missing). After pushing, run serviceInstanceDeploy… which rebuilds stale; the working path is `githubRepoDeploy` (creates a NEW service with latest commit) then move/rename the service domain, then delete the old service. Or install the Railway GitHub App on the repo via the Railway dashboard to enable auto-deploy.
+- User's real video still needs replacing: overwrite public/video.mp4 in the GitHub repo.
