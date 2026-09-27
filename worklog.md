@@ -287,3 +287,22 @@ Stage Summary:
 - Admin access: /admin (not in nav/footer, noindex) → password from scripts/railway.env ADMIN_PASSWORD; changes go live in seconds via GitHub-backed content.json (server reads it via GitHub API with token; media uploads served from jsDelivr CDN).
 - GitHub main: latest commit includes deploy-script fix + prod E2E suite. Railway service 67fa0194-81b3-4946-8da5-49face821d90 (named "adlene-portfolio"), domain id 0aa42333-6691-4c68-b432-07f71b72b24f (state file scripts/railway.env).
 - Security notes: user's Railway token + GitHub token are in chat history + now in Railway env vars (GITHub_TOKEN is required server-side for the CMS; rotate both anytime — then update scripts/railway.env and the Railway variable).
+
+---
+Task ID: 14
+Agent: Super Z (main agent)
+Task: User (Arabic): (1) page transition should carry his name "Adlene Benmechta" in a signature font like an autograph, (2) admin login returned "Wrong password" for him.
+
+Work Log:
+- SIGNATURE TRANSITION: PageShell curtain now carries the name as a title card — Alex Brush (next/font/google, display:block) at clamp(2.6rem,8vw,6rem), white/95, slight -1.5deg tilt, soft glow. Ink writes in via clip-path inset wipe L→R (0.8s, INK_EASE [0.65,0,0.35,1]) + block rise/blur; a hand-drawn flourish underline draws beneath it (SVG pathLength 0.55s). Curtain now waits (delay 1.55) for the autograph, then sweeps up carrying it; content rise delayed to 1.72. Total ~2.3s per navigation. Reduced-motion handled by MotionConfig. Plays on every route change incl. first load (title-ident effect).
+- Fixed pre-existing dev-only React key warning: server-passed `background` prop rendered as sibling in PageShell's children array triggered RSC false-positive ("Check the render method of PageShell"). Wrapped `{background}` in a plain div (layout-neutral: all backgrounds are position:fixed). Warning gone on all routes.
+- PASSWORD RESET: user mistyped the complex generated one (8j10H44KHhEm6B — ambiguous glyphs). Reset to memorable "Adlene@2026" (railway.env → --set-vars on new service during build). Live: new → 200, old → 401, wrong → 401.
+- Deploy: commit f3c1da0 pushed → trigger-only (service e4c7c021) → set-vars → finalize. RAILWAY API LESSON: serviceDomainDelete returned true but silently FAILED to release the old binding (old service kept the domain) → rename couldn't settle. Manual recovery: delete + VERIFY (poll domains until 0) → then rename verified on first attempt. Script improved: rename now verified with 4-retry loop; NOTE for next time — add the same verify+retry to the domain delete step. Old service 67fa0194 deleted, new service renamed "adlene-portfolio", state file updated.
+- Verified live: signature present in served HTML, 13/13 routes 200, zero console errors, VLM QA on both transition frame (signature centered, flourish intact, no defects) and settled Work page (no defects).
+- Full production E2E re-run with new password: 32/32 PASSED (auth gates, login, upload byte-exact on jsDelivr, brand add/edit/remove reflected live, file manager, logout, noindex, hidden from public UI).
+
+Stage Summary:
+- LIVE: https://adlene-portfolio-production.up.railway.app — signature autograph transition + working admin.
+- Admin password: Adlene@2026 (stored in scripts/railway.env; change anytime via Railway variable ADMIN_PASSWORD + redeploy).
+- GitHub main f3c1da0+; Railway service e4c7c021-926b-46a6-91b6-02056a4e6055 ("adlene-portfolio"), domain id 11a10222-cec8-4b74-8b1b-95420a0d1dd4.
+- Deploy gotcha for future: Railway domain mutations can return success without applying — ALWAYS verify (poll) after serviceDomainDelete AND serviceDomainUpdate.
