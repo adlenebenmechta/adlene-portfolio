@@ -6,3 +6,4 @@ server.log
 scripts/railway.env
 db/custom.db
 .env.local
+dev.log
