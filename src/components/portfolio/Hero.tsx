@@ -5,10 +5,21 @@ import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { EASE } from "./shared";
 
+/** staggered line reveal */
+const lineIn = (delay: number) => ({
+  initial: { opacity: 0, y: 42, filter: "blur(10px)" },
+  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+  transition: { duration: 1.1, delay, ease: EASE },
+});
+
 /**
- * Clean cinematic hero — the film plays fullscreen, untouched.
- * A single line of text sits on the left; "my portfolio" lives in
- * a bordered box that opens the work index page.
+ * Editorial cinematic hero — the film plays fullscreen, untouched.
+ * A stacked serif composition sits on the left:
+ *
+ *   Hi, my name is          ← italic, elegant
+ *   Adlene Benmechta        ← huge display serif
+ *   and this is             ← italic
+ *   [ my portfolio ]        ← big boxed link → /work
  */
 export function Hero() {
   return (
@@ -17,34 +28,49 @@ export function Hero() {
       aria-label="Introduction"
       className="relative z-10 flex min-h-svh w-full items-center"
     >
-      <div className="mx-auto flex w-full max-w-[1400px] justify-start px-6 pb-28 pt-24 md:px-10 md:pt-28 lg:px-16">
-        <div className="max-w-xl">
+      <div className="mx-auto w-full max-w-[1400px] px-6 pb-24 pt-24 md:px-10 md:pb-28 md:pt-28 lg:px-16">
+        <div className="max-w-4xl font-serif">
+          {/* line 1 */}
           <motion.p
-            initial={{ opacity: 0, y: 26, filter: "blur(8px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 1.2, delay: 0.4, ease: EASE }}
-            className="text-lg leading-relaxed text-white md:text-2xl"
-            style={{ textShadow: "0 2px 28px rgba(0, 0, 0, 0.6)" }}
+            {...lineIn(0.35)}
+            className="text-xl italic text-white/85 md:text-2xl"
+            style={{ textShadow: "0 2px 24px rgba(0,0,0,0.55)" }}
           >
-            Hi, my name is{" "}
-            <span className="font-medium">Adlene Benmechta</span> and this is
+            Hi, my name is
           </motion.p>
 
+          {/* line 2 — the name */}
+          <motion.h1
+            {...lineIn(0.5)}
+            className="mt-3 text-[clamp(2.9rem,8.5vw,7rem)] font-semibold leading-[0.98] tracking-[-0.015em] text-white"
+            style={{ textShadow: "0 4px 40px rgba(0,0,0,0.55)" }}
+          >
+            Adlene Benmechta
+          </motion.h1>
+
+          {/* line 3 */}
+          <motion.p
+            {...lineIn(0.68)}
+            className="mt-3 text-xl italic text-white/85 md:text-2xl"
+            style={{ textShadow: "0 2px 24px rgba(0,0,0,0.55)" }}
+          >
+            and this is
+          </motion.p>
+
+          {/* line 4 — the boxed portfolio link */}
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.85, ease: EASE }}
-            className="mt-6 md:mt-8"
+            {...lineIn(0.86)}
+            className="mt-8 md:mt-10"
           >
             <Link
               href="/work"
-              className="group inline-flex items-center gap-2.5 rounded-xl border border-white/50 bg-black/20 px-5 py-2.5 text-base text-white backdrop-blur-sm transition-all duration-500 hover:border-white hover:bg-white hover:text-black md:px-6 md:py-3 md:text-xl"
+              className="group inline-flex items-center gap-3 rounded-2xl border-2 border-white/70 bg-black/25 px-7 py-4 text-2xl font-medium text-white backdrop-blur-md transition-all duration-500 hover:border-white hover:bg-white hover:text-black md:gap-4 md:px-9 md:py-5 md:text-4xl"
             >
               my portfolio
               <ArrowUpRight
-                size={17}
+                size={30}
                 aria-hidden="true"
-                className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                className="transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1"
               />
             </Link>
           </motion.div>

@@ -17,12 +17,6 @@ import { ContactCTA } from "./ContactCTA";
 export function HomePage() {
   return (
     <PageShell background={<CinematicBackground />}>
-      {/* SEO only — visually hidden so nothing writes over the film */}
-      <h1 className="sr-only">
-        Adlene Benmechta — Creative Director, Filmmaker &amp; Brand
-        Storyteller
-      </h1>
-
       <Hero />
 
       {/* solid archive surface that slides over the film on scroll */}
