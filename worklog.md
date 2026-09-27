@@ -139,3 +139,19 @@ Work Log:
 Stage Summary:
 - LIVE: https://adlene-portfolio-production.up.railway.app — editorial serif hero live.
 - Service 665a3564-48a5-45c8-a85a-4897aa58af37, domain 265518cc-60fb-4baa-b044-4d838e5398aa.
+
+---
+Task ID: 8
+Agent: Super Z (main agent)
+Task: User (Arabic): hero composition — "make it a little higher and a little more to the left".
+
+Work Log:
+- Hero.tsx wrapper only: max-w-[1400px]→max-w-[1600px]; left padding cut (pl-5 / md:pl-8 / lg:pl-10, right padding unchanged); added -translate-y-12 (mobile) / md:-translate-y-16 (desktop) lifting the whole stacked composition.
+- Effective shift: desktop 1920 ≈ 124px more left, laptop 1440 ≈ 44px; all screens ~48–64px higher. Video, text content, box link untouched.
+- Lint clean; commit 273f225 pushed; zero-downtime deploy: build f2b202c4 SUCCESS, domain migrated, old service 665a3564 deleted.
+- Live verified: 8/8 routes + /video.mp4 + poster 200; served HTML contains max-w-[1600px] / -translate-y-12 / lg:pl-10.
+
+Stage Summary:
+- LIVE: https://adlene-portfolio-production.up.railway.app — hero text block now sits higher and closer to the left edge.
+- GitHub commit 273f225; service 2567964c-cd6c-4dc0-9d4f-e055b7b1d7f0, domain 3ef9be8f-f19f-408f-859f-0f499290ae81.
+- Prior UUID-message commits (worklog-only) confirmed harmless — code identical to 83ba547.
