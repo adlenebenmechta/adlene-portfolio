@@ -103,10 +103,9 @@ export function AboutPage() {
                     style={{ y: imageY }}
                     className="absolute -inset-y-10 inset-x-0"
                   >
-                    { }
                     <img
                       src="/media/portrait-director.jpg"
-                      alt="Adlene Benmechta — creative director, black and white portrait"
+                      alt="Adlene Benmechta — creative director, portrait"
                       loading="eager"
                       decoding="async"
                       className="h-full w-full object-cover"

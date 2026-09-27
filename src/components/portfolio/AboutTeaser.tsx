@@ -14,11 +14,10 @@ export function AboutTeaser() {
         {/* portrait */}
         <div className="order-first md:order-last md:col-span-5">
           <Reveal variant="clip" amount={0.2}>
-            <figure className="group relative aspect-[16/10] overflow-hidden rounded-lg bg-white/[0.03] md:rounded-xl">
-              { }
+            <figure className="group relative aspect-[4/5] overflow-hidden rounded-lg bg-white/[0.03] md:rounded-xl">
               <img
                 src="/media/portrait-director.jpg"
-                alt="Adlene Benmechta — creative director, black and white portrait"
+                alt="Adlene Benmechta — creative director, portrait"
                 loading="lazy"
                 decoding="async"
                 className="h-full w-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-[1.04]"
