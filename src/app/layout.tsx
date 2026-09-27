@@ -48,7 +48,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={playfair.variable}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      data-scroll-behavior="smooth"
+      className={playfair.variable}
+    >
       <body className="antialiased bg-[#050505] text-white">{children}</body>
     </html>
   );
