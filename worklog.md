@@ -194,3 +194,23 @@ Stage Summary:
 - LIVE: https://adlene-portfolio-production.up.railway.app — curtain transitions, ordered work index, navbar Home, Adlene-owned footer.
 - GitHub commit 9b33d71; service d9888e27-ce4c-4888-aa8b-d3d4365ab352, domain bbeac454-15aa-4a7a-a4ed-034c36210aea.
 - Instagram/TikTok links omitted from footer until real handles are provided.
+
+---
+Task ID: 11
+Agent: Super Z (main agent)
+Task: User (Arabic): (1) brands organized with a place for their own logo, (2) replace the About image with uploaded file Changing_top_of_person_in_2K_20260927043543.jpg.
+
+Work Log:
+- Designed 5 luxury monogram logo SVGs in public/media/logos/ — maison-noire (double seal MN), halcyon (circular H), obsidian-labs (minimal OL), veloce (italic V), atlas-ivy (corner-accent A&I). All white, scalable, replaceable with real logos.
+- portfolio-data.ts: added logo: string field to Project interface + all 5 projects.
+- WorkIndexPage rows: new grid [logo slot | number+services + brand + tagline | industry/year/location] — logo in a framed 72px rounded square (backdrop-blur, hover border-glow + scale), mobile 56px inline. Desktop row numbers now paired with services line.
+- CaseStudy header: brand mark now sits beside industry · location kicker.
+- Verified locally + VLM visual QA: alignment precise, professional, no defects. Mobile overflow 0, no console errors.
+- Deployed zero-downtime: commit bacd320, domain migrated, old service d9888e27 deleted. Live: all routes 200, 5/5 logos loading.
+- ABOUT IMAGE DID NOT ARRIVE: upload/ empty (same silent gateway failure as earlier videos). Told user to send via WeTransfer/Drive link — that path is proven.
+
+Stage Summary:
+- LIVE: https://adlene-portfolio-production.up.railway.app/work — every brand now has its dedicated logo slot.
+- GitHub commit bacd320; service 409063ac-286e-42bd-a6b9-a3605b90ac51, domain 6c34a3b8-8f5e-48ec-b6a9-b16608ba30c1.
+- To swap in real logos later: replace the files in public/media/logos/ (keep filenames) — the site picks them up automatically.
+- BLOCKED on: user's About portrait image — needs re-send via link.
