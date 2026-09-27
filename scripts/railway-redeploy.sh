@@ -124,7 +124,7 @@ EOF
       say "waiting for build on $NEW_SERVICE…"
       for i in $(seq 1 120); do
         cat > /tmp/q-dep.json << EOF
-{"query":"query(\$eid:String!,\$sid:String!){ deployments(input:{environmentId:\$eid, serviceId:\$sid, first:1}){ edges{ node{ id status meta } } } }","variables":{"eid":"$ENV_ID","sid":"$NEW_SERVICE"}}
+{"query":"query(\$eid:String!,\$sid:String!){ deployments(input:{environmentId:\$eid, serviceId:\$sid}){ edges{ node{ id status meta } } } }","variables":{"eid":"$ENV_ID","sid":"$NEW_SERVICE"}}
 EOF
         out=$(gq /tmp/q-dep.json)
         status=$(echo "$out" | python3 -c "import json,sys; d=json.load(sys.stdin); e=d['data']['deployments']['edges']; print(e[0]['node']['status'] if e else 'NONE')" 2>/dev/null || echo "PARSE_FAIL")

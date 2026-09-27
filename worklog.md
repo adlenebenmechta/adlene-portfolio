@@ -260,3 +260,30 @@ Stage Summary:
 - Admin studio: COMPLETE + fully tested locally at /admin. Needs deploy + env vars (ADMIN_PASSWORD, GITHub_TOKEN) set on Railway via variableUpsert.
 - BLOCKED on: RAILWAY_TOKEN (lost in environment reset) — user must paste a new/existing Railway API token to deploy and go live.
 - Deploy procedure once token arrives: put it in scripts/railway.env → bash scripts/railway-redeploy.sh --trigger-only → --finalize --wait → --set-vars (or set vars first) → verify /admin live.
+
+---
+Task ID: 13 (completion)
+Agent: Super Z (main agent)
+Task: Deploy Task 13's pending code (new About image + hidden admin CMS) and fully verify on production.
+
+Work Log:
+- User supplied the Railway token (UUID format) in chat → saved to scripts/railway.env, verified via GraphQL `me` query (adlenebenmechta@gmail.com).
+- Pushed local-only commit abc67eb (deploy script, no secrets) → GitHub main.
+- Deployed zero-downtime: --trigger-only created new service 67fa0194 building abc67eb; env vars ADMIN_PASSWORD + GITHUB_TOKEN upserted onto the NEW service during build (skipDeploys, temporary state swap then restore); build SUCCESS.
+- FIXED SCRIPT BUG: reconstructed poll query used `first:1` in deployments input → GRAPHQL_VALIDATION_FAILED loop (the 10-min "timeout" was this). Removed the invalid field; also serviceDomainUpdate returned true but silently did NOT rename during finalize (edge still releasing the old binding) → retry of the same mutation after cleanup worked immediately. Known patterns to remember.
+- Migration completed: domain adlene-portfolio-production.up.railway.app → new service, old service 10a575a2 deleted. All 15 routes/assets 200; live portrait byte-exact (68,964 B = new B&W cutout).
+- PRODUCTION E2E (scripts/e2e-admin-prod.py — reads password from railway.env, safe to commit): 32/32 PASSED —
+  unauthed API 401s ×3, wrong password 401, login + cookie, session authed:true, content read (5 brands),
+  image upload → served byte-exact on jsDelivr CDN, brand add → visible on /work + home + own case page in seconds,
+  brand edit (tagline) → live update, brand remove → gone + 404 + content restored to the exact 5 originals,
+  file manager list/delete + stray cleanup, logout, /admin noindex, ZERO links to /admin anywhere in public UI.
+- Visual QA (agent-browser + VLM) on production: admin dashboard clean/professional (tabs, 5 brands, reorder disabled states correct); About page with new cutout portrait well-framed, no layout defects; zero console errors/warnings.
+- Test-script bugs found & fixed during E2E (app was fine): upload response field is `url`/`repoPath` (not `path`); server appends random suffix to filenames; DELETE /api/admin/files expects the repo path (public/media/uploads/…).
+- GitHub uploads folder: fully cleaned by E2E (folder auto-removed when empty).
+- Committed: fixed railway-redeploy.sh + e2e-admin-prod.py + worklog (this section).
+
+Stage Summary:
+- LIVE: https://adlene-portfolio-production.up.railway.app — new About portrait + hidden admin CMS at /admin, all verified on production.
+- Admin access: /admin (not in nav/footer, noindex) → password from scripts/railway.env ADMIN_PASSWORD; changes go live in seconds via GitHub-backed content.json (server reads it via GitHub API with token; media uploads served from jsDelivr CDN).
+- GitHub main: latest commit includes deploy-script fix + prod E2E suite. Railway service 67fa0194-81b3-4946-8da5-49face821d90 (named "adlene-portfolio"), domain id 0aa42333-6691-4c68-b432-07f71b72b24f (state file scripts/railway.env).
+- Security notes: user's Railway token + GitHub token are in chat history + now in Railway env vars (GITHub_TOKEN is required server-side for the CMS; rotate both anytime — then update scripts/railway.env and the Railway variable).
