@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
-import type { Project } from "@/lib/portfolio-data";
-import { projects } from "@/lib/portfolio-data";
+import type { Project } from "@/lib/site-content";
+import { mediaUrl } from "@/lib/media";
 import { Reveal, SectionLabel } from "./shared";
 
 /** editorial layout rhythm per row of the index */
@@ -38,9 +38,8 @@ function WorkCard({
       >
         <figure className="relative h-full w-full overflow-hidden rounded-lg bg-white/[0.03] md:rounded-xl">
           {/* media */}
-          { }
           <img
-            src={project.preview.src}
+            src={mediaUrl(project.preview.src)}
             alt={project.preview.alt}
             loading={position < 2 ? "eager" : "lazy"}
             decoding="async"
@@ -91,7 +90,7 @@ function WorkCard({
   );
 }
 
-export function WorkGrid() {
+export function WorkGrid({ projects }: { projects: Project[] }) {
   return (
     <section
       id="work"

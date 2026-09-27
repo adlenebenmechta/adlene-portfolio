@@ -1,6 +1,7 @@
 "use client";
 
-import type { MediaItem as PortfolioMedia } from "@/lib/portfolio-data";
+import type { MediaItem as PortfolioMedia } from "@/lib/site-content";
+import { mediaUrl } from "@/lib/media";
 import { Reveal } from "./shared";
 import { SmartVideo } from "./SmartVideo";
 
@@ -26,8 +27,8 @@ export function MediaItem({ item, cta = false }: MediaItemProps) {
       <figure className="group relative h-full w-full overflow-hidden rounded-md bg-white/[0.03] md:rounded-lg">
         {item.type === "video" ? (
           <SmartVideo
-            src={item.src}
-            poster={item.poster}
+            src={mediaUrl(item.src)}
+            poster={item.poster ? mediaUrl(item.poster) : undefined}
             alt={item.alt}
             label={item.label}
             cta={cta}
@@ -36,9 +37,8 @@ export function MediaItem({ item, cta = false }: MediaItemProps) {
           />
         ) : (
           <>
-            { }
             <img
-              src={item.src}
+              src={mediaUrl(item.src)}
               alt={item.alt}
               loading="lazy"
               decoding="async"

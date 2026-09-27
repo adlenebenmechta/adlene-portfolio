@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { getContent } from "@/lib/content";
 import { ContactPage } from "@/components/portfolio/ContactPage";
 import { PageShell } from "@/components/portfolio/PageShell";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Contact — Adlene Benmechta",
@@ -14,10 +17,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Contact() {
+export default async function Contact() {
+  const content = await getContent();
   return (
-    <PageShell background={<div className="film-grain" aria-hidden="true" />}>
-      <ContactPage />
+    <PageShell projects={content.projects} background={<div className="film-grain" aria-hidden="true" />}>
+      <ContactPage email={content.settings.email} />
     </PageShell>
   );
 }

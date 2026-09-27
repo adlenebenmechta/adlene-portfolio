@@ -4,7 +4,8 @@ import { useRef } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
-import type { Project } from "@/lib/portfolio-data";
+import type { Project } from "@/lib/site-content";
+import { mediaUrl } from "@/lib/media";
 import { Reveal, SectionLabel } from "./shared";
 import { MediaGallery } from "./MediaGallery";
 import { SmartVideo } from "./SmartVideo";
@@ -69,7 +70,7 @@ export function CaseStudy({ project, next, position, total }: CaseStudyProps) {
               {/* the brand's own mark */}
               <figure className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] p-1.5 md:h-16 md:w-16 md:p-2">
                 <img
-                  src={project.logo}
+                  src={mediaUrl(project.logo)}
                   alt={`${project.brand} logo`}
                   className="h-full w-full object-contain"
                 />
@@ -103,8 +104,8 @@ export function CaseStudy({ project, next, position, total }: CaseStudyProps) {
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg bg-white/[0.03] md:aspect-[21/10] md:rounded-xl">
             {heroMedia.type === "video" ? (
               <SmartVideo
-                src={heroMedia.src}
-                poster={heroMedia.poster}
+                src={mediaUrl(heroMedia.src)}
+                poster={heroMedia.poster ? mediaUrl(heroMedia.poster) : undefined}
                 alt={heroMedia.alt}
                 label={heroMedia.label}
                 cta
@@ -112,9 +113,8 @@ export function CaseStudy({ project, next, position, total }: CaseStudyProps) {
                 rounded="rounded-none"
               />
             ) : (
-               
-              <img
-                src={heroMedia.src}
+               <img
+                src={mediaUrl(heroMedia.src)}
                 alt={heroMedia.alt}
                 className="absolute inset-0 h-full w-full object-cover"
                 loading="eager"
@@ -220,9 +220,8 @@ export function CaseStudy({ project, next, position, total }: CaseStudyProps) {
           className="group relative block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] outline-none transition-colors duration-700 hover:border-white/25"
         >
           <div className="absolute inset-0 overflow-hidden">
-            { }
             <img
-              src={next.preview.src}
+              src={mediaUrl(next.preview.src)}
               alt=""
               aria-hidden="true"
               loading="lazy"

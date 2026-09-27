@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { capabilities } from "@/lib/portfolio-data";
+import { mediaUrl } from "@/lib/media";
 import { Reveal, SectionLabel } from "./shared";
 
 const FACTS: { label: string; value: string }[] = [
@@ -13,7 +14,11 @@ const FACTS: { label: string; value: string }[] = [
   { label: "Availability", value: "Select projects — Q1 2026" },
 ];
 
-export function AboutPage() {
+export function AboutPage({
+  portrait,
+}: {
+  portrait: { src: string; alt: string };
+}) {
   return (
     <>
       {/* ─── Intro ─────────────────────────────────────────────────── */}
@@ -90,8 +95,8 @@ export function AboutPage() {
             <Reveal variant="clip" amount={0.2}>
               <figure className="group relative aspect-square overflow-hidden rounded-lg bg-white/[0.03] md:rounded-xl">
                 <img
-                  src="/media/portrait-director.jpg"
-                  alt="Adlene Benmechta — creative director, portrait"
+                  src={mediaUrl(portrait.src)}
+                  alt={portrait.alt}
                   loading="eager"
                   decoding="async"
                   className="h-full w-full object-cover"

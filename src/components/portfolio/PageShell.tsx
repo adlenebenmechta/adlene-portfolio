@@ -5,9 +5,12 @@ import type { ReactNode } from "react";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { EASE } from "./shared";
+import type { Project } from "@/lib/site-content";
 
 interface PageShellProps {
   children: ReactNode;
+  /** brand list for the footer work column */
+  projects?: Project[];
   /** fixed background layers (cinematic video, overlays) — rendered outside the animated wrapper */
   background?: ReactNode;
 }
@@ -23,7 +26,7 @@ const CURTAIN_EASE: [number, number, number, number] = [0.76, 0, 0.24, 1];
  * — fixed chrome (Navbar / Footer) that survives the reveal
  * — sticky-footer layout: content grows, footer stays at the bottom
  */
-export function PageShell({ children, background }: PageShellProps) {
+export function PageShell({ children, projects, background }: PageShellProps) {
   return (
     <MotionConfig reducedMotion="user">
       <div className="relative flex min-h-screen w-full flex-col items-center overflow-x-hidden font-sans selection:bg-white/20 selection:text-white">
@@ -52,7 +55,7 @@ export function PageShell({ children, background }: PageShellProps) {
           {children}
         </motion.main>
 
-        <Footer />
+        <Footer projects={projects ?? []} />
       </div>
     </MotionConfig>
   );

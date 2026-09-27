@@ -6,6 +6,8 @@ import { Hero } from "./Hero";
 import { WorkGrid } from "./WorkGrid";
 import { AboutTeaser } from "./AboutTeaser";
 import { ContactCTA } from "./ContactCTA";
+import { mediaUrl } from "@/lib/media";
+import type { SiteContent } from "@/lib/site-content";
 
 /**
  * The multi-page home:
@@ -13,10 +15,14 @@ import { ContactCTA } from "./ContactCTA";
  *   (no text over it, nothing covering it)
  * — organized work index below (every card opens its own page)
  * — about teaser + contact CTA
+ * All media slots come from the runtime content (admin-editable).
  */
-export function HomePage() {
+export function HomePage({ content }: { content: SiteContent }) {
   return (
-    <PageShell background={<CinematicBackground />}>
+    <PageShell
+      projects={content.projects}
+      background={<CinematicBackground video={content.hero.video} poster={content.hero.poster} />}
+    >
       <Hero />
 
       {/* solid archive surface that slides over the film on scroll */}
@@ -28,8 +34,8 @@ export function HomePage() {
         />
 
         <div className="flex w-full flex-col items-center bg-[#050505]">
-          <WorkGrid />
-          <AboutTeaser />
+          <WorkGrid projects={content.projects} />
+          <AboutTeaser portrait={content.portrait} />
           <ContactCTA />
         </div>
       </div>
@@ -42,7 +48,13 @@ export function HomePage() {
  * No brightness filter, no dark veil, no vignette, no grain:
  * the video is shown exactly as the filmmaker made it.
  */
-function CinematicBackground(): ReactNode {
+function CinematicBackground({
+  video,
+  poster,
+}: {
+  video: string;
+  poster: string;
+}): ReactNode {
   return (
     <video
       className="fixed inset-0 z-[0] h-full w-full object-cover"
@@ -50,10 +62,10 @@ function CinematicBackground(): ReactNode {
       loop
       muted
       playsInline
-      poster="/media/hero-poster.jpg"
+      poster={mediaUrl(poster)}
       aria-hidden="true"
     >
-      <source src="/video.mp4" type="video/mp4" />
+      <source src={mediaUrl(video)} type="video/mp4" />
     </video>
   );
 }

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
-import { AboutPage } from "@/components/portfolio/AboutPage";
+import { getContent } from "@/lib/content";
 import { PageShell } from "@/components/portfolio/PageShell";
+import { AboutPage } from "@/components/portfolio/AboutPage";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "About — Adlene Benmechta",
@@ -14,10 +17,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function About() {
+export default async function About() {
+  const content = await getContent();
   return (
-    <PageShell background={<div className="film-grain" aria-hidden="true" />}>
-      <AboutPage />
+    <PageShell
+      projects={content.projects}
+      background={<div className="film-grain" aria-hidden="true" />}
+    >
+      <AboutPage portrait={content.portrait} />
     </PageShell>
   );
 }

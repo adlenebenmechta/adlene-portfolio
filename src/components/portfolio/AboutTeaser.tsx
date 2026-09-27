@@ -2,9 +2,14 @@
 
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import { mediaUrl } from "@/lib/media";
 import { Reveal, SectionLabel } from "./shared";
 
-export function AboutTeaser() {
+export function AboutTeaser({
+  portrait,
+}: {
+  portrait: { src: string; alt: string };
+}) {
   return (
     <section
       aria-label="About Adlene Benmechta"
@@ -16,8 +21,8 @@ export function AboutTeaser() {
           <Reveal variant="clip" amount={0.2}>
             <figure className="group relative aspect-square overflow-hidden rounded-lg bg-white/[0.03] md:rounded-xl">
               <img
-                src="/media/portrait-director.jpg"
-                alt="Adlene Benmechta — creative director, portrait"
+                src={mediaUrl(portrait.src)}
+                alt={portrait.alt}
                 loading="lazy"
                 decoding="async"
                 className="h-full w-full object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-[1.03]"

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
-import { projects, EMAIL } from "@/lib/portfolio-data";
+import type { Project } from "@/lib/site-content";
 
 const MENU_LINKS = [
   { label: "Home", href: "/" },
@@ -12,16 +12,15 @@ const MENU_LINKS = [
   { label: "Contact", href: "/contact" },
 ];
 
-const CONNECT_LINKS = [
-  { label: "Start a Project", href: "/contact" },
-  { label: "Email", href: `mailto:${EMAIL}` },
-];
+export function Footer({
+  projects,
+  email,
+}: {
+  projects: Project[];
+  email?: string;
+}) {
+  const mail = email ?? "hello@adlenebenmechta.com";
 
-/**
- * Site footer — Adlene Benmechta's own sign-off.
- * Brand wordmark, work index, menu and direct contact — nothing else.
- */
-export function Footer() {
   return (
     <div className="relative z-10 w-full px-4 pb-10 sm:px-6 md:px-10 lg:px-16">
       <div className="mx-auto w-full max-w-[1400px]">
@@ -42,10 +41,10 @@ export function Footer() {
                 selected work, made with patience and light.
               </p>
               <a
-                href={`mailto:${EMAIL}`}
+                href={`mailto:${mail}`}
                 className="group mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-white/70 transition-colors hover:text-white"
               >
-                {EMAIL}
+                {mail}
                 <ArrowUpRight
                   size={12}
                   aria-hidden="true"
@@ -97,16 +96,22 @@ export function Footer() {
                   Connect
                 </h4>
                 <ul className="space-y-2 text-xs">
-                  {CONNECT_LINKS.map((link) => (
-                    <li key={link.label}>
-                      <a
-                        href={link.href}
-                        className="text-white/60 transition-colors hover:text-white"
-                      >
-                        {link.label}
-                      </a>
-                    </li>
-                  ))}
+                  <li>
+                    <Link
+                      href="/contact"
+                      className="text-white/60 transition-colors hover:text-white"
+                    >
+                      Start a Project
+                    </Link>
+                  </li>
+                  <li>
+                    <a
+                      href={`mailto:${mail}`}
+                      className="text-white/60 transition-colors hover:text-white"
+                    >
+                      Email
+                    </a>
+                  </li>
                 </ul>
               </nav>
             </div>

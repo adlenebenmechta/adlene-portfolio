@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import { EMAIL } from "@/lib/portfolio-data";
 import { Reveal, SectionLabel } from "./shared";
-
 const STEPS: { index: string; title: string; note: string }[] = [
   {
     index: "01",
@@ -38,7 +37,12 @@ const SOCIALS = [
   { label: "Facebook", Icon: Facebook },
 ];
 
-export function ContactPage() {
+export function ContactPage({
+  email,
+}: {
+  email?: string;
+}) {
+  const mail = email ?? EMAIL;
   return (
     <>
       {/* ─── CTA block ─────────────────────────────────────────────── */}
@@ -66,7 +70,7 @@ export function ContactPage() {
 
         <Reveal delay={0.2}>
           <a
-            href={`mailto:${EMAIL}`}
+            href={`mailto:${mail}`}
             className="group mt-12 inline-flex items-center gap-4 rounded-full bg-white px-10 py-5 text-[11px] uppercase tracking-[0.22em] text-black transition-all duration-500 hover:bg-white/85 md:px-12 md:py-6 md:text-xs"
           >
             Start a Project
@@ -80,10 +84,10 @@ export function ContactPage() {
 
         <Reveal delay={0.28}>
           <a
-            href={`mailto:${EMAIL}`}
+            href={`mailto:${mail}`}
             className="mt-10 block text-[11px] uppercase tracking-[0.26em] text-white/40 transition-colors duration-300 hover:text-white md:text-xs"
           >
-            {EMAIL}
+            {mail}
           </a>
         </Reveal>
       </section>

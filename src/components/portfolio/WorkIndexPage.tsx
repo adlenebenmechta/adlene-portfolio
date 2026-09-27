@@ -5,8 +5,8 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
-import type { Project } from "@/lib/portfolio-data";
-import { projects } from "@/lib/portfolio-data";
+import type { Project, SiteContent } from "@/lib/site-content";
+import { mediaUrl } from "@/lib/media";
 import { ContactCTA } from "./ContactCTA";
 import { Reveal, EASE } from "./shared";
 
@@ -17,16 +17,15 @@ const lineIn = (delay: number) => ({
   transition: { duration: 1.1, delay, ease: EASE },
 });
 
-/** newest work first — a professionally ordered index */
-const SORTED: Project[] = [...projects].sort(
-  (a, b) => Number(b.year) - Number(a.year),
-);
-
 /**
  * Fixed looping film background for the /work page —
- * Adlene's second film, full colour, unfiltered, uncovered.
+ * full colour, unfiltered, uncovered. Slot comes from content.
  */
-export function WorkFilmBackground(): ReactNode {
+export function WorkFilmBackground({
+  film,
+}: {
+  film: SiteContent["workFilm"];
+}): ReactNode {
   return (
     <video
       className="fixed inset-0 z-[0] h-full w-full object-cover"
@@ -34,10 +33,10 @@ export function WorkFilmBackground(): ReactNode {
       loop
       muted
       playsInline
-      poster="/media/work-poster.jpg"
+      poster={mediaUrl(film.poster)}
       aria-hidden="true"
     >
-      <source src="/work-video.mp4" type="video/mp4" />
+      <source src={mediaUrl(film.video)} type="video/mp4" />
     </video>
   );
 }
@@ -66,7 +65,7 @@ function IndexRow({
         {/* mobile thumbnail */}
         <figure className="mb-4 overflow-hidden rounded-lg md:hidden">
           <img
-            src={project.preview.src}
+            src={mediaUrl(project.preview.src)}
             alt={project.preview.alt}
             loading={position < 2 ? "eager" : "lazy"}
             decoding="async"
@@ -88,7 +87,7 @@ function IndexRow({
           {/* ── the brand's own logo slot ─────────────────────── */}
           <figure className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] p-1.5 backdrop-blur-sm transition-colors duration-500 group-hover:border-white/25 group-hover:bg-white/[0.07] md:h-[4.5rem] md:w-[4.5rem] md:rounded-xl md:p-2.5">
             <img
-              src={project.logo}
+              src={mediaUrl(project.logo)}
               alt={`${project.brand} logo`}
               loading="lazy"
               decoding="async"
@@ -134,11 +133,11 @@ function IndexRow({
 
 /**
  * /work — the professional portfolio index.
- * The second film plays fullscreen behind the page title; below the seam,
- * a strictly ordered editorial list: newest first, hairline rules,
+ * The film plays fullscreen behind the page title; below the seam,
+ * a strictly ordered editorial list (newest first), hairline rules,
  * a spring-following image preview on desktop, thumbnails on mobile.
  */
-export function WorkIndexPage() {
+export function WorkIndexPage({ projects }: { projects: Project[] }) {
   const [active, setActive] = useState<Project | null>(null);
   const [hoverFine, setHoverFine] = useState(false);
   const mx = useMotionValue(0);
@@ -153,6 +152,11 @@ export function WorkIndexPage() {
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
   }, []);
+
+  /** newest work first */
+  const sorted = [...projects].sort(
+    (a, b) => Number(b.year) - Number(a.year),
+  );
 
   return (
     <div className="flex w-full flex-col items-center">
@@ -216,14 +220,14 @@ export function WorkIndexPage() {
             </Reveal>
             <Reveal y={14} delay={0.08}>
               <p className="text-[10px] tabular-nums uppercase tracking-[0.24em] text-white/35 md:text-[11px]">
-                2023 → 2025 · Newest first
+                Newest first
               </p>
             </Reveal>
           </div>
 
           {/* the ordered list */}
           <ul className="border-b border-white/10">
-            {SORTED.map((project, i) => (
+            {sorted.map((project, i) => (
               <IndexRow
                 key={project.id}
                 project={project}
@@ -235,8 +239,8 @@ export function WorkIndexPage() {
 
           {/* warm the preview cache */}
           <div className="pointer-events-none h-0 overflow-hidden" aria-hidden="true">
-            {SORTED.map((p) => (
-              <img key={p.id} src={p.preview.src} alt="" decoding="async" />
+            {sorted.map((p) => (
+              <img key={p.id} src={mediaUrl(p.preview.src)} alt="" decoding="async" />
             ))}
           </div>
         </section>
@@ -259,7 +263,7 @@ export function WorkIndexPage() {
           <div className="aspect-[16/10] overflow-hidden rounded-lg shadow-2xl shadow-black/60">
             {active && (
               <img
-                src={active.preview.src}
+                src={mediaUrl(active.preview.src)}
                 alt=""
                 className="h-full w-full object-cover"
               />
