@@ -123,3 +123,19 @@ Stage Summary:
 - LIVE: https://adlene-portfolio-production.up.railway.app — palindrome hero (8.2MB, seamless loop), left intro text, boxed "my portfolio" → /work, centered minimal navbar.
 - GitHub a3af157; service 45a040aa-8212-44a8-b079-eaf635fd722a, domain 6b37d46f-0362-4a78-85d0-4bfa95912f48.
 - scripts/palindrome-hero.sh kept for future video swaps of the same style.
+
+---
+Task ID: 7
+Agent: Super Z (main agent)
+Task: User unhappy with hero text: all on one line, small, disliked the font.
+
+Work Log:
+- Added Playfair Display (next/font/google — self-hosted at build, italic + weights 400-700) as the editorial display voice; wired --font-serif into the Tailwind v4 theme (globals.css). Helvetica stays for UI/body.
+- Hero rebuilt as a stacked editorial composition, explicit lines (never one long line): italic "Hi, my name is" / huge "Adlene Benmechta" (clamp 2.9rem→7rem, Playfair semibold, soft text-shadow) / italic "and this is" / large boxed "my portfolio" (border-2, rounded-2xl, backdrop-blur, hover invert, ArrowUpRight → /work). Staggered blur-line reveals 0.35/0.5/0.68/0.86s.
+- Removed the now-duplicate sr-only h1 (hero h1 is a real visible h1).
+- Verified locally (Playfair resolved, h1 108.8px desktop / 46.4px mobile, 0 overflow) and live after deploy: font Playfair Display, h1 108.8px, both italic lines, box → /work, video still playing unfiltered, 6/6 routes + video 200.
+- Deployed zero-downtime: commit 83ba547, build 0d6e7ce6 SUCCESS, domain migrated, old service deleted, live 200.
+
+Stage Summary:
+- LIVE: https://adlene-portfolio-production.up.railway.app — editorial serif hero live.
+- Service 665a3564-48a5-45c8-a85a-4897aa58af37, domain 265518cc-60fb-4baa-b044-4d838e5398aa.
