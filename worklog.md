@@ -87,3 +87,21 @@ Stage Summary:
 - Deployment 1aee80d0 (commit 1c9cd3e), service 563da5d1 (unchanged this task), domain intact.
 - Video swap ready: `bash scripts/set-hero-video.sh <file-or-url>` (runs encode→push→redeploy→verify; ~6-8 min total on 2-core sandbox).
 - BLOCKED on: user's actual video file — must be re-sent in chat or shared via Drive/Instagram/direct link.
+
+---
+Task ID: 5
+Agent: Super Z (main agent)
+Task: User sent WeTransfer link (https://we.tl/t-Zm1B3qw8xZrhVTmm) with his video → publish it as the clean fullscreen hero.
+
+Work Log:
+- Downloaded the video via transferwee (stdlib python, github.com/iamleot/transferwee): 6.0MB, 1280x704 @24fps, 10s, h264+aac.
+- Ran scripts/set-hero-video.sh /tmp/user-video.mp4: validated → encoded (superfast crf23, faststart, audio stripped, 1280w kept) → 2.6MB hero video + fresh poster from its frames → commit 4686dd44 pushed to GitHub.
+- Refactored railway-redeploy.sh into zero-downtime modes: --trigger-only (githubRepoDeploy only; live site untouched), --finalize [--wait] (poll new build → then move domain + delete old service — downtime = seconds), --status (report only), full mode (PATH A → PATH B build-first-then-migrate). State file now tracks NEW_SERVICE_ID.
+- Migration executed: new service cb98cd0f build 8b4c960e SUCCESS on 4686dd44 (~70s), domain moved to it, old service 54063406 deleted, live 200.
+- Post-swap 404s on some routes + poster were edge propagation lag only — all 9 routes + poster returned 200 within ~20s.
+- Live verification: /video.mp4 = 2774640 bytes (exact new encode), readyState 4, paused=false, heroText EMPTY, 0 overlays, filter none. The user's film plays fullscreen, clean and unfiltered.
+
+Stage Summary:
+- LIVE: https://adlene-portfolio-production.up.railway.app — hero is now Adlene's own 10s film, looping fullscreen with zero text and zero overlays, full colour.
+- GitHub commit 4686dd44; Railway service cb98cd0f-5731-4292-b537-71716a263dc1, domain dd305d4b-5b0c-4e19-bb06-dd436cacd140.
+- Zero-downtime deploy flow proven end-to-end (trigger → finalize).
