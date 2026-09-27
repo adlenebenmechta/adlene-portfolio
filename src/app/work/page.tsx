@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { PageShell } from "@/components/portfolio/PageShell";
-import { WorkIndexPage } from "@/components/portfolio/WorkIndexPage";
+import {
+  WorkFilmBackground,
+  WorkIndexPage,
+} from "@/components/portfolio/WorkIndexPage";
 
 export const metadata: Metadata = {
   title: "Work — Adlene Benmechta",
@@ -16,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function Work() {
   return (
-    <PageShell background={<div className="film-grain" aria-hidden="true" />}>
+    <PageShell background={<WorkFilmBackground />}>
       <WorkIndexPage />
     </PageShell>
   );
