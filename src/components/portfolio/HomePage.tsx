@@ -9,21 +9,28 @@ import { ContactCTA } from "./ContactCTA";
 
 /**
  * The multi-page home:
- * — cinematic fullscreen video hero
- * — organized work index (every card opens its own case study page)
+ * — the filmmaker's showreel plays fullscreen and completely clean
+ *   (no text over it, nothing covering it)
+ * — organized work index below (every card opens its own page)
  * — about teaser + contact CTA
  */
 export function HomePage() {
   return (
     <PageShell background={<CinematicBackground />}>
+      {/* SEO only — visually hidden so nothing writes over the film */}
+      <h1 className="sr-only">
+        Adlene Benmechta — Creative Director, Filmmaker &amp; Brand
+        Storyteller
+      </h1>
+
       <Hero />
 
-      {/* solid archive surface over the film */}
+      {/* solid archive surface that slides over the film on scroll */}
       <div className="relative z-10 flex w-full flex-col items-center">
-        {/* cinematic fade from the film into the archive */}
+        {/* soft seam: the film dissolves into the archive below */}
         <div
           aria-hidden="true"
-          className="h-[34vh] w-full bg-gradient-to-b from-transparent via-[#050505dd] to-[#050505]"
+          className="h-[26vh] w-full bg-gradient-to-b from-transparent via-[#05050599] to-[#050505]"
         />
 
         <div className="flex w-full flex-col items-center bg-[#050505]">
@@ -36,33 +43,23 @@ export function HomePage() {
   );
 }
 
-/** Fixed looping film background with readability overlays */
+/**
+ * Fixed looping film background — full colour, unfiltered, uncovered.
+ * No brightness filter, no dark veil, no vignette, no grain:
+ * the video is shown exactly as the filmmaker made it.
+ */
 function CinematicBackground(): ReactNode {
   return (
-    <>
-      <video
-        className="fixed inset-0 z-[0] w-full h-full object-cover"
-        autoPlay
-        loop
-        muted
-        playsInline
-        poster="/media/hero-poster.jpg"
-        aria-hidden="true"
-        style={{ filter: "brightness(0.62) saturate(0.78)" }}
-      >
-        <source src="/video.mp4" type="video/mp4" />
-      </video>
-
-      {/* Atmospheric overlays — readability + vignette + grain */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-[1] bg-black/55"
-      />
-      <div
-        aria-hidden="true"
-        className="vignette pointer-events-none fixed inset-0 z-[2]"
-      />
-      <div className="film-grain" aria-hidden="true" />
-    </>
+    <video
+      className="fixed inset-0 z-[0] h-full w-full object-cover"
+      autoPlay
+      loop
+      muted
+      playsInline
+      poster="/media/hero-poster.jpg"
+      aria-hidden="true"
+    >
+      <source src="/video.mp4" type="video/mp4" />
+    </video>
   );
 }
