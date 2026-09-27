@@ -48,3 +48,24 @@ Stage Summary:
 - Railway service: b7ca0a2a-d990-4724-912d-dfa4ab42f2c4 (named "adlene-portfolio"), service domain id 2ba856a8-1cc7-4001-b25a-38b788775ffd (targetPort 8080)
 - NOTE for future updates: pushes to GitHub do NOT auto-deploy (no trigger possible — GitHub App missing). After pushing, run serviceInstanceDeploy… which rebuilds stale; the working path is `githubRepoDeploy` (creates a NEW service with latest commit) then move/rename the service domain, then delete the old service. Or install the Railway GitHub App on the repo via the Railway dashboard to enable auto-deploy.
 - User's real video still needs replacing: overwrite public/video.mp4 in the GitHub repo.
+
+---
+Task ID: 3
+Agent: Super Z (main agent)
+Task: "أريد الفيديو الخاص بي أرفعه حالا بأي طريقة" — enable instant hero-video replacement pipeline. Confirmed (again) the user's uploaded video NEVER arrived on the server (upload/ empty, no recent video files anywhere).
+
+Work Log:
+- Confirmed live state: multi-page site healthy, 9/9 routes 200, deployment 89b50942 = GitHub main HEAD.
+- Installed gdown (Drive) + yt-dlp (Instagram/YouTube/TikTok/1000+ sites) into ~/.local/bin.
+- Wrote scripts/set-hero-video.sh <file-or-url> [--no-deploy]: source resolution (local / Drive / Dropbox / direct URL / yt-dlp), ffprobe validation (fail-safe: never touches public/ on invalid input), web-optimize encode (H.264 high, faststart, max 1920w, fps cap 30, audio stripped, superfast preset for the 2-core sandbox, 3-tier size guard 15→25MB), poster regeneration, git commit/push, Railway redeploy trigger, live verification.
+- Wrote scripts/railway-redeploy.sh: PATH A serviceInstanceRedeploy (stale-commit detection via meta.commitHash) → PATH B githubRepoDeploy (new service) + domain move + old service delete + state file scripts/railway.env; flags: --timeout-min N, --trigger-only (build continues server-side), --status.
+- Live-tested PATH B end-to-end: deployed 89b50942 to a fresh service, discovered + fixed critical bug (serviceDomainUpdate returns Boolean — the `{ id }` selection made the domain rename silently fail → 404 x-railway-fallback; fixed with no-selection mutation + grep '"serviceDomainUpdate":true' + rename-verification poll), domain restored to adlene-portfolio-production.up.railway.app, old service deleted.
+- Sandbox findings: (1) process reaper kills ALL background/detached processes (even setsid) when a tool call ends → long jobs must run inside ONE tool call with timeout 600000ms; (2) CPU is 2-core shared → superfast preset mandatory (~10x realtime at medium); (3) GitHub API needs the token (read from git remote, not stored in scripts).
+- Tested: local-file encode path ✓ (valid faststart mp4, fps capped, audio stripped, poster generated), URL download path ✓ (15MB from live site in seconds), invalid-URL rejection ✓ (public/ untouched), --status ✓, both scripts syntax-checked; scripts/ is gitignored → Railway token never reaches GitHub.
+- Restored original stock hero video after tests (public/video.mp4 = 15,010,896 bytes, git clean).
+
+Stage Summary:
+- Site LIVE & healthy: https://adlene-portfolio-production.up.railway.app (9/9 routes 200)
+- One-command video pipeline READY: `bash scripts/set-hero-video.sh <file-or-url>` — waiting only for the user's actual video file/link (never received; user must attach it in chat or send a Drive/Instagram/direct link).
+- Current service id: 563da5d1-a09c-4f09-a476-cf28ea6ca2e6, domain id 9135da75-01ec-428c-a37c-bf50f96d9176 (persisted in scripts/railway.env).
+- Known-good update procedure: set-hero-video.sh (≈ encode 1-2 min per 30s of 1080p) → push → redeploy PATH B (≈ 4 min build) → verify.
