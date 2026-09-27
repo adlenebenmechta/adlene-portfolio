@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Atlas and Ivy">
+  <!-- lifestyle botanical mark -->
+  <rect x="7" y="7" width="146" height="146" fill="none" stroke="#FFFFFF" stroke-width="0.75"/>
+  <!-- corner accents -->
+  <path d="M 7 26 L 7 7 L 26 7" fill="none" stroke="#FFFFFF" stroke-width="1.6"/>
+  <path d="M 134 7 L 153 7 L 153 26" fill="none" stroke="#FFFFFF" stroke-width="1.6"/>
+  <path d="M 153 134 L 153 153 L 134 153" fill="none" stroke="#FFFFFF" stroke-width="1.6"/>
+  <path d="M 26 153 L 7 153 L 7 134" fill="none" stroke="#FFFFFF" stroke-width="1.6"/>
+  <text x="81" y="74" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="40" fill="#FFFFFF" letter-spacing="1">A&amp;I</text>
+  <line x1="52" y1="92" x2="108" y2="92" stroke="#FFFFFF" stroke-width="0.5" opacity="0.7"/>
+  <text x="82" y="108" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="9" fill="#FFFFFF" letter-spacing="3">ATLAS &amp; IVY</text>
+  <text x="80" y="126" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="6.5" fill="#FFFFFF" opacity="0.6" letter-spacing="3">LIFESTYLE — MMXXIII</text>
+</svg>

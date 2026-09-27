@@ -84,15 +84,27 @@ function IndexRow({
           <span className="ml-auto tabular-nums">{project.year}</span>
         </p>
 
-        <div className="mt-2 md:mt-0 md:grid md:grid-cols-[3.5rem_1fr_auto] md:items-baseline md:gap-8">
-          {/* number — desktop */}
-          <span className="hidden self-start pt-2 text-[11px] tabular-nums text-white/30 md:block">
-            {String(position + 1).padStart(2, "0")}
-          </span>
+        <div className="mt-4 flex items-center gap-5 md:mt-0 md:grid md:grid-cols-[auto_1fr_auto] md:items-center md:gap-8">
+          {/* ── the brand's own logo slot ─────────────────────── */}
+          <figure className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] p-1.5 backdrop-blur-sm transition-colors duration-500 group-hover:border-white/25 group-hover:bg-white/[0.07] md:h-[4.5rem] md:w-[4.5rem] md:rounded-xl md:p-2.5">
+            <img
+              src={project.logo}
+              alt={`${project.brand} logo`}
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+            />
+          </figure>
 
           {/* brand + tagline */}
           <div>
-            <h2 className="inline-flex items-center gap-4 text-[1.85rem] font-medium leading-none tracking-[-0.02em] text-white/90 transition-all duration-500 group-hover:translate-x-2 group-hover:text-white sm:text-4xl md:text-5xl">
+            <p className="hidden text-[10px] uppercase tracking-[0.24em] text-white/30 md:block">
+              <span className="tabular-nums">
+                {String(position + 1).padStart(2, "0")}
+              </span>
+              &ensp;·&ensp;{project.services.slice(0, 2).join(" · ")}
+            </p>
+            <h2 className="mt-1.5 inline-flex items-center gap-4 text-[1.85rem] font-medium leading-none tracking-[-0.02em] text-white/90 transition-all duration-500 group-hover:translate-x-2 group-hover:text-white sm:text-4xl md:text-5xl">
               {project.brand}
               <ArrowUpRight
                 size={26}

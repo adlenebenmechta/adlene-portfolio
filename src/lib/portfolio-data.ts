@@ -24,6 +24,8 @@ export interface Project {
   index: string;
   brand: string;
   shortName: string;
+  /** brand logo — replace the file in /public/media/logos/ with the real one */
+  logo: string;
   tagline: string;
   industry: string;
   location: string;
@@ -44,6 +46,7 @@ export const projects: Project[] = [
     index: "01",
     brand: "Maison Noire",
     shortName: "Noire",
+    logo: "/media/logos/maison-noire.svg",
     tagline: "Parisian couture, reimagined for a new generation.",
     industry: "Fashion & Luxury",
     location: "Paris, FR",
@@ -135,6 +138,7 @@ export const projects: Project[] = [
     index: "02",
     brand: "Halcyon",
     shortName: "Halcyon",
+    logo: "/media/logos/halcyon.svg",
     tagline: "A quiet language for slow hospitality.",
     industry: "Hospitality",
     location: "Geneva, CH",
@@ -207,6 +211,7 @@ export const projects: Project[] = [
     index: "03",
     brand: "Obsidian Labs",
     shortName: "Obsidian",
+    logo: "/media/logos/obsidian-labs.svg",
     tagline: "Making deep tech feel inevitable.",
     industry: "Technology",
     location: "Berlin, DE",
@@ -279,6 +284,7 @@ export const projects: Project[] = [
     index: "04",
     brand: "Veloce",
     shortName: "Veloce",
+    logo: "/media/logos/veloce.svg",
     tagline: "Performance, photographed at night.",
     industry: "Automotive",
     location: "Turin, IT",
@@ -345,6 +351,7 @@ export const projects: Project[] = [
     index: "05",
     brand: "Atlas & Ivy",
     shortName: "Atlas",
+    logo: "/media/logos/atlas-ivy.svg",
     tagline: "Objects of quiet ritual.",
     industry: "Lifestyle & Fragrance",
     location: "Copenhagen, DK",

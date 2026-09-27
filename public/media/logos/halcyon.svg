@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Halcyon">
+  <!-- hospitality circular seal -->
+  <circle cx="80" cy="80" r="71" fill="none" stroke="#FFFFFF" stroke-width="1"/>
+  <circle cx="80" cy="80" r="65" fill="none" stroke="#FFFFFF" stroke-width="0.4" opacity="0.55"/>
+  <text x="80" y="78" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="52" fill="#FFFFFF">H</text>
+  <line x1="58" y1="96" x2="102" y2="96" stroke="#FFFFFF" stroke-width="0.5" opacity="0.7"/>
+  <text x="82" y="112" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="9.5" fill="#FFFFFF" letter-spacing="3.5">HALCYON</text>
+  <text x="80" y="126" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="6.5" fill="#FFFFFF" opacity="0.6" letter-spacing="3">HÔTELLERIE</text>
+</svg>

@@ -65,9 +65,19 @@ export function CaseStudy({ project, next, position, total }: CaseStudyProps) {
       <header className="mx-auto w-full max-w-[1400px] px-6 pt-10 md:px-10 md:pt-16 lg:px-16">
         <div ref={ref}>
           <Reveal y={16}>
-            <p className="text-[9px] uppercase tracking-[0.3em] text-white/40 md:text-[10px]">
-              {project.industry}&ensp;·&ensp;{project.location}
-            </p>
+            <div className="flex items-center gap-4">
+              {/* the brand's own mark */}
+              <figure className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] p-1.5 md:h-16 md:w-16 md:p-2">
+                <img
+                  src={project.logo}
+                  alt={`${project.brand} logo`}
+                  className="h-full w-full object-contain"
+                />
+              </figure>
+              <p className="text-[9px] uppercase tracking-[0.3em] text-white/40 md:text-[10px]">
+                {project.industry}&ensp;·&ensp;{project.location}
+              </p>
+            </div>
           </Reveal>
 
           <motion.h1

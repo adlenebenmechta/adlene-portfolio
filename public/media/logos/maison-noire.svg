@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Maison Noire">
+  <!-- couture double seal -->
+  <rect x="7" y="7" width="146" height="146" fill="none" stroke="#FFFFFF" stroke-width="1"/>
+  <rect x="13" y="13" width="134" height="134" fill="none" stroke="#FFFFFF" stroke-width="0.4" opacity="0.55"/>
+  <text x="81" y="72" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="44" fill="#FFFFFF" letter-spacing="2">MN</text>
+  <line x1="50" y1="90" x2="110" y2="90" stroke="#FFFFFF" stroke-width="0.5" opacity="0.7"/>
+  <text x="82" y="108" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="9" fill="#FFFFFF" letter-spacing="3.5">MAISON NOIRE</text>
+  <text x="80" y="126" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="6.5" fill="#FFFFFF" opacity="0.6" letter-spacing="3">PARIS — MMXXV</text>
+</svg>

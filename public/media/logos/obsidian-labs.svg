@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Obsidian Labs">
+  <!-- minimal tech mark -->
+  <rect x="10" y="10" width="140" height="140" fill="none" stroke="#FFFFFF" stroke-width="0.75"/>
+  <text x="86" y="78" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="38" font-weight="300" fill="#FFFFFF" letter-spacing="8">OL</text>
+  <line x1="38" y1="94" x2="122" y2="94" stroke="#FFFFFF" stroke-width="0.5" opacity="0.6"/>
+  <text x="82" y="110" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="8" font-weight="400" fill="#FFFFFF" letter-spacing="3.2">OBSIDIAN LABS</text>
+  <text x="80" y="128" text-anchor="middle" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="6.5" fill="#FFFFFF" opacity="0.55" letter-spacing="2.6">TECHNOLOGY</text>
+</svg>

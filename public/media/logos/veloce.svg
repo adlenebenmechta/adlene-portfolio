@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Veloce">
+  <!-- automotive speed mark -->
+  <rect x="10" y="10" width="140" height="140" fill="none" stroke="#FFFFFF" stroke-width="0.75"/>
+  <text x="80" y="76" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-weight="600" font-size="58" fill="#FFFFFF">V</text>
+  <line x1="42" y1="90" x2="118" y2="90" stroke="#FFFFFF" stroke-width="0.5" opacity="0.7"/>
+  <text x="82" y="106" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="9.5" fill="#FFFFFF" letter-spacing="3">VELOCE</text>
+  <text x="80" y="124" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="6.5" fill="#FFFFFF" opacity="0.6" letter-spacing="3">AUTOMOTIVE — MMXXIV</text>
+</svg>
