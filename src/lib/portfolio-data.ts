@@ -425,7 +425,7 @@ export const capabilities: Capability[] = [
 ];
 
 export const navLinks = [
-  { label: "Work", href: "/" },
+  { label: "Work", href: "/work" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;

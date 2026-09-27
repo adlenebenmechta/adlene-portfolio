@@ -8,6 +8,10 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { navLinks } from "@/lib/portfolio-data";
 import { EASE } from "./shared";
 
+/**
+ * Minimal centered navigation — no logo, no monogram.
+ * Work · About · Contact · Let's Work Together, all centered.
+ */
 export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -40,72 +44,53 @@ export function Navbar() {
             : "rgba(255, 255, 255, 0.01)",
         }}
         transition={{ duration: 0.6, ease: "easeOut" }}
-        className="liquid-glass flex items-center justify-between gap-4 rounded-full px-4 py-3 md:px-6"
+        className="liquid-glass flex items-center justify-center gap-7 rounded-full px-6 py-3 md:gap-10 md:px-8"
       >
-        {/* Monogram + name */}
+        {/* Desktop links + CTA — one centered group */}
+        <ul className="hidden items-center gap-8 text-[11px] uppercase tracking-[0.18em] md:flex">
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                aria-current={isActive(link.href) ? "page" : undefined}
+                className={`relative transition-colors duration-300 focus-visible:outline-none ${
+                  isActive(link.href)
+                    ? "text-white"
+                    : "text-white/55 hover:text-white"
+                }`}
+              >
+                {link.label}
+                {isActive(link.href) && (
+                  <motion.span
+                    layoutId="nav-dot"
+                    transition={{ duration: 0.5, ease: EASE }}
+                    className="absolute -bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-white"
+                    aria-hidden="true"
+                  />
+                )}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
         <Link
-          href="/"
-          className="group flex items-center gap-3"
-          aria-label="Adlene Benmechta — home"
+          href="/contact"
+          className="hidden items-center gap-1.5 rounded-full border border-white/20 px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-white/85 transition-all duration-500 hover:border-white hover:bg-white hover:text-black md:inline-flex"
         >
-          <span
-            aria-hidden="true"
-            className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/20 text-[9px] tracking-[0.12em] text-white/85 transition-colors duration-500 group-hover:border-white/60"
-          >
-            AB
-          </span>
-          <span className="hidden text-[11px] uppercase tracking-[0.22em] text-white/80 transition-colors duration-500 group-hover:text-white sm:block">
-            Adlene Benmechta
-          </span>
+          Let&apos;s Work Together
+          <ArrowUpRight size={12} aria-hidden="true" />
         </Link>
 
-        {/* Desktop links + CTA */}
-        <div className="flex items-center gap-6 md:gap-8">
-          <ul className="hidden items-center gap-7 text-[11px] uppercase tracking-[0.18em] md:flex">
-            {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  aria-current={isActive(link.href) ? "page" : undefined}
-                  className={`relative transition-colors duration-300 focus-visible:outline-none ${
-                    isActive(link.href)
-                      ? "text-white"
-                      : "text-white/55 hover:text-white"
-                  }`}
-                >
-                  {link.label}
-                  {isActive(link.href) && (
-                    <motion.span
-                      layoutId="nav-dot"
-                      transition={{ duration: 0.5, ease: EASE }}
-                      className="absolute -bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-white"
-                      aria-hidden="true"
-                    />
-                  )}
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <Link
-            href="/contact"
-            className="hidden items-center gap-1.5 rounded-full border border-white/20 px-4 py-2 text-[10px] uppercase tracking-[0.18em] text-white/85 transition-all duration-500 hover:border-white hover:bg-white hover:text-black md:inline-flex"
-          >
-            Let&apos;s Work Together
-            <ArrowUpRight size={12} aria-hidden="true" />
-          </Link>
-
-          {/* Mobile toggle */}
-          <button
-            type="button"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-label={open ? "Close menu" : "Open menu"}
-            className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-white/85 transition-colors hover:border-white/40 md:hidden"
-          >
-            {open ? <X size={16} aria-hidden="true" /> : <Menu size={16} aria-hidden="true" />}
-          </button>
-        </div>
+        {/* Mobile toggle — centered alone */}
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-label={open ? "Close menu" : "Open menu"}
+          className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-white/85 transition-colors hover:border-white/40 md:hidden"
+        >
+          {open ? <X size={16} aria-hidden="true" /> : <Menu size={16} aria-hidden="true" />}
+        </button>
       </motion.nav>
 
       {/* Mobile menu */}
