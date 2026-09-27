@@ -71,7 +71,7 @@ export async function writeContentFile(content: unknown): Promise<void> {
       `commit content.json failed (${put.status}): ${await put.text()}`,
     );
   }
-  await purgeCdn("/content.json");
+  await purgeCdn("content.json");
 }
 
 const EXT_OK = new Set([
@@ -116,7 +116,7 @@ export async function uploadMedia(
   if (!put.ok)
     throw new Error(`upload failed (${put.status}): ${await put.text()}`);
 
-  await purgeCdn(`/public${repoPath.slice("public".length)}`);
+  await purgeCdn(repoPath);
   return { repoPath, url: `/gh/media/uploads/${name}`, size: bytes.length };
 }
 
@@ -163,15 +163,14 @@ export async function deleteUpload(repoPath: string): Promise<void> {
     }),
   });
   if (!del.ok) throw new Error(`delete failed (${del.status})`);
-  await purgeCdn(`/${repoPath}`);
+  await purgeCdn(repoPath);
 }
 
-/** Ask jsDelivr to drop its cached copy of a repo path. */
+/** Ask jsDelivr to drop its cached copy of a repo path (purge API = GET). */
 async function purgeCdn(repoPath: string): Promise<void> {
+  const url = `${CDN_PURGE}/gh/${OWNER}/${REPO}@${BRANCH}/${repoPath.replace(/^\/+/, "")}`;
   try {
-    await fetch(`${CDN_PURGE}${repoPath.replace(/^\/+/, "/")}`, {
-      method: "POST",
-    });
+    await fetch(url); // GET — visiting the purge URL invalidates the CDN edge
   } catch {
     // purge is best-effort — CDN refreshes within hours anyway
   }
