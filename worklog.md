@@ -69,3 +69,21 @@ Stage Summary:
 - One-command video pipeline READY: `bash scripts/set-hero-video.sh <file-or-url>` — waiting only for the user's actual video file/link (never received; user must attach it in chat or send a Drive/Instagram/direct link).
 - Current service id: 563da5d1-a09c-4f09-a476-cf28ea6ca2e6, domain id 9135da75-01ec-428c-a37c-bf50f96d9176 (persisted in scripts/railway.env).
 - Known-good update procedure: set-hero-video.sh (≈ encode 1-2 min per 30s of 1080p) → push → redeploy PATH B (≈ 4 min build) → verify.
+
+---
+Task ID: 4
+Agent: Super Z (main agent)
+Task: User sent video ("هذا هو الفديو") + requested: remove ALL text over the video and stop covering it (no dark overlay).
+
+Work Log:
+- Requested clean hero deployed LIVE: rewrote Hero.tsx to an empty 100svh section (metadata line, headline, description, CTAs, secondary meta, scroll indicator — all removed) and HomePage.tsx CinematicBackground (removed brightness(0.62)/saturate(0.78) filter, black/55 veil, vignette, film grain — video now unfiltered full colour). Kept: navbar (site chrome), soft 26vh gradient seam only where archive content begins, sr-only h1 for SEO.
+- Verified locally + live via agent-browser: heroText EMPTY, 0 overlays, videoFilter none, readyState 4 (playing). All routes 200.
+- Commit 1c9cd3e pushed; Railway PATH B redeploy: deployment 1aee80d0 SUCCESS on 1c9cd3e; domain verified serving new code.
+- Fixed redeploy script bug: PATH B wait_deploy compared against NEW_DEP_ID captured AFTER githubRepoDeploy (the deployment already exists → ID never changes → infinite poll). Now waits for ANY terminal status ("none" sentinel).
+- USER'S VIDEO FILE DID NOT ARRIVE: gateway metadata said upload/video.mp4 but the file is not on the filesystem (checked upload/, /home/z, /tmp, root fs; -mmin windows; size filters). Only public/video.mp4 (old stock) exists. Attachment likely failed silently (size limit?).
+
+Stage Summary:
+- LIVE clean hero: https://adlene-portfolio-production.up.railway.app — video area has ZERO text, ZERO overlays, full colour.
+- Deployment 1aee80d0 (commit 1c9cd3e), service 563da5d1 (unchanged this task), domain intact.
+- Video swap ready: `bash scripts/set-hero-video.sh <file-or-url>` (runs encode→push→redeploy→verify; ~6-8 min total on 2-core sandbox).
+- BLOCKED on: user's actual video file — must be re-sent in chat or shared via Drive/Instagram/direct link.
