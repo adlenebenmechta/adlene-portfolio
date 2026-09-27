@@ -28,7 +28,7 @@ export function Hero() {
       aria-label="Introduction"
       className="relative z-10 flex min-h-svh w-full items-center"
     >
-      <div className="mx-auto w-full max-w-[1400px] px-6 pb-24 pt-24 md:px-10 md:pb-28 md:pt-28 lg:px-16">
+      <div className="mx-auto w-full max-w-[1600px] -translate-y-12 pl-5 pr-6 pb-24 pt-24 md:-translate-y-16 md:pl-8 md:pr-10 md:pb-28 md:pt-28 lg:pl-10 lg:pr-16">
         <div className="max-w-4xl font-serif">
           {/* line 1 */}
           <motion.p
