@@ -1,2 +1,6 @@
 skills/
 node_modules/
+.next/
+dev.log
+server.log
+scripts/railway.env
