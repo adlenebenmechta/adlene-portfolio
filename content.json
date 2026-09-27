@@ -281,39 +281,6 @@
           "span": "half"
         }
       ]
-    },
-    {
-      "id": "test-brand-e2e",
-      "index": "06",
-      "brand": "Test Brand E2E",
-      "shortName": "Test",
-      "logo": "/gh/media/uploads/test-upload-mujybcp5.jpg",
-      "tagline": "A temporary brand added by the automated test.",
-      "industry": "Testing",
-      "location": "Sandbox, DZ",
-      "year": "2026",
-      "services": [
-        "Testing",
-        "Automation"
-      ],
-      "role": "Tester",
-      "description": "This brand exists only to verify the admin panel end-to-end. It should appear on /work and its own case study page, then be removed.",
-      "deliverables": [
-        "A passing test"
-      ],
-      "preview": {
-        "type": "image",
-        "src": "/gh/media/uploads/test-upload-mujybcp5.jpg",
-        "alt": "Test brand preview"
-      },
-      "media": [
-        {
-          "type": "image",
-          "src": "/gh/media/uploads/test-upload-mujybcp5.jpg",
-          "alt": "Test media",
-          "span": "full"
-        }
-      ]
     }
   ]
 }
