@@ -43,7 +43,7 @@ export function CaseStudy({ project, next, position, total }: CaseStudyProps) {
       {/* ─── Breadcrumb ─────────────────────────────────────────────── */}
       <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between px-6 pt-28 md:px-10 md:pt-36 lg:px-16">
         <Link
-          href="/"
+          href="/work"
           className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.24em] text-white/45 transition-colors duration-300 hover:text-white md:text-[11px]"
         >
           <ArrowLeft

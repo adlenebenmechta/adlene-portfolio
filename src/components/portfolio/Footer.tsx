@@ -2,18 +2,12 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
-import {
-  Facebook,
-  Instagram,
-  Music2,
-  Twitter,
-  Youtube,
-} from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { projects, EMAIL } from "@/lib/portfolio-data";
 
-const STUDIO_LINKS = [
+const MENU_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Selected Work", href: "/#work" },
+  { label: "Selected Work", href: "/work" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
@@ -21,10 +15,12 @@ const STUDIO_LINKS = [
 const CONNECT_LINKS = [
   { label: "Start a Project", href: "/contact" },
   { label: "Email", href: `mailto:${EMAIL}` },
-  { label: "Instagram", href: "#top" },
-  { label: "TikTok", href: "#top" },
 ];
 
+/**
+ * Site footer — Adlene Benmechta's own sign-off.
+ * Brand wordmark, work index, menu and direct contact — nothing else.
+ */
 export function Footer() {
   return (
     <div className="relative z-10 w-full px-4 pb-10 sm:px-6 md:px-10 lg:px-16">
@@ -32,42 +28,44 @@ export function Footer() {
         <motion.footer
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
-          className="liquid-glass w-full rounded-3xl p-6 mt-32 text-white/70 md:mt-64 md:p-10"
+          transition={{ duration: 1, delay: 0.35, ease: "easeOut" }}
+          className="liquid-glass w-full rounded-3xl p-6 mt-32 text-white/70 md:mt-48 md:p-10"
         >
           <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12 mb-10">
             {/* Brand column */}
             <div className="md:col-span-5">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 256 256"
-                fill="currentColor"
-                className="text-white/80"
-                aria-hidden="true"
-              >
-                <path d="M 4.688 136 C 68.373 136 120 187.627 120 251.312 C 120 252.883 119.967 254.445 119.905 256 L 0 256 L 0 136.096 C 1.555 136.034 3.117 136 4.688 136 Z M 251.312 136 C 252.883 136 254.445 136.034 256 136.096 L 256 256 L 136.095 256 C 136.032 254.438 136.001 252.875 136 251.312 C 136 187.627 187.627 136 251.312 136 Z M 119.905 0 C 119.967 1.555 120 3.117 120 4.688 C 120 68.373 68.373 120 4.687 120 C 3.117 120 1.555 119.967 0 119.905 L 0 0 Z M 256 119.905 C 254.445 119.967 252.883 120 251.312 120 C 187.627 120 136 68.373 136 4.687 C 136 3.117 136.033 1.555 136.095 0 L 256 0 Z" />
-              </svg>
-              <p className="text-xl font-medium text-white mt-5">LUMINA</p>
-              <p className="text-sm leading-relaxed max-w-sm mt-4">
-                Lumina provides premium clarity on global events and cosmic
-                wonders - shared with all for free.
+              <p className="font-serif text-2xl font-medium tracking-[-0.01em] text-white md:text-[2rem]">
+                Adlene Benmechta
               </p>
+              <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
+                Campaign films, photography and identities — a portfolio of
+                selected work, made with patience and light.
+              </p>
+              <a
+                href={`mailto:${EMAIL}`}
+                className="group mt-6 inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.22em] text-white/70 transition-colors hover:text-white"
+              >
+                {EMAIL}
+                <ArrowUpRight
+                  size={12}
+                  aria-hidden="true"
+                  className="transition-transform duration-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                />
+              </a>
             </div>
 
             {/* Link columns */}
             <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 md:col-span-7">
               <nav aria-label="Work">
-                <h4 className="text-sm uppercase tracking-wider text-white font-medium mb-4">
+                <h4 className="mb-4 text-sm font-medium uppercase tracking-wider text-white">
                   Work
                 </h4>
-                <ul className="text-xs space-y-2">
+                <ul className="space-y-2 text-xs">
                   {projects.map((project) => (
                     <li key={project.id}>
                       <Link
                         href={`/work/${project.id}`}
-                        className="text-white/60 hover:text-white transition-colors"
+                        className="text-white/60 transition-colors hover:text-white"
                       >
                         {project.brand}
                       </Link>
@@ -76,16 +74,16 @@ export function Footer() {
                 </ul>
               </nav>
 
-              <nav aria-label="Studio">
-                <h4 className="text-sm uppercase tracking-wider text-white font-medium mb-4">
-                  Studio
+              <nav aria-label="Menu">
+                <h4 className="mb-4 text-sm font-medium uppercase tracking-wider text-white">
+                  Menu
                 </h4>
-                <ul className="text-xs space-y-2">
-                  {STUDIO_LINKS.map((link) => (
+                <ul className="space-y-2 text-xs">
+                  {MENU_LINKS.map((link) => (
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="text-white/60 hover:text-white transition-colors"
+                        className="text-white/60 transition-colors hover:text-white"
                       >
                         {link.label}
                       </Link>
@@ -95,15 +93,15 @@ export function Footer() {
               </nav>
 
               <nav aria-label="Connect">
-                <h4 className="text-sm uppercase tracking-wider text-white font-medium mb-4">
-                  Concierge
+                <h4 className="mb-4 text-sm font-medium uppercase tracking-wider text-white">
+                  Connect
                 </h4>
-                <ul className="text-xs space-y-2">
+                <ul className="space-y-2 text-xs">
                   {CONNECT_LINKS.map((link) => (
                     <li key={link.label}>
                       <a
                         href={link.href}
-                        className="text-white/60 hover:text-white transition-colors"
+                        className="text-white/60 transition-colors hover:text-white"
                       >
                         {link.label}
                       </a>
@@ -115,27 +113,13 @@ export function Footer() {
           </div>
 
           {/* Bottom bar */}
-          <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4">
-            <p className="text-[10px] uppercase tracking-widest opacity-50">
-              Curated by @GotInGeorgiG
+          <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 md:flex-row md:gap-4">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-white/40">
+              © 2026 Adlene Benmechta — All rights reserved
             </p>
-            <div className="flex items-center gap-6">
-              <span className="text-[10px] uppercase tracking-widest opacity-50">
-                Join the Journey:
-              </span>
-              <div className="flex items-center gap-5">
-                {[Music2, Facebook, Twitter, Youtube, Instagram].map((Icon, i) => (
-                  <a
-                    key={i}
-                    href="#top"
-                    aria-label={`Social channel ${i + 1}`}
-                    className="opacity-70 hover:opacity-100 transition-colors hover:text-white"
-                  >
-                    <Icon size={16} aria-hidden="true" />
-                  </a>
-                ))}
-              </div>
-            </div>
+            <p className="text-[10px] uppercase tracking-[0.2em] text-white/30">
+              Films · Photography · Identity
+            </p>
           </div>
         </motion.footer>
       </div>
