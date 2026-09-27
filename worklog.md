@@ -231,3 +231,32 @@ Stage Summary:
 - LIVE: https://adlene-portfolio-production.up.railway.app/about — Adlene's real portrait now in the About section and home teaser.
 - GitHub commit aead4b5; service 10a575a2-bb9a-4447-ac39-1ffb4429ec65, domain 0989e8bf-cefe-4bba-8a52-26d5df8be954.
 - WeTransfer path confirmed again as the reliable attachment channel.
+
+---
+Task ID: 13
+Agent: Super Z (main agent)
+Task: User (Arabic): (1) replace About image with WeTransfer https://we.tl/t-nUuX8DrfT1CQRiA6 and delete the old one, (2) build a hidden admin page to add/modify/remove brands, images and videos — full content control — and test it works without problems.
+
+Work Log:
+- Downloaded the new About image (B&W cutout portrait, 400x400). Processed (2x Lanczos upscale to 800x800 + unsharp) → public/media/portrait-director.jpg (old photo overwritten). AboutTeaser/AboutPage frames changed 4/5 → aspect-square (cutout must not be cropped); AboutPage parallax crop-overflow removed.
+- CRITICAL DISCOVERY — environment reset wiped scripts/ (gitignored) including the RAILWAY_TOKEN. Git remote holds only the GITHUB token. Railway GraphQL data queries now return Not Authorized. Deployment BLOCKED until user provides a Railway token again.
+- ARCHITECTURE (admin CMS, GitHub-backed — no Railway API needed at runtime):
+  * content.json at repo root = source of truth (seeded from portfolio-data via scripts/bootstrap-content.py).
+  * src/lib/site-content.ts: types + DEFAULT_CONTENT. portfolio-data.ts now only navLinks/capabilities/EMAIL.
+  * src/lib/content.ts (server): getContent() reads content.json via GitHub Contents API (GITHUB_TOKEN, always fresh) → raw.githubusercontent fallback → stale cache → defaults. 20s in-memory cache.
+  * src/lib/github.ts (server): contents API PUT/GET/DELETE (commit to main), uploadMedia (≤20MB, ext whitelist, sanitized names → public/media/uploads/), listUploads, deleteUpload (uploads folder only), purgeCdn (GET purge.jsdelivr.net — POST is MethodNotAllowed), admin auth (cookie cms_auth = sha256("adlene-cms:"+ADMIN_PASSWORD), httpOnly).
+  * /gh/... URL scheme → mapped by mediaUrl() (client-safe src/lib/media.ts) to cdn.jsdelivr.net/gh/repo@main/public/...
+  * Pages refactored to server-side getContent + force-dynamic, props drilled: page.tsx, work/page, work/[slug] (generateStaticParams removed), about, contact → HomePage/WorkIndexPage/WorkGrid/AboutTeaser/AboutPage/ContactPage/Footer/PageShell/CaseStudy/SmartVideo/MediaItem all take props + mediaUrl() at leaf render points.
+  * API routes: /api/admin/session (login/logout/check), content (GET live, PUT validate+commit+purge), upload (multipart→repo), files (list/delete).
+  * /admin page (noindex): login gate → Content Studio dashboard: Brands tab (list, reorder up/down, edit form with ALL fields + logo/preview upload + media items manager with alt/label/span/reorder, add brand with auto-slug), Site Media tab (hero film+poster, work film+poster, portrait, contact email), Files tab (upload manager with delete).
+- CDN saga (why site didn't update initially): raw.githubusercontent caches up to ~5min; jsDelivr caches 12h (s-maxage=43200) and purge is unreliable for @main branch content.json. FIX: read content.json via GitHub API with token (fresh). Media stays on jsDelivr (immutable filenames — new upload = new URL, cache-safe).
+- E2E TESTED (all passing): unauthed API 401s; wrong password 401; login ✓; upload test image → served on jsDelivr (exact bytes) ✓; add test brand via PUT → appears on /work + own case page within seconds ✓; remove → disappears + 404 ✓; UI: login → dashboard (5 brands) → edit Maison Noire tagline → Save → live /work shows it in ≤20s → reverted ✓; Files tab delete with confirm ✓; VLM visual QA: professional, no defects; lint clean; PRODUCTION BUILD SUCCEEDS (all routes dynamic); standalone server smoke test 200s.
+- Sandbox git hygiene: .next/, dev.log, db/custom.db, .env.local untracked+ignored; .env.local holds dev ADMIN_PASSWORD + GITHub_TOKEN.
+- scripts/railway-redeploy.sh RECONSTRUCTED (trigger-only / finalize --wait / status / set-vars) with verified mutation shapes: githubRepoDeploy(input{repo,branch,projectId,environmentId})→String, serviceDomainCreate(input{serviceId,environmentId,targetPort})→{id,domain}, serviceDomainUpdate(input{serviceDomainId,domain,serviceId,environmentId,targetPort})→Boolean (NO selection), serviceDomainDelete(id), serviceDelete(id,environmentId), variableUpsert(input{...skipDeploys}), deployments(input{environmentId,serviceId}). State file scripts/railway.env (gitignored): RAILWAY_TOKEN empty + SERVICE_ID 10a575a2 + ADMIN_PASSWORD generated.
+- All code pushed to GitHub main (0a5b16a). LIVE SITE STILL RUNS OLD CODE (aead4b5) — cannot deploy without the Railway token.
+
+Stage Summary:
+- About: new B&W cutout portrait LIVE-CODED (in repo, pending deploy).
+- Admin studio: COMPLETE + fully tested locally at /admin. Needs deploy + env vars (ADMIN_PASSWORD, GITHub_TOKEN) set on Railway via variableUpsert.
+- BLOCKED on: RAILWAY_TOKEN (lost in environment reset) — user must paste a new/existing Railway API token to deploy and go live.
+- Deploy procedure once token arrives: put it in scripts/railway.env → bash scripts/railway-redeploy.sh --trigger-only → --finalize --wait → --set-vars (or set vars first) → verify /admin live.
