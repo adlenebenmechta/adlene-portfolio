@@ -214,3 +214,20 @@ Stage Summary:
 - GitHub commit bacd320; service 409063ac-286e-42bd-a6b9-a3605b90ac51, domain 6c34a3b8-8f5e-48ec-b6a9-b16608ba30c1.
 - To swap in real logos later: replace the files in public/media/logos/ (keep filenames) — the site picks them up automatically.
 - BLOCKED on: user's About portrait image — needs re-send via link.
+
+---
+Task ID: 12
+Agent: Super Z (main agent)
+Task: User sent WeTransfer link (https://we.tl/t-8mEyYeBgR9uaamqs) — "هذه صورة about" — replace the About portrait with his own photo.
+
+Work Log:
+- Downloaded via transferwee: JPEG 1792x2400 portrait (2.5MB) — studio headshot, beige jacket, light background.
+- scripts/prepare-about-image.py: resized to 1195x1600, subtle cinematic grade (saturation -12%, contrast +7%, brightness -4% — still clearly the same photo), progressive JPEG q86 → 223KB overwriting public/media/portrait-director.jpg (both components reference the same path).
+- AboutTeaser: figure aspect 16/10 → 4/5 (portrait photo needs a portrait crop), alt updated. AboutPage: alt updated (aspect already 4/5, near-zero crop).
+- Verified locally + VLM visual QA on both pages: face fully visible, professional framing, blends with the dark theme, no layout defects. Lint clean.
+- Deployed zero-downtime: commit aead4b5, domain migrated, old service 409063ac deleted. Live portrait 200 (exact new bytes).
+
+Stage Summary:
+- LIVE: https://adlene-portfolio-production.up.railway.app/about — Adlene's real portrait now in the About section and home teaser.
+- GitHub commit aead4b5; service 10a575a2-bb9a-4447-ac39-1ffb4429ec65, domain 0989e8bf-cefe-4bba-8a52-26d5df8be954.
+- WeTransfer path confirmed again as the reliable attachment channel.
