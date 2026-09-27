@@ -288,10 +288,10 @@
       "brand": "Test Brand E2E",
       "shortName": "Test",
       "logo": "/gh/media/uploads/e2e-prod-874416-muk4byv4.jpg",
-      "tagline": "Temporary E2E verification brand.",
+      "tagline": "Edited tagline — v2 verified.",
       "industry": "Testing",
       "location": "Algiers, DZ",
-      "year": "2026",
+      "year": "2025",
       "services": [
         "Testing",
         "Automation"
