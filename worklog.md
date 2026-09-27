@@ -105,3 +105,21 @@ Stage Summary:
 - LIVE: https://adlene-portfolio-production.up.railway.app — hero is now Adlene's own 10s film, looping fullscreen with zero text and zero overlays, full colour.
 - GitHub commit 4686dd44; Railway service cb98cd0f-5731-4292-b537-71716a263dc1, domain dd305d4b-5b0c-4e19-bb06-dd436cacd140.
 - Zero-downtime deploy flow proven end-to-end (trigger → finalize).
+
+---
+Task ID: 6
+Agent: Super Z (main agent)
+Task: User requests: (1) seamless reverse loop (forward+reverse playback), (2) higher quality, (3) simple left text "Hi my name is Adlene Benmechta and this is my portfolio" with "my portfolio" in a clickable box → opens another page, (4) remove AB/Adlene Benmechta from navbar; center Work/About/Contact/Let's Work Together.
+
+Work Log:
+- Built palindrome hero (scripts/palindrome-hero.sh): one-pass ffmpeg split/trim/reverse/concat — forward frames 0..N-2 + reverse N-1..1 → loop wraps to 0 with zero duplicated frames (no hiccup at extremes). Quality: crf 18 preset slow, native 1280x704@24fps, audio stripped, faststart → 8.2MB / 19.96s (vs previous 2.6MB/10s crf23 superfast — near-transparent quality).
+- Hero.tsx rewritten: left-aligned intro text (text-shadow for readability, no veil over the film) + "my portfolio" bordered box (Link → /work, hover invert, ArrowUpRight).
+- Navbar.tsx: AB monogram + name removed entirely; Work · About · Contact · Let's Work Together centered as one group (desktop); hamburger centered alone on mobile; mobile menu unchanged.
+- New route /work (app/work/page.tsx + WorkIndexPage component): editorial index reusing WorkGrid + ContactCTA. navLinks.Work → /work.
+- Deploy saga: palindrome script's encode+commit+push+trigger succeeded but the tool timeout killed the wait; the triggered service 13d71c4e was building d6beabd (video only, no code) → deleted it, committed code (a3af157 = video + all code), triggered fresh (45a040aa), build 4b557921 SUCCESS, domain migrated, old service deleted. Post-swap 404s were edge propagation again — all clear after ~25s.
+- Live verified: video.mp4 = 8,163,283 bytes (exact palindrome encode), duration 19.96s, playing; hero text + box → click navigates to /work ("The work, in its own room."); navbar has no logo, centered items; 11/11 routes + poster 200.
+
+Stage Summary:
+- LIVE: https://adlene-portfolio-production.up.railway.app — palindrome hero (8.2MB, seamless loop), left intro text, boxed "my portfolio" → /work, centered minimal navbar.
+- GitHub a3af157; service 45a040aa-8212-44a8-b079-eaf635fd722a, domain 6b37d46f-0362-4a78-85d0-4bfa95912f48.
+- scripts/palindrome-hero.sh kept for future video swaps of the same style.
