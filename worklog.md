@@ -175,3 +175,22 @@ Stage Summary:
 - LIVE: https://adlene-portfolio-production.up.railway.app/work — organized index over Adlene's second film.
 - GitHub commit 7367946; service 875633aa-08a5-4fb6-a216-40de4b16ee69, domain 3885e999-7a71-48a8-ac32-7b26b081db68.
 - scripts/palindrome-work-video.sh kept for future swaps of the work-page film.
+
+---
+Task ID: 10
+Agent: Super Z (main agent)
+Task: User (Arabic): (1) modern professional transitions between pages, (2) professionally arranged brands on /work, (3) at least a button to return to the menu, (4) remove the unrelated LUMINA footer content.
+
+Work Log:
+- PageShell: cinematic route transition — black curtain (fixed, z-[100], pointer-events-none) covers on mount then sweeps up (0.75s, ease [0.76,0,0.24,1]); page content rises in (y 26 + blur 10 → 0, 0.9s, delay 0.14). Replays on every route change (each page mounts its own PageShell).
+- WorkIndexPage: replaced uniform card grid with a strictly ordered editorial index — rows sorted newest first (Maison Noire 2025, Obsidian Labs 2025, Halcyon 2024, Veloce 2024, Atlas & Ivy 2023), hairline rules, big brand typography + arrow, industry/year/location meta, spring-following floating image preview on hover-capable pointers (matchMedia gate), inline thumbnails on mobile, hidden image cache warmer.
+- Navbar: navLinks now starts with Home (also lands in mobile menu); isActive handles "/" via exact match. CaseStudy breadcrumb now → /work.
+- Footer fully rewritten: LUMINA wordmark/svg/cosmic tagline, @GotInGeorgiG credit, "Join the Journey" + 5 placeholder social icons — ALL removed. Now: serif "Adlene Benmechta" + own tagline + mailto link, columns Work/Menu/Connect, bottom "© 2026 Adlene Benmechta — All rights reserved" / "Films · Photography · Identity".
+- Fixed Next warning: added data-scroll-behavior="smooth" to <html> so route transitions reset scroll instantly.
+- Verified locally + live: transitions curtain sweeps off-screen, sorted rows, Home link present, zero LUMINA strings (curl grep = 0), mobile overflow 0, no console errors.
+- Deployed zero-downtime twice (4e35a18 then 9b33d71), domain migrated, old services deleted.
+
+Stage Summary:
+- LIVE: https://adlene-portfolio-production.up.railway.app — curtain transitions, ordered work index, navbar Home, Adlene-owned footer.
+- GitHub commit 9b33d71; service d9888e27-ce4c-4888-aa8b-d3d4365ab352, domain bbeac454-15aa-4a7a-a4ed-034c36210aea.
+- Instagram/TikTok links omitted from footer until real handles are provided.
