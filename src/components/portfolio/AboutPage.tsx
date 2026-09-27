@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { capabilities } from "@/lib/portfolio-data";
 import { Reveal, SectionLabel } from "./shared";
@@ -16,13 +14,6 @@ const FACTS: { label: string; value: string }[] = [
 ];
 
 export function AboutPage() {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const imageY = useTransform(scrollYProgress, [0, 1], [-28, 28]);
-
   return (
     <>
       {/* ─── Intro ─────────────────────────────────────────────────── */}
@@ -94,34 +85,27 @@ export function AboutPage() {
             </Reveal>
           </div>
 
-          {/* Portrait */}
+          {/* Portrait — square cutout, shown in full, no crop */}
           <div className="md:col-span-5">
-            <div ref={ref} className="relative">
-              <Reveal variant="clip" amount={0.2}>
-                <figure className="group relative aspect-[4/5] overflow-hidden rounded-lg bg-white/[0.03] md:rounded-xl">
-                  <motion.div
-                    style={{ y: imageY }}
-                    className="absolute -inset-y-10 inset-x-0"
-                  >
-                    <img
-                      src="/media/portrait-director.jpg"
-                      alt="Adlene Benmechta — creative director, portrait"
-                      loading="eager"
-                      decoding="async"
-                      className="h-full w-full object-cover"
-                    />
-                  </motion.div>
-                  <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-6 pb-5 pt-20">
-                    <span className="block text-[10px] uppercase tracking-[0.24em] text-white/85">
-                      Adlene Benmechta
-                    </span>
-                    <span className="mt-1.5 block text-[9px] uppercase tracking-[0.24em] text-white/45">
-                      Creative Director — Algiers / Worldwide
-                    </span>
+            <Reveal variant="clip" amount={0.2}>
+              <figure className="group relative aspect-square overflow-hidden rounded-lg bg-white/[0.03] md:rounded-xl">
+                <img
+                  src="/media/portrait-director.jpg"
+                  alt="Adlene Benmechta — creative director, portrait"
+                  loading="eager"
+                  decoding="async"
+                  className="h-full w-full object-cover"
+                />
+                <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-6 pb-5 pt-20">
+                  <span className="block text-[10px] uppercase tracking-[0.24em] text-white/85">
+                    Adlene Benmechta
                   </span>
-                </figure>
-              </Reveal>
-            </div>
+                  <span className="mt-1.5 block text-[9px] uppercase tracking-[0.24em] text-white/45">
+                    Creative Director — Algiers / Worldwide
+                  </span>
+                </span>
+              </figure>
+            </Reveal>
           </div>
         </div>
       </section>
