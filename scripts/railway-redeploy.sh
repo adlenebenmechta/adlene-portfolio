@@ -162,6 +162,20 @@ EOF
     echo "$out" | grep -q '"serviceDomainUpdate":true' || fail "serviceDomainUpdate failed: $out"
     say "domain $DOMAIN -> new service (port $PORT)"
 
+    # ── verify the rename actually took effect ───────────────────
+    # Railway can return true yet silently keep the auto-generated name while
+    # the previous binding is still releasing — poll and retry the mutation.
+    rename_ok() { current_domain_id "$NEW_SERVICE" | grep -q "\"$DOMAIN\""; }
+    ok_seen=0
+    for attempt in 1 2 3 4; do
+      sleep 8
+      if rename_ok; then ok_seen=1; say "rename verified: $DOMAIN on $NEW_SERVICE"; break; fi
+      say "rename not visible yet (attempt $attempt/4) — retrying serviceDomainUpdate"
+      out=$(gq /tmp/q-dupd.json)
+      echo "$out" | grep -q '"serviceDomainUpdate":true' || fail "serviceDomainUpdate retry failed: $out"
+    done
+    [ "$ok_seen" = "1" ] || fail "domain never settled on $DOMAIN — check Railway dashboard"
+
     # ── delete the old service ─────────────────────────────────────
     cat > /tmp/q-sdel.json << EOF
 {"query":"mutation(\$id:String!,\$eid:String!){ serviceDelete(id:\$id, environmentId:\$eid) }","variables":{"id":"$OLD_SERVICE","eid":"$ENV_ID"}}
