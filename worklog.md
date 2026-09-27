@@ -155,3 +155,23 @@ Stage Summary:
 - LIVE: https://adlene-portfolio-production.up.railway.app — hero text block now sits higher and closer to the left edge.
 - GitHub commit 273f225; service 2567964c-cd6c-4dc0-9d4f-e055b7b1d7f0, domain 3ef9be8f-f19f-408f-859f-0f499290ae81.
 - Prior UUID-message commits (worklog-only) confirmed harmless — code identical to 83ba547.
+
+---
+Task ID: 9
+Agent: Super Z (main agent)
+Task: User (Arabic): organize the Work section + use the new WeTransfer video (https://we.tl/t-v4GJf7yGAtv4dspR) as its background.
+
+Work Log:
+- Downloaded the new film via transferwee: 1920x1080 @25fps, 24s, 5MB h264+aac.
+- Built scripts/palindrome-work-video.sh: seamless ping-pong loop (forward 0..598 + reverse 599..1), scaled to 1280x720, crf 20 veryfast, faststart, audio stripped → public/work-video.mp4 (9.3MB, 47.88s, 1198 frames) + poster public/media/work-poster.jpg.
+- Sandbox saga: three "timeout" reports were FALSE — encodes actually completed; learned to always verify output files after ffmpeg timeout/-9 reports. Reverse filter RAM (~1.7GB with concat buffering at 1080p) forced stopping the dev server during the first attempts; final encode ran fine at 720p. bash tool kill-reports remain unreliable — verify artifacts, don't trust exit codes.
+- Rewrote WorkIndexPage.tsx: WorkFilmBackground (fixed fullscreen looping film, exported) + editorial serif header over the film (( 01 ) — Selected Work / "The work, in its own room." / intro, text-shadow only, no veils) + 26vh gradient seam + ORGANIZED uniform archive: index header row (5 case studies · 2023→2025, hairline rule), 2-column grid with identical cards (16/10 image, then BELOW it: number · industry · year meta row, brand + arrow, tagline — nothing hidden behind hover), 5th card full-width 21/9 to complete the grid. ContactCTA below.
+- app/work/page.tsx: background swapped from film-grain to <WorkFilmBackground />.
+- Verified locally: video playing (47.88s), 5 cards, card click → /work/maison-noire, desktop overflow 0, lint clean, no console errors.
+- Deployed zero-downtime: commit 7367946, build 02f70bad SUCCESS, domain migrated, old service 2567964c deleted.
+- Live verified: 11 routes + /video.mp4 + /work-video.mp4 + both posters all 200; live /work plays the palindrome fullscreen, 5 cards, no console errors.
+
+Stage Summary:
+- LIVE: https://adlene-portfolio-production.up.railway.app/work — organized index over Adlene's second film.
+- GitHub commit 7367946; service 875633aa-08a5-4fb6-a216-40de4b16ee69, domain 3885e999-7a71-48a8-ac32-7b26b081db68.
+- scripts/palindrome-work-video.sh kept for future swaps of the work-page film.
