@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getContent } from "@/lib/content";
+import { resolvePages } from "@/lib/site-content";
 import { PageShell } from "@/components/portfolio/PageShell";
 import {
   WorkFilmBackground,
@@ -22,9 +23,20 @@ export const metadata: Metadata = {
 
 export default async function Work() {
   const content = await getContent();
+  const texts = resolvePages(content.pages);
   return (
-    <PageShell projects={content.projects} background={<WorkFilmBackground film={content.workFilm} />}>
-      <WorkIndexPage projects={content.projects} />
+    <PageShell
+      projects={content.projects}
+      background={<WorkFilmBackground film={content.workFilm} />}
+      signature={texts.home.heroName}
+      footerTexts={texts.footer}
+      email={content.settings.email}
+    >
+      <WorkIndexPage
+        projects={content.projects}
+        texts={texts.work}
+        cta={{ texts: texts.contact, email: content.settings.email }}
+      />
     </PageShell>
   );
 }

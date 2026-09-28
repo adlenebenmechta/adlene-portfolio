@@ -6,7 +6,7 @@ import type { ReactNode } from "react";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { EASE } from "./shared";
-import type { Project } from "@/lib/site-content";
+import { DEFAULT_PAGES, type PageTexts, type Project } from "@/lib/site-content";
 
 interface PageShellProps {
   children: ReactNode;
@@ -14,6 +14,12 @@ interface PageShellProps {
   projects?: Project[];
   /** fixed background layers (cinematic video, overlays) — rendered outside the animated wrapper */
   background?: ReactNode;
+  /** the autograph shown on the curtain — defaults to "Adlene Benmechta" */
+  signature?: string;
+  /** footer texts (tagline / copyright / bottom line) */
+  footerTexts?: PageTexts["footer"];
+  /** contact email shown in the footer */
+  email?: string;
 }
 
 /** curtain wipe ease — decisive start, soft landing */
@@ -37,7 +43,14 @@ const signatureFont = Alex_Brush({
  * — fixed chrome (Navbar / Footer) that survives the reveal
  * — sticky-footer layout: content grows, footer stays at the bottom
  */
-export function PageShell({ children, projects, background }: PageShellProps) {
+export function PageShell({
+  children,
+  projects,
+  background,
+  signature = "Adlene Benmechta",
+  footerTexts = DEFAULT_PAGES.footer,
+  email,
+}: PageShellProps) {
   return (
     <MotionConfig reducedMotion="user">
       <div className="relative flex min-h-screen w-full flex-col items-center overflow-x-hidden font-sans selection:bg-white/20 selection:text-white">
@@ -70,7 +83,7 @@ export function PageShell({ children, projects, background }: PageShellProps) {
                 className={`${signatureFont.className} text-white/95 text-[clamp(2.6rem,8vw,6rem)] leading-[1.25]`}
                 style={{ textShadow: "0 0 24px rgba(255,255,255,0.18)" }}
               >
-                Adlene Benmechta
+                {signature}
               </motion.span>
               <motion.svg
                 viewBox="0 0 400 20"
@@ -105,7 +118,12 @@ export function PageShell({ children, projects, background }: PageShellProps) {
           {children}
         </motion.main>
 
-        <Footer projects={projects ?? []} />
+        <Footer
+          projects={projects ?? []}
+          name={signature}
+          texts={footerTexts}
+          email={email}
+        />
       </div>
     </MotionConfig>
   );

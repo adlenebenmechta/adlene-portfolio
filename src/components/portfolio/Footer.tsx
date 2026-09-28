@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
-import type { Project } from "@/lib/site-content";
+import type { Project, PageTexts } from "@/lib/site-content";
 
 const MENU_LINKS = [
   { label: "Home", href: "/" },
@@ -15,9 +15,13 @@ const MENU_LINKS = [
 export function Footer({
   projects,
   email,
+  name,
+  texts,
 }: {
   projects: Project[];
   email?: string;
+  name: string;
+  texts: PageTexts["footer"];
 }) {
   const mail = email ?? "hello@adlenebenmechta.com";
 
@@ -34,11 +38,10 @@ export function Footer({
             {/* Brand column */}
             <div className="md:col-span-5">
               <p className="font-serif text-2xl font-medium tracking-[-0.01em] text-white md:text-[2rem]">
-                Adlene Benmechta
+                {name}
               </p>
               <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/60">
-                Campaign films, photography and identities — a portfolio of
-                selected work, made with patience and light.
+                {texts.tagline}
               </p>
               <a
                 href={`mailto:${mail}`}
@@ -120,10 +123,10 @@ export function Footer({
           {/* Bottom bar */}
           <div className="flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 md:flex-row md:gap-4">
             <p className="text-[10px] uppercase tracking-[0.2em] text-white/40">
-              © 2026 Adlene Benmechta — All rights reserved
+              {texts.copyright}
             </p>
             <p className="text-[10px] uppercase tracking-[0.2em] text-white/30">
-              Films · Photography · Identity
+              {texts.bottomLine}
             </p>
           </div>
         </motion.footer>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
+import type { PageTexts } from "@/lib/site-content";
 import { EASE } from "./shared";
 
 /** staggered line reveal */
@@ -21,7 +22,7 @@ const lineIn = (delay: number) => ({
  *   and this is             ← italic
  *   [ my portfolio ]        ← big boxed link → /work
  */
-export function Hero() {
+export function Hero({ texts }: { texts: PageTexts["home"] }) {
   return (
     <section
       id="top"
@@ -36,7 +37,7 @@ export function Hero() {
             className="text-xl italic text-white/85 md:text-2xl"
             style={{ textShadow: "0 2px 24px rgba(0,0,0,0.55)" }}
           >
-            Hi, my name is
+            {texts.heroIntro}
           </motion.p>
 
           {/* line 2 — the name */}
@@ -45,7 +46,7 @@ export function Hero() {
             className="mt-3 text-[clamp(2.9rem,8.5vw,7rem)] font-semibold leading-[0.98] tracking-[-0.015em] text-white"
             style={{ textShadow: "0 4px 40px rgba(0,0,0,0.55)" }}
           >
-            Adlene Benmechta
+            {texts.heroName}
           </motion.h1>
 
           {/* line 3 */}
@@ -54,7 +55,7 @@ export function Hero() {
             className="mt-3 text-xl italic text-white/85 md:text-2xl"
             style={{ textShadow: "0 2px 24px rgba(0,0,0,0.55)" }}
           >
-            and this is
+            {texts.heroLine}
           </motion.p>
 
           {/* line 4 — the boxed portfolio link */}
@@ -66,7 +67,7 @@ export function Hero() {
               href="/work"
               className="group inline-flex items-center gap-3 rounded-2xl border-2 border-white/70 bg-black/25 px-7 py-4 text-2xl font-medium text-white backdrop-blur-md transition-all duration-500 hover:border-white hover:bg-white hover:text-black md:gap-4 md:px-9 md:py-5 md:text-4xl"
             >
-              my portfolio
+              {texts.heroBox}
               <ArrowUpRight
                 size={30}
                 aria-hidden="true"

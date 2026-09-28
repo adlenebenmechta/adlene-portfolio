@@ -10,24 +10,8 @@ import {
   Youtube,
 } from "lucide-react";
 import { EMAIL } from "@/lib/portfolio-data";
+import type { PageTexts } from "@/lib/site-content";
 import { Reveal, SectionLabel } from "./shared";
-const STEPS: { index: string; title: string; note: string }[] = [
-  {
-    index: "01",
-    title: "The Brief",
-    note: "Tell me about the brand, the ambition and the timeline — a voice note is enough.",
-  },
-  {
-    index: "02",
-    title: "The Proposal",
-    note: "Within a week you receive a direction, a scope and a transparent budget.",
-  },
-  {
-    index: "03",
-    title: "The Work",
-    note: "Concept to final frame — with review checkpoints you can follow live.",
-  },
-];
 
 const SOCIALS = [
   { label: "TikTok", Icon: Music2 },
@@ -39,8 +23,10 @@ const SOCIALS = [
 
 export function ContactPage({
   email,
+  texts,
 }: {
   email?: string;
+  texts: PageTexts["contact"];
 }) {
   const mail = email ?? EMAIL;
   return (
@@ -56,15 +42,18 @@ export function ContactPage({
 
         <Reveal delay={0.05}>
           <h1 className="mt-8 text-[2.75rem] font-medium leading-[1.02] tracking-[-0.025em] text-white sm:text-6xl md:text-8xl">
-            Have a project
-            <br />
-            in mind?
+            {texts.headline.split("\n").map((line, i) => (
+              <span key={i}>
+                {line}
+                {i < texts.headline.split("\n").length - 1 && <br />}
+              </span>
+            ))}
           </h1>
         </Reveal>
 
         <Reveal delay={0.12}>
           <p className="mt-7 max-w-md text-balance text-base leading-relaxed text-white/55 md:text-lg">
-            Let&apos;s create something worth remembering.
+            {texts.subline}
           </p>
         </Reveal>
 
@@ -73,7 +62,7 @@ export function ContactPage({
             href={`mailto:${mail}`}
             className="group mt-12 inline-flex items-center gap-4 rounded-full bg-white px-10 py-5 text-[11px] uppercase tracking-[0.22em] text-black transition-all duration-500 hover:bg-white/85 md:px-12 md:py-6 md:text-xs"
           >
-            Start a Project
+            {texts.ctaButton}
             <ArrowRight
               size={16}
               aria-hidden="true"
@@ -104,9 +93,9 @@ export function ContactPage({
                 Location
               </dt>
               <dd className="mt-3 text-[15px] leading-relaxed text-white/85">
-                Algiers, DZ
+                {texts.location}
                 <span className="block text-[13px] text-white/45">
-                  working worldwide
+                  {texts.locationSub}
                 </span>
               </dd>
             </div>
@@ -115,9 +104,9 @@ export function ContactPage({
                 Availability
               </dt>
               <dd className="mt-3 text-[15px] leading-relaxed text-white/85">
-                Select projects
+                {texts.availability}
                 <span className="block text-[13px] text-white/45">
-                  booking Q1 2026
+                  {texts.availabilitySub}
                 </span>
               </dd>
             </div>
@@ -126,9 +115,9 @@ export function ContactPage({
                 Response
               </dt>
               <dd className="mt-3 text-[15px] leading-relaxed text-white/85">
-                Within 48 hours
+                {texts.response}
                 <span className="block text-[13px] text-white/45">
-                  via email
+                  {texts.responseSub}
                 </span>
               </dd>
             </div>
@@ -141,11 +130,11 @@ export function ContactPage({
         aria-label="Working together"
         className="mx-auto w-full max-w-[1400px] border-t border-white/[0.08] px-6 py-24 md:px-10 md:py-36 lg:px-16"
       >
-        <SectionLabel index="02">What Happens Next</SectionLabel>
+        <SectionLabel index="02">{texts.stepsTitle}</SectionLabel>
 
         <div className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
-          {STEPS.map((step, i) => (
-            <Reveal key={step.index} delay={i * 0.08} y={24}>
+          {texts.steps.map((step, i) => (
+            <Reveal key={step.index + i} delay={i * 0.08} y={24}>
               <div className="border-t border-white/15 pt-6">
                 <p className="text-[11px] tabular-nums text-white/30">
                   {step.index}

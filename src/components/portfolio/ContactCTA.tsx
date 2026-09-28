@@ -2,9 +2,16 @@
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import type { PageTexts } from "@/lib/site-content";
 import { Reveal, SectionLabel } from "./shared";
 
-export function ContactCTA() {
+export function ContactCTA({
+  texts,
+  email,
+}: {
+  texts: PageTexts["contact"];
+  email: string;
+}) {
   return (
     <section
       id="contact"
@@ -17,13 +24,13 @@ export function ContactCTA() {
 
       <Reveal delay={0.05}>
         <h2 className="mt-8 text-4xl font-medium leading-[1.05] tracking-[-0.025em] text-white sm:text-6xl md:text-7xl">
-          Have a project in mind?
+          {texts.headline}
         </h2>
       </Reveal>
 
       <Reveal delay={0.12}>
         <p className="mt-7 max-w-md text-balance text-base leading-relaxed text-white/55 md:text-lg">
-          Let&apos;s create something worth remembering.
+          {texts.subline}
         </p>
       </Reveal>
 
@@ -32,7 +39,7 @@ export function ContactCTA() {
           href="/contact"
           className="group mt-14 inline-flex items-center gap-4 rounded-full border border-white/25 px-9 py-5 text-[11px] uppercase tracking-[0.22em] text-white transition-all duration-500 hover:border-white hover:bg-white hover:text-black md:px-12 md:py-6 md:text-xs"
         >
-          Start a Project
+          {texts.ctaButton}
           <ArrowRight
             size={17}
             aria-hidden="true"
@@ -43,7 +50,7 @@ export function ContactCTA() {
 
       <Reveal delay={0.28}>
         <p className="mt-16 text-[10px] uppercase tracking-[0.26em] text-white/30 md:text-[11px]">
-          hello@adlenebenmechta.com&ensp;—&ensp;Algiers · Worldwide
+          {email}&ensp;—&ensp;{texts.locationTag}
         </p>
       </Reveal>
     </section>

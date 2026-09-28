@@ -1,10 +1,16 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
-import { capabilities } from "@/lib/portfolio-data";
+import type { NoteItem } from "@/lib/site-content";
 import { Reveal, SectionLabel } from "./shared";
 
-export function Capabilities() {
+export function Capabilities({
+  title,
+  items,
+}: {
+  title: string;
+  items: NoteItem[];
+}) {
   return (
     <section
       id="capabilities"
@@ -15,13 +21,13 @@ export function Capabilities() {
 
       <Reveal delay={0.05}>
         <h2 className="mt-7 max-w-2xl text-3xl font-medium leading-[1.1] tracking-[-0.02em] text-white md:text-5xl">
-          What I bring to the table.
+          {title}
         </h2>
       </Reveal>
 
       <ul className="mt-14 list-none border-y border-white/10 md:mt-20">
-        {capabilities.map((capability, i) => (
-          <li key={capability.index} className="border-b border-white/[0.06] last:border-b-0">
+        {items.map((capability, i) => (
+          <li key={capability.index + i} className="border-b border-white/[0.06] last:border-b-0">
             <Reveal delay={Math.min(i * 0.03, 0.2)} y={20}>
               <div className="group grid grid-cols-[2.6rem_1fr_auto] items-baseline gap-x-4 px-2 py-6 transition-colors duration-500 hover:bg-white/[0.025] md:grid-cols-[5rem_1fr_1fr_2.5rem] md:gap-x-8 md:px-4 md:py-8">
                 <span className="text-[11px] tabular-nums text-white/30 md:text-xs">

@@ -1,24 +1,31 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import type { SiteContent, Project, MediaItem } from "@/lib/site-content";
+import {
+  resolvePages,
+  type SiteContent,
+  type Project,
+  type MediaItem,
+  type PageTexts,
+} from "@/lib/site-content";
 import { mediaUrl } from "@/lib/media";
 import { BrandForm } from "./BrandForm";
 import { SiteMediaTab } from "./SiteMediaTab";
 import { FilesTab } from "./FilesTab";
+import { TextsTab } from "./TextsTab";
 import { Uploader, Field, Btn } from "./ui";
 
 /* ────────────────────────────────────────────────────────────────
    /admin — hidden content studio.
-   Login gate → dashboard with three tabs:
-     Brands (add / edit / reorder / delete),
+   Login gate → dashboard with four tabs:
+     Brands (add / edit / reorder / delete), Texts (every page headline / paragraph / label),
      Site Media (hero film, work film, portrait),
      Files (uploaded media manager).
    Saves commit content.json to GitHub; the site picks changes up
    within seconds (no rebuild needed).
    ──────────────────────────────────────────────────────────────── */
 
-type Tab = "brands" | "media" | "files";
+type Tab = "brands" | "texts" | "media" | "files";
 
 export function AdminApp() {
   const [authed, setAuthed] = useState<boolean | null>(null);
@@ -114,6 +121,11 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
     load();
   }, [load]);
 
+  /** resolved page texts (defaults fill any missing field) */
+  const pages: PageTexts | null = content
+    ? resolvePages(content.pages)
+    : null;
+
   if (!content) {
     return (
       <div className="grid min-h-svh place-items-center text-white/40">
@@ -197,6 +209,7 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
         {(
           [
             ["brands", "Brands"],
+            ["texts", "Texts"],
             ["media", "Site Media"],
             ["files", "Files"],
           ] as [Tab, string][]
@@ -317,6 +330,21 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
             });
             setEditing(null);
           }}
+        />
+      )}
+
+      {/* ── TEXTS TAB ─────────────────────────────────────────── */}
+      {tab === "texts" && pages && (
+        <TextsTab
+          pages={pages}
+          update={(mut) =>
+            update((d) => {
+              d.pages ??= {};
+              const resolved = resolvePages(d.pages);
+              mut(resolved);
+              d.pages = resolved;
+            })
+          }
         />
       )}
 

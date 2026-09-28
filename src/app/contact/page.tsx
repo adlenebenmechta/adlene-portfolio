@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getContent } from "@/lib/content";
+import { resolvePages } from "@/lib/site-content";
 import { ContactPage } from "@/components/portfolio/ContactPage";
 import { PageShell } from "@/components/portfolio/PageShell";
 
@@ -19,9 +20,16 @@ export const metadata: Metadata = {
 
 export default async function Contact() {
   const content = await getContent();
+  const texts = resolvePages(content.pages);
   return (
-    <PageShell projects={content.projects} background={<div className="film-grain" aria-hidden="true" />}>
-      <ContactPage email={content.settings.email} />
+    <PageShell
+      projects={content.projects}
+      background={<div className="film-grain" aria-hidden="true" />}
+      signature={texts.home.heroName}
+      footerTexts={texts.footer}
+      email={content.settings.email}
+    >
+      <ContactPage email={content.settings.email} texts={texts.contact} />
     </PageShell>
   );
 }

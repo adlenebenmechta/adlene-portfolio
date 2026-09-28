@@ -4,7 +4,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "motion/react";
 import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
-import type { Project } from "@/lib/site-content";
+import type { Project, PageTexts } from "@/lib/site-content";
 import { mediaUrl } from "@/lib/media";
 import { Reveal, SectionLabel } from "./shared";
 import { MediaGallery } from "./MediaGallery";
@@ -15,6 +15,7 @@ interface CaseStudyProps {
   next: Project;
   position: number;
   total: number;
+  texts: PageTexts["caseStudy"];
 }
 
 function Meta({ label, children }: { label: string; children: React.ReactNode }) {
@@ -28,7 +29,7 @@ function Meta({ label, children }: { label: string; children: React.ReactNode })
   );
 }
 
-export function CaseStudy({ project, next, position, total }: CaseStudyProps) {
+export function CaseStudy({ project, next, position, total, texts }: CaseStudyProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -52,7 +53,7 @@ export function CaseStudy({ project, next, position, total }: CaseStudyProps) {
             aria-hidden="true"
             className="transition-transform duration-500 group-hover:-translate-x-1"
           />
-          All Work
+          {texts.backLabel}
         </Link>
         <p className="text-[10px] uppercase tracking-[0.24em] text-white/30 md:text-[11px]">
           <span className="tabular-nums">{project.index}</span>&ensp;/&ensp;
@@ -153,7 +154,7 @@ export function CaseStudy({ project, next, position, total }: CaseStudyProps) {
       >
         <div className="grid gap-12 md:grid-cols-12 md:gap-8">
           <div className="md:col-span-4">
-            <SectionLabel index="02">The Brief</SectionLabel>
+            <SectionLabel index="02">{texts.briefTitle}</SectionLabel>
             <div className="mt-8 md:sticky md:top-28">
               <Reveal delay={0.1} y={18}>
                 <ul className="space-y-3.5">
@@ -178,7 +179,7 @@ export function CaseStudy({ project, next, position, total }: CaseStudyProps) {
           <div className="md:col-span-7 md:col-start-6">
             <Reveal>
               <h2 className="text-[1.6rem] font-medium leading-[1.2] tracking-[-0.015em] text-white sm:text-3xl md:text-[2.25rem]">
-                The work.
+                {texts.workTitle}
               </h2>
             </Reveal>
             <Reveal delay={0.08}>
@@ -237,7 +238,7 @@ export function CaseStudy({ project, next, position, total }: CaseStudyProps) {
           <div className="relative flex flex-col items-start gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-14">
             <div>
               <p className="text-[9px] uppercase tracking-[0.3em] text-white/40 md:text-[10px]">
-                Next Project&ensp;—&ensp;{next.index}
+                {texts.nextLabel}&ensp;—&ensp;{next.index}
               </p>
               <p className="mt-4 text-3xl font-medium leading-none tracking-[-0.02em] text-white transition-transform duration-700 ease-out group-hover:translate-x-2 sm:text-4xl md:text-6xl">
                 {next.brand}
@@ -247,7 +248,7 @@ export function CaseStudy({ project, next, position, total }: CaseStudyProps) {
               </p>
             </div>
             <span className="flex items-center gap-2 rounded-full border border-white/20 px-5 py-3 text-[10px] uppercase tracking-[0.2em] text-white/85 transition-all duration-500 group-hover:border-white group-hover:bg-white group-hover:text-black md:text-[11px]">
-              Open Case Study
+              {texts.openLabel}
               <ArrowUpRight
                 size={13}
                 aria-hidden="true"

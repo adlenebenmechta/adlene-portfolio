@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
-import type { Project, SiteContent } from "@/lib/site-content";
+import type { Project, SiteContent, PageTexts } from "@/lib/site-content";
 import { mediaUrl } from "@/lib/media";
 import { ContactCTA } from "./ContactCTA";
 import { Reveal, EASE } from "./shared";
@@ -137,7 +137,15 @@ function IndexRow({
  * a strictly ordered editorial list (newest first), hairline rules,
  * a spring-following image preview on desktop, thumbnails on mobile.
  */
-export function WorkIndexPage({ projects }: { projects: Project[] }) {
+export function WorkIndexPage({
+  projects,
+  texts,
+  cta,
+}: {
+  projects: Project[];
+  texts: PageTexts["work"];
+  cta: { texts: PageTexts["contact"]; email: string };
+}) {
   const [active, setActive] = useState<Project | null>(null);
   const [hoverFine, setHoverFine] = useState(false);
   const mx = useMotionValue(0);
@@ -171,7 +179,7 @@ export function WorkIndexPage({ projects }: { projects: Project[] }) {
             className="text-[10px] uppercase tracking-[0.32em] text-white/60 md:text-[11px]"
             style={{ textShadow: "0 2px 20px rgba(0,0,0,0.6)" }}
           >
-            ( 01 ) — Selected Work
+            {texts.kicker}
           </motion.p>
 
           <motion.h1
@@ -179,7 +187,7 @@ export function WorkIndexPage({ projects }: { projects: Project[] }) {
             className="mt-5 max-w-4xl font-serif text-[clamp(2.6rem,7vw,6rem)] font-semibold leading-[1.02] tracking-[-0.015em] text-white"
             style={{ textShadow: "0 4px 40px rgba(0,0,0,0.55)" }}
           >
-            The work, in its own room.
+            {texts.headline}
           </motion.h1>
 
           <motion.p
@@ -187,9 +195,7 @@ export function WorkIndexPage({ projects }: { projects: Project[] }) {
             className="mt-6 max-w-xl text-[15px] leading-relaxed text-white/70 md:text-base"
             style={{ textShadow: "0 2px 20px rgba(0,0,0,0.6)" }}
           >
-            Every project below opens its own page — campaign films,
-            photography, identities and digital experiences, each with
-            the full story behind it.
+            {texts.intro}
           </motion.p>
         </div>
       </section>
@@ -245,7 +251,7 @@ export function WorkIndexPage({ projects }: { projects: Project[] }) {
           </div>
         </section>
 
-        <ContactCTA />
+        <ContactCTA texts={cta.texts} email={cta.email} />
       </div>
 
       {/* ── floating preview — desktop pointers only ──────────── */}

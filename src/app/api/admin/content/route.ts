@@ -44,6 +44,11 @@ function validate(c: unknown): c is SiteContent {
     return false;
   if (o.portrait && typeof (o.portrait as Record<string, unknown>).src !== "string")
     return false;
+  if (
+    o.pages &&
+    (typeof o.pages !== "object" ||
+      (o.pages as Record<string, unknown>).hero === "string"))
+    return false;
   return true;
 }
 

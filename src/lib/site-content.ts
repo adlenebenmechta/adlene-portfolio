@@ -43,6 +43,186 @@ export interface SiteSettings {
   email: string;
 }
 
+/* ── editable page copy (managed from /admin → Texts tab) ────────── */
+
+export interface FactItem {
+  label: string;
+  value: string;
+}
+
+export interface NoteItem {
+  index: string;
+  title: string;
+  note: string;
+}
+
+export interface PageTexts {
+  home: {
+    heroIntro: string;
+    /** the name — also drives the curtain signature + footer name */
+    heroName: string;
+    heroLine: string;
+    heroBox: string;
+    /** headline of the work section on the home page */
+    workTitle: string;
+  };
+  about: {
+    headline: string;
+    bio1: string;
+    bio2: string;
+    portraitName: string;
+    portraitRole: string;
+    teaserHeadline: string;
+    teaserBio: string;
+    capabilitiesTitle: string;
+    facts: FactItem[];
+    capabilities: NoteItem[];
+  };
+  work: { kicker: string; headline: string; intro: string };
+  contact: {
+    headline: string;
+    subline: string;
+    ctaButton: string;
+    stepsTitle: string;
+    steps: NoteItem[];
+    location: string;
+    locationSub: string;
+    availability: string;
+    availabilitySub: string;
+    response: string;
+    responseSub: string;
+    locationTag: string;
+  };
+  caseStudy: {
+    backLabel: string;
+    briefTitle: string;
+    workTitle: string;
+    nextLabel: string;
+    openLabel: string;
+  };
+  footer: { tagline: string; copyright: string; bottomLine: string };
+}
+
+const seedFacts: FactItem[] = [
+  { label: "Experience", value: "8+ years — independent since 2021" },
+  { label: "Disciplines", value: "Creative Direction · Branding · Film · Photography" },
+  { label: "Industries", value: "Fashion · Hospitality · Tech · Automotive · Lifestyle" },
+  { label: "Location", value: "Algiers, DZ — working worldwide" },
+  { label: "Availability", value: "Select projects — Q1 2026" },
+];
+
+const seedCapabilities: NoteItem[] = [
+  { index: "01", title: "Creative Direction", note: "Concept to campaign — one held vision" },
+  { index: "02", title: "Brand Identity", note: "Systems built to age slowly and well" },
+  { index: "03", title: "Campaign & Film", note: "Direction and photography for moving image" },
+  { index: "04", title: "Photography", note: "Editorial, campaign and portrait work" },
+  { index: "05", title: "Digital Experiences", note: "Websites and interactive worlds with editorial pacing" },
+  { index: "06", title: "Creative Strategy", note: "Positioning, narrative and brand architecture" },
+];
+
+const seedSteps: NoteItem[] = [
+  {
+    index: "01",
+    title: "The Brief",
+    note: "Tell me about the brand, the ambition and the timeline — a voice note is enough.",
+  },
+  {
+    index: "02",
+    title: "The Proposal",
+    note: "Within a week you receive a direction, a scope and a transparent budget.",
+  },
+  {
+    index: "03",
+    title: "The Work",
+    note: "Concept to final frame — with review checkpoints you can follow live.",
+  },
+];
+
+export const DEFAULT_PAGES: PageTexts = {
+  home: {
+    heroIntro: "Hi, my name is",
+    heroName: "Adlene Benmechta",
+    heroLine: "and this is",
+    heroBox: "my portfolio",
+    workTitle: "Brands I've had the opportunity to work with.",
+  },
+  about: {
+    headline: "I work at the intersection of strategy, culture and visual storytelling.",
+    bio1:
+      "I'm Adlene Benmechta — a creative director and brand strategist based between Algiers and Europe. For the past eight years I've helped fashion houses, hotels, technology companies and lifestyle brands define how they look, speak and are remembered. My work moves from strategy to the final frame: positioning, identity, campaigns, photography and the digital experiences that carry them.",
+    bio2:
+      "I believe a brand is not what it says about itself — it's the feeling that remains when the lights go out. That's the standard I hold every project to: work that is intentional enough to feel inevitable, and distinctive enough to be remembered.",
+    portraitName: "Adlene Benmechta",
+    portraitRole: "Creative Director — Algiers / Worldwide",
+    teaserHeadline: "I work at the intersection of strategy, culture and visual storytelling.",
+    teaserBio:
+      "I'm Adlene Benmechta — a creative director and brand strategist based between Algiers and Europe. For the past eight years I've helped fashion houses, hotels, technology companies and lifestyle brands define how they look, speak and are remembered.",
+    capabilitiesTitle: "What I bring to the table.",
+    facts: seedFacts,
+    capabilities: seedCapabilities,
+  },
+  work: {
+    kicker: "( 01 ) — Selected Work",
+    headline: "The work, in its own room.",
+    intro:
+      "Every project below opens its own page — campaign films, photography, identities and digital experiences, each with the full story behind it.",
+  },
+  contact: {
+    headline: "Have a project\nin mind?",
+    subline: "Let's create something worth remembering.",
+    ctaButton: "Start a Project",
+    stepsTitle: "What Happens Next",
+    steps: seedSteps,
+    location: "Algiers, DZ",
+    locationSub: "working worldwide",
+    availability: "Select projects",
+    availabilitySub: "booking Q1 2026",
+    response: "Within 48 hours",
+    responseSub: "via email",
+    locationTag: "Algiers · Worldwide",
+  },
+  caseStudy: {
+    backLabel: "All Work",
+    briefTitle: "The Brief",
+    workTitle: "The work.",
+    nextLabel: "Next Project",
+    openLabel: "Open Case Study",
+  },
+  footer: {
+    tagline:
+      "Campaign films, photography and identities — a portfolio of selected work, made with patience and light.",
+    copyright: "© 2026 Adlene Benmechta — All rights reserved",
+    bottomLine: "Films · Photography · Identity",
+  },
+};
+
+/** deep-ish merge: fill missing text fields from defaults (arrays as-is when provided) */
+export function resolvePages(
+  pages: Partial<PageTexts> | null | undefined,
+): PageTexts {
+  const d = DEFAULT_PAGES;
+  const p = pages ?? {};
+  return {
+    home: { ...d.home, ...(p.home ?? {}) },
+    about: {
+      ...d.about,
+      ...(p.about ?? {}),
+      facts: Array.isArray(p.about?.facts) ? p.about.facts : d.about.facts,
+      capabilities: Array.isArray(p.about?.capabilities)
+        ? p.about.capabilities
+        : d.about.capabilities,
+    },
+    work: { ...d.work, ...(p.work ?? {}) },
+    contact: {
+      ...d.contact,
+      ...(p.contact ?? {}),
+      steps: Array.isArray(p.contact?.steps) ? p.contact.steps : d.contact.steps,
+    },
+    caseStudy: { ...d.caseStudy, ...(p.caseStudy ?? {}) },
+    footer: { ...d.footer, ...(p.footer ?? {}) },
+  };
+}
+
 export interface SiteContent {
   version: number;
   settings: SiteSettings;
@@ -53,6 +233,8 @@ export interface SiteContent {
   /** about portrait (home teaser + /about) */
   portrait: { src: string; alt: string };
   projects: Project[];
+  /** editable page copy — optional for older content.json (falls back to defaults) */
+  pages?: Partial<PageTexts>;
 }
 
 /* ── seed defaults — mirrored to content.json in the repo ────────── */
@@ -328,4 +510,5 @@ export const DEFAULT_CONTENT: SiteContent = {
     alt: "Adlene Benmechta — creative director, portrait",
   },
   projects: seedProjects,
+  pages: DEFAULT_PAGES,
 };

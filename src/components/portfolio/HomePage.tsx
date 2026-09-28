@@ -6,8 +6,9 @@ import { Hero } from "./Hero";
 import { WorkGrid } from "./WorkGrid";
 import { AboutTeaser } from "./AboutTeaser";
 import { ContactCTA } from "./ContactCTA";
+import { Capabilities } from "./Capabilities";
 import { mediaUrl } from "@/lib/media";
-import type { SiteContent } from "@/lib/site-content";
+import { resolvePages, type SiteContent } from "@/lib/site-content";
 
 /**
  * The multi-page home:
@@ -18,12 +19,16 @@ import type { SiteContent } from "@/lib/site-content";
  * All media slots come from the runtime content (admin-editable).
  */
 export function HomePage({ content }: { content: SiteContent }) {
+  const texts = resolvePages(content.pages);
   return (
     <PageShell
       projects={content.projects}
       background={<CinematicBackground video={content.hero.video} poster={content.hero.poster} />}
+      signature={texts.home.heroName}
+      footerTexts={texts.footer}
+      email={content.settings.email}
     >
-      <Hero />
+      <Hero texts={texts.home} />
 
       {/* solid archive surface that slides over the film on scroll */}
       <div className="relative z-10 flex w-full flex-col items-center">
@@ -34,9 +39,13 @@ export function HomePage({ content }: { content: SiteContent }) {
         />
 
         <div className="flex w-full flex-col items-center bg-[#050505]">
-          <WorkGrid projects={content.projects} />
-          <AboutTeaser portrait={content.portrait} />
-          <ContactCTA />
+          <WorkGrid projects={content.projects} title={texts.home.workTitle} />
+          <AboutTeaser portrait={content.portrait} texts={texts.about} />
+          <Capabilities
+            title={texts.about.capabilitiesTitle}
+            items={texts.about.capabilities}
+          />
+          <ContactCTA texts={texts.contact} email={content.settings.email} />
         </div>
       </div>
     </PageShell>

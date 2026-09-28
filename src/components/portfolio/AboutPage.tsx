@@ -2,22 +2,16 @@
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { capabilities } from "@/lib/portfolio-data";
+import type { PageTexts } from "@/lib/site-content";
 import { mediaUrl } from "@/lib/media";
 import { Reveal, SectionLabel } from "./shared";
 
-const FACTS: { label: string; value: string }[] = [
-  { label: "Experience", value: "8+ years — independent since 2021" },
-  { label: "Disciplines", value: "Creative Direction · Branding · Film · Photography" },
-  { label: "Industries", value: "Fashion · Hospitality · Tech · Automotive · Lifestyle" },
-  { label: "Location", value: "Algiers, DZ — working worldwide" },
-  { label: "Availability", value: "Select projects — Q1 2026" },
-];
-
 export function AboutPage({
   portrait,
+  texts,
 }: {
   portrait: { src: string; alt: string };
+  texts: PageTexts["about"];
 }) {
   return (
     <>
@@ -30,8 +24,7 @@ export function AboutPage({
 
         <Reveal delay={0.05}>
           <h1 className="mt-8 max-w-4xl text-[2.25rem] font-medium leading-[1.06] tracking-[-0.025em] text-white sm:text-5xl md:text-7xl">
-            I work at the intersection of strategy, culture and visual
-            storytelling.
+            {texts.headline}
           </h1>
         </Reveal>
 
@@ -40,29 +33,19 @@ export function AboutPage({
           <div className="md:col-span-7">
             <Reveal delay={0.08}>
               <p className="text-[15px] leading-[1.9] text-white/60 md:text-base">
-                I&apos;m Adlene Benmechta — a creative director and brand
-                strategist based between Algiers and Europe. For the past eight
-                years I&apos;ve helped fashion houses, hotels, technology
-                companies and lifestyle brands define how they look, speak and
-                are remembered. My work moves from strategy to the final frame:
-                positioning, identity, campaigns, photography and the digital
-                experiences that carry them.
+                {texts.bio1}
               </p>
             </Reveal>
 
             <Reveal delay={0.14}>
               <p className="mt-5 text-[15px] leading-[1.9] text-white/60 md:text-base">
-                I believe a brand is not what it says about itself — it&apos;s
-                the feeling that remains when the lights go out. That&apos;s
-                the standard I hold every project to: work that is intentional
-                enough to feel inevitable, and distinctive enough to be
-                remembered.
+                {texts.bio2}
               </p>
             </Reveal>
 
             <dl className="mt-12 grid grid-cols-1 gap-x-10 gap-y-7 sm:grid-cols-2">
-              {FACTS.map((fact, i) => (
-                <Reveal key={fact.label} delay={0.06 * i} y={18}>
+              {texts.facts.map((fact, i) => (
+                <Reveal key={fact.label + i} delay={0.06 * i} y={18}>
                   <div>
                     <dt className="text-[9px] uppercase tracking-[0.28em] text-white/35 md:text-[10px]">
                       {fact.label}
@@ -103,10 +86,10 @@ export function AboutPage({
                 />
                 <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-6 pb-5 pt-20">
                   <span className="block text-[10px] uppercase tracking-[0.24em] text-white/85">
-                    Adlene Benmechta
+                    {texts.portraitName}
                   </span>
                   <span className="mt-1.5 block text-[9px] uppercase tracking-[0.24em] text-white/45">
-                    Creative Director — Algiers / Worldwide
+                    {texts.portraitRole}
                   </span>
                 </span>
               </figure>
@@ -124,14 +107,14 @@ export function AboutPage({
 
         <Reveal delay={0.05}>
           <h2 className="mt-7 max-w-2xl text-3xl font-medium leading-[1.1] tracking-[-0.02em] text-white md:text-5xl">
-            What I bring to the table.
+            {texts.capabilitiesTitle}
           </h2>
         </Reveal>
 
         <ul className="mt-14 list-none border-y border-white/10 md:mt-20">
-          {capabilities.map((capability, i) => (
+          {texts.capabilities.map((capability, i) => (
             <li
-              key={capability.index}
+              key={capability.index + i}
               className="border-b border-white/[0.06] last:border-b-0"
             >
               <Reveal delay={Math.min(i * 0.03, 0.2)} y={20}>

@@ -90,7 +90,13 @@ function WorkCard({
   );
 }
 
-export function WorkGrid({ projects }: { projects: Project[] }) {
+export function WorkGrid({
+  projects,
+  title,
+}: {
+  projects: Project[];
+  title: string;
+}) {
   return (
     <section
       id="work"
@@ -102,7 +108,7 @@ export function WorkGrid({ projects }: { projects: Project[] }) {
       <div className="mt-7 flex flex-wrap items-end justify-between gap-6">
         <Reveal delay={0.05}>
           <h2 className="max-w-2xl text-3xl font-medium leading-[1.08] tracking-[-0.02em] text-white sm:text-4xl md:text-5xl">
-            Brands I&apos;ve had the opportunity to work with.
+            {title}
           </h2>
         </Reveal>
         <Reveal delay={0.12}>

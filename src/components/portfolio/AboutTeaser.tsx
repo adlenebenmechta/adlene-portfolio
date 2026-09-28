@@ -2,13 +2,16 @@
 
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
+import type { PageTexts } from "@/lib/site-content";
 import { mediaUrl } from "@/lib/media";
 import { Reveal, SectionLabel } from "./shared";
 
 export function AboutTeaser({
   portrait,
+  texts,
 }: {
   portrait: { src: string; alt: string };
+  texts: PageTexts["about"];
 }) {
   return (
     <section
@@ -41,18 +44,13 @@ export function AboutTeaser({
 
           <Reveal delay={0.05}>
             <h2 className="mt-7 max-w-2xl text-[1.75rem] font-medium leading-[1.15] tracking-[-0.015em] text-white sm:text-4xl md:text-[2.75rem] md:leading-[1.1]">
-              I work at the intersection of strategy, culture and visual
-              storytelling.
+              {texts.teaserHeadline}
             </h2>
           </Reveal>
 
           <Reveal delay={0.12}>
             <p className="mt-7 max-w-xl text-[15px] leading-[1.9] text-white/60 md:text-base">
-              I&apos;m Adlene Benmechta — a creative director and brand
-              strategist based between Algiers and Europe. For the past eight
-              years I&apos;ve helped fashion houses, hotels, technology
-              companies and lifestyle brands define how they look, speak and
-              are remembered.
+              {texts.teaserBio}
             </p>
           </Reveal>
 
