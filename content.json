@@ -286,13 +286,13 @@
   "pages": {
     "home": {
       "heroIntro": "Hi, my name is",
-      "heroName": "Adlene Benmechta",
+      "heroName": "Test Name E2E",
       "heroLine": "and this is",
       "heroBox": "my portfolio",
       "workTitle": "Brands I've had the opportunity to work with."
     },
     "about": {
-      "headline": "I work at the intersection of strategy, culture and visual storytelling.",
+      "headline": "EDITED HEADLINE — texts E2E test.",
       "bio1": "I'm Adlene Benmechta — a creative director and brand strategist based between Algiers and Europe. For the past eight years I've helped fashion houses, hotels, technology companies and lifestyle brands define how they look, speak and are remembered. My work moves from strategy to the final frame: positioning, identity, campaigns, photography and the digital experiences that carry them.",
       "bio2": "I believe a brand is not what it says about itself — it's the feeling that remains when the lights go out. That's the standard I hold every project to: work that is intentional enough to feel inevitable, and distinctive enough to be remembered.",
       "portraitName": "Adlene Benmechta",
@@ -398,7 +398,7 @@
       "openLabel": "Open Case Study"
     },
     "footer": {
-      "tagline": "Campaign films, photography and identities — a portfolio of selected work, made with patience and light.",
+      "tagline": "Edited tagline for E2E.",
       "copyright": "© 2026 Adlene Benmechta — All rights reserved",
       "bottomLine": "Films · Photography · Identity"
     }
