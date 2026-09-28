@@ -306,3 +306,28 @@ Stage Summary:
 - Admin password: Adlene@2026 (stored in scripts/railway.env; change anytime via Railway variable ADMIN_PASSWORD + redeploy).
 - GitHub main f3c1da0+; Railway service e4c7c021-926b-46a6-91b6-02056a4e6055 ("adlene-portfolio"), domain id 11a10222-cec8-4b74-8b1b-95420a0d1dd4.
 - Deploy gotcha for future: Railway domain mutations can return success without applying — ALWAYS verify (poll) after serviceDomainDelete AND serviceDomainUpdate.
+
+---
+Task ID: 15
+Agent: Super Z (main agent)
+Task: User (Arabic): "In the admin panel I want the ability to change the TEXTS too, e.g. the writing on the ABOUT page."
+
+Work Log:
+- NEW ADMIN TAB "TEXTS" — every headline/paragraph/label on the public site is now editable from /admin, live in seconds (same GitHub-backed content.json flow):
+  * content.json gains a `pages` block: home (hero 4 lines + name + work-section headline), about (headline, bio1, bio2, portrait captions, teaser headline/bio, capabilities title, facts list, capabilities list), work (kicker/headline/intro), contact (headline/subline/button, details grid + subs, steps title + 3 steps, location tag), caseStudy labels (back/brief/work/next/open), footer (tagline/copyright/bottom line).
+  * site-content.ts: PageTexts types + DEFAULT_PAGES + resolvePages() (fills any missing field from defaults → site can never break); SiteContent.pages optional.
+  * All page components now take texts props: Hero, AboutPage, AboutTeaser, Capabilities, WorkGrid, WorkIndexPage, ContactPage, ContactCTA, CaseStudy, Footer; PageShell takes signature/footerTexts/email. 5 page.tsx files pass resolvePages(content.pages) down.
+  * heroName is THE name everywhere: hero h1, curtain signature, footer brand (labelled clearly in admin).
+  * Contact headline supports multi-line (Enter = line break; seeded "Have a project\nin mind?").
+  * Admin: TextsTab.tsx (sections per page + ListEditor with add/reorder/delete for facts/capabilities/steps); 4th tab in AdminApp; validation extended (pages must be object).
+- IMPORTANT DISCOVERY during rebase: the USER had already used his admin in production — uploaded a real logo photo for Maison Noire (photo_2026-06-15_23-40-50-muk7cbc6.jpg) via the Files tab and set it as the brand logo. Verified post-rebase that his changes are 100% intact (projects identical to his version, logo URL rendering live).
+- Local E2E (scripts/e2e-texts-test.py): 11/11 — login, pages present, edit about.headline + home.heroName + footer.tagline via PUT → all live on site within seconds (incl. curtain signature follows heroName), revert → restored, pages byte-identical to pre-test.
+- UI test via agent-browser: Texts tab renders all fields, edited About headline → Save → live on /about, revert after the 20s content cache TTL; zero console errors.
+- Deployed zero-downtime (commit faf2942 → service 5a8b172b, env vars set during build). Railway hit the SAME silent domain-delete failure (returns true, binding held) → recovered with verified release→rename procedure, then PATCHED scripts/railway-redeploy.sh: the finalize path now VERIFIES the old domain release (poll until 0 domains, retry delete ×5, fail loudly) before creating/renaming the new one.
+- Production verification: all routes 200, texts render from content.json, user's uploaded Maison Noire logo live, Texts E2E 11/11 on production, full admin E2E 32/32 on production, VLM QA on Texts tab (clean, no defects).
+
+Stage Summary:
+- LIVE: https://adlene-portfolio-production.up.railway.app/admin → Texts tab = full copy control (Home/About/Work/Contact/Case-study labels/Footer), saving makes changes live in seconds.
+- Local repo commit faf2942 + script fixes; Railway service 5a8b172b-20e9-4998-bbaf-6923b32104d6 ("adlene-portfolio"), domain id 3a75c6b7-f942-4c5d-9288-4099138c30c0 (state scripts/railway.env).
+- Admin password unchanged: Adlene@2026.
+- deploy script now verifies domain release + rename — Railway silent-failure handled automatically next time.

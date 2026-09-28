@@ -136,7 +136,7 @@ EOF
       done
     fi
 
-    # ── move the domain: delete old → create on new → rename ──
+    # ── move the domain: delete old (VERIFIED) → create on new → rename ──
     OLD_DOMAINS=$(current_domain_id "$OLD_SERVICE")
     say "old domains: $OLD_DOMAINS"
     OLD_DOMAIN_ID=$(echo "$OLD_DOMAINS" | python3 -c "import json,sys; d=json.loads(sys.stdin.read()); print(d[0]['id'] if d else '')" 2>/dev/null || true)
@@ -144,7 +144,17 @@ EOF
       cat > /tmp/q-ddel.json << EOF
 {"query":"mutation(\$id:String!){ serviceDomainDelete(id:\$id) }","variables":{"id":"$OLD_DOMAIN_ID"}}
 EOF
-      gq /tmp/q-ddel.json >/dev/null && say "old domain binding released"
+      gq /tmp/q-ddel.json >/dev/null
+      say "old domain delete requested — verifying release…"
+      released=0
+      for attempt in 1 2 3 4 5; do
+        sleep 8
+        n=$(current_domain_id "$OLD_SERVICE" | python3 -c "import json,sys; print(len(json.loads(sys.stdin.read())))" 2>/dev/null || echo 1)
+        if [ "$n" = "0" ]; then released=1; say "old binding released (verified)"; break; fi
+        say "  still held (attempt $attempt/5) — retrying delete"
+        gq /tmp/q-ddel.json >/dev/null
+      done
+      [ "$released" = "1" ] || fail "old domain never released — check Railway dashboard"
     fi
 
     cat > /tmp/q-dnew.json << EOF
