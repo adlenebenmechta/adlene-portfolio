@@ -316,6 +316,7 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
       {tab === "brands" && editing !== null && (
         <BrandForm
           project={editing === "new" ? null : content.projects[editing]}
+          existingIds={content.projects.map((p) => p.id)}
           onCancel={() => setEditing(null)}
           onSave={(project) => {
             update((d) => {

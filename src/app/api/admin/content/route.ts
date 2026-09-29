@@ -32,9 +32,13 @@ function validate(c: unknown): c is SiteContent {
   if (!c || typeof c !== "object") return false;
   const o = c as Record<string, unknown>;
   if (!Array.isArray(o.projects)) return false;
+  const ids = new Set<string>();
   for (const p of o.projects as Record<string, unknown>[]) {
     if (typeof p.id !== "string" || !/^[a-z0-9-]{2,40}$/.test(p.id))
       return false;
+    /* two brands must never share a page URL */
+    if (ids.has(p.id)) return false;
+    ids.add(p.id);
     if (typeof p.brand !== "string" || !p.brand.trim()) return false;
     if (!Array.isArray(p.media)) return false;
   }

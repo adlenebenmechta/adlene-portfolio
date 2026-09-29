@@ -22,10 +22,13 @@ function slugify(s: string): string {
 
 export function BrandForm({
   project,
+  existingIds,
   onSave,
   onCancel,
 }: {
   project: Project | null;
+  /** slugs of the already-saved brands — the slug must stay unique */
+  existingIds: string[];
   onSave: (p: Project) => void;
   onCancel: () => void;
 }) {
@@ -55,8 +58,13 @@ export function BrandForm({
   const set = <K extends keyof Project>(k: K, v: Project[K]) =>
     setP((d) => ({ ...d, [k]: v }));
 
-  const valid =
-    (isNew ? /^[a-z0-9-]{2,40}$/.test(p.id) : true) && p.brand.trim() !== "";
+  /* slug rules — apply to new AND existing brands:
+     valid format + must not collide with another brand's page */
+  const slugTaken =
+    p.id !== project?.id && existingIds.includes(p.id);
+  const slugOk = /^[a-z0-9-]{2,40}$/.test(p.id);
+
+  const valid = slugOk && !slugTaken && p.brand.trim() !== "";
 
   return (
     <section className="mt-8 space-y-6">
@@ -73,6 +81,14 @@ export function BrandForm({
               const out = structuredClone(p);
               if (isNew && !out.id) out.id = slugify(out.brand);
               if (!out.shortName) out.shortName = out.brand.split(" ")[0];
+              if (!isNew && out.id !== project.id) {
+                if (
+                  !confirm(
+                    `Rename the page URL from /work/${project.id} to /work/${out.id}?\n\nThe old address will stop working — anyone opening an old link will see a 404.`,
+                  )
+                )
+                  return;
+              }
               onSave(out);
             }}
             disabled={!valid}
@@ -89,17 +105,24 @@ export function BrandForm({
           onChange={(v) => set("brand", v)}
           placeholder="e.g. Maison Noire"
         />
-        {isNew ? (
-          <Field
-            label="URL slug"
-            value={p.id}
-            onChange={(v) => set("id", slugify(v))}
-            placeholder="auto from name"
-            hint={`Page will live at /work/${p.id || "…"}`}
-          />
-        ) : (
-          <Field label="URL slug" value={p.id} onChange={() => {}} hint="locked (renaming would break the page URL)" />
-        )}
+        <Field
+          label="URL slug"
+          value={p.id}
+          onChange={(v) => set("id", slugify(v))}
+          placeholder="auto from name"
+          error={
+            slugTaken
+              ? `"${p.id}" is already used by another brand — pick a different slug`
+              : undefined
+          }
+          hint={
+            isNew
+              ? `Page will live at /work/${p.id || "…"}`
+              : p.id !== project.id
+                ? `Page will move to /work/${p.id || "…"} — the old link will stop working`
+                : `Page lives at /work/${p.id}`
+          }
+        />
         <Field
           label="Tagline"
           value={p.tagline}

@@ -12,6 +12,7 @@ export function Field({
   placeholder,
   type = "text",
   hint,
+  error,
 }: {
   label: string;
   value: string;
@@ -19,6 +20,7 @@ export function Field({
   placeholder?: string;
   type?: string;
   hint?: string;
+  error?: string;
 }) {
   return (
     <label className="block">
@@ -32,7 +34,13 @@ export function Field({
         onChange={(e) => onChange(e.target.value)}
         className="w-full rounded-lg border border-white/12 bg-white/[0.04] px-3.5 py-2.5 text-[14px] text-white placeholder:text-white/25 focus:border-white/35 focus:outline-none"
       />
-      {hint && <span className="mt-1 block text-[11px] text-white/30">{hint}</span>}
+      {error ? (
+        <span className="mt-1 block text-[11px] text-red-400/90">{error}</span>
+      ) : (
+        hint && (
+          <span className="mt-1 block text-[11px] text-white/30">{hint}</span>
+        )
+      )}
     </label>
   );
 }
