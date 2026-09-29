@@ -1,304 +1,44 @@
 {
-  "version": 1,
-  "settings": {
-    "email": "hello@adlenebenmechta.com"
-  },
   "hero": {
-    "video": "/video.mp4",
-    "poster": "/media/hero-poster.jpg"
+    "poster": "/media/hero-poster.jpg",
+    "video": "/video.mp4"
   },
-  "workFilm": {
-    "video": "/work-video.mp4",
-    "poster": "/media/work-poster.jpg"
-  },
-  "portrait": {
-    "src": "/media/portrait-director.jpg",
-    "alt": "Adlene Benmechta — creative director, portrait"
-  },
-  "projects": [
-    {
-      "id": "maison-noire-slug-e2e",
-      "index": "01",
-      "brand": "Maison Noire",
-      "shortName": "Noire",
-      "logo": "/gh/media/uploads/photo_2026-06-15_23-40-50-muk7cbc6.jpg",
-      "tagline": "Parisian couture, reimagined for a new generation.",
-      "industry": "Fashion & Luxury",
-      "location": "Paris, FR",
-      "year": "2025",
-      "services": [
-        "Creative Direction",
-        "Campaign",
-        "Photography",
-        "Social Content"
-      ],
-      "role": "Creative Director",
-      "description": "Developed an autumn campaign designed to reintroduce the house to a younger international audience. The visual language pairs the brand's couture heritage with a raw, nocturnal Paris — deep blacks, sculptural silhouettes and street-cast energy. Every frame was built to feel like the beginning of a film rather than the end of a lookbook.",
-      "deliverables": [
-        "60-second campaign film — NOIRE/SS25",
-        "18 campaign photographs — full key visual set",
-        "Social content system — 40+ assets",
-        "Campaign photography book — 48 pages"
-      ],
-      "preview": {
-        "type": "image",
-        "src": "/media/fashion-portrait-01.jpg",
-        "alt": "Maison Noire campaign — portrait in black couture"
-      },
-      "media": [
-        {
-          "type": "video",
-          "src": "/video.mp4",
-          "poster": "/media/hero-poster.jpg",
-          "alt": "Maison Noire — SS25 campaign film",
-          "label": "Campaign Film — SS25",
-          "span": "full"
-        },
-        {
-          "type": "image",
-          "src": "/media/fashion-hero.png",
-          "alt": "Maison Noire hero — sculptural black couture",
-          "span": "wide"
-        },
-        {
-          "type": "image",
-          "src": "/media/fashion-detail.png",
-          "alt": "Maison Noire — couture detail study",
-          "span": "half"
-        },
-        {
-          "type": "image",
-          "src": "/media/fashion-portrait-02.jpg",
-          "alt": "Maison Noire — backstage portrait",
-          "span": "half-tall"
-        }
-      ]
-    },
-    {
-      "id": "halcyon",
-      "index": "02",
-      "brand": "Halcyon",
-      "shortName": "Halcyon",
-      "logo": "/media/logos/halcyon.svg",
-      "tagline": "A quiet language for slow hospitality.",
-      "industry": "Hospitality",
-      "location": "Lake Como, IT",
-      "year": "2024",
-      "services": [
-        "Brand Identity",
-        "Art Direction",
-        "Photography"
-      ],
-      "role": "Brand Director",
-      "description": "A complete identity for a family-run lakeside hotel trading noise for stillness. We built a quiet system — editorial serif typography, a desaturated palette drawn from morning fog, and photography that treats empty rooms as portraits. The result is a brand that feels like the first hour of daylight.",
-      "deliverables": [
-        "Brand identity — full system and guidelines",
-        "45 photographs — property and experience",
-        "Printed suite — stationery, menus, wayfinding",
-        "Booking website art direction"
-      ],
-      "preview": {
-        "type": "image",
-        "src": "/media/hotel-lobby.jpg",
-        "alt": "Halcyon — lobby in warm evening light"
-      },
-      "media": [
-        {
-          "type": "image",
-          "src": "/media/hotel-lobby.jpg",
-          "alt": "Halcyon — lobby in warm evening light",
-          "span": "full"
-        },
-        {
-          "type": "image",
-          "src": "/media/hotel-detail.jpg",
-          "alt": "Halcyon — architectural detail",
-          "span": "half"
-        },
-        {
-          "type": "image",
-          "src": "/media/hotel-suite.jpg",
-          "alt": "Halcyon — suite morning light",
-          "span": "half"
-        },
-        {
-          "type": "image",
-          "src": "/media/hotel-dining.jpg",
-          "alt": "Halcyon — dining room",
-          "span": "wide"
-        }
-      ]
-    },
-    {
-      "id": "obsidian-labs",
-      "index": "03",
-      "brand": "Obsidian Labs",
-      "shortName": "Obsidian",
-      "logo": "/media/logos/obsidian-labs.svg",
-      "tagline": "Precision instruments for teams who ship.",
-      "industry": "Technology",
-      "location": "Berlin, DE",
-      "year": "2025",
-      "services": [
-        "Brand Identity",
-        "Product Design",
-        "Motion"
-      ],
-      "role": "Creative Lead",
-      "description": "Naming, identity and product design for a developer tooling startup that treats software like craft. The system is built on a strict monochrome core with a single signal colour, engineered type, and motion principles borrowed from oscilloscopes — precise, calm, always in motion.",
-      "deliverables": [
-        "Naming and verbal identity",
-        "Visual identity system",
-        "Product UI design — 3 core flows",
-        "Motion language and launch film"
-      ],
-      "preview": {
-        "type": "image",
-        "src": "/media/tech-dark.jpg",
-        "alt": "Obsidian Labs — product on dark surface"
-      },
-      "media": [
-        {
-          "type": "image",
-          "src": "/media/tech-dark.jpg",
-          "alt": "Obsidian Labs — product on dark surface",
-          "span": "full"
-        },
-        {
-          "type": "image",
-          "src": "/media/tech-desk.jpg",
-          "alt": "Obsidian Labs — workspace study",
-          "span": "half"
-        },
-        {
-          "type": "image",
-          "src": "/media/tech-motion.jpg",
-          "alt": "Obsidian Labs — motion frames",
-          "span": "half-tall"
-        }
-      ]
-    },
-    {
-      "id": "veloce",
-      "index": "04",
-      "brand": "Veloce",
-      "shortName": "Veloce",
-      "logo": "/media/logos/veloce.svg",
-      "tagline": "An automotive house tuned for emotion.",
-      "industry": "Automotive",
-      "location": "Turin, IT",
-      "year": "2024",
-      "services": [
-        "Campaign",
-        "Film Direction",
-        "Photography"
-      ],
-      "role": "Campaign Director",
-      "description": "A launch campaign for a limited-run coachbuilt roadster. We filmed the car where it is happiest — empty mountain roads before dawn — and built the campaign around a single idea: speed as silence. Stills, film and sound design all move in one direction.",
-      "deliverables": [
-        "90-second launch film",
-        "24 campaign photographs",
-        "Social teaser system",
-        "Launch event visual language"
-      ],
-      "preview": {
-        "type": "image",
-        "src": "/media/auto-night.png",
-        "alt": "Veloce — roadster at night"
-      },
-      "media": [
-        {
-          "type": "image",
-          "src": "/media/auto-night.png",
-          "alt": "Veloce — roadster at night",
-          "span": "full"
-        },
-        {
-          "type": "image",
-          "src": "/media/auto-front.jpg",
-          "alt": "Veloce — front study",
-          "span": "half"
-        },
-        {
-          "type": "image",
-          "src": "/media/auto-curve.jpg",
-          "alt": "Veloce — the mountain road",
-          "span": "half"
-        },
-        {
-          "type": "image",
-          "src": "/media/auto-portrait-01.png",
-          "alt": "Veloce — detail portrait",
-          "span": "portrait"
-        }
-      ]
-    },
-    {
-      "id": "atlas-ivy",
-      "index": "05",
-      "brand": "Atlas & Ivy",
-      "shortName": "Atlas",
-      "logo": "/media/logos/atlas-ivy.svg",
-      "tagline": "Everyday objects, quietly upgraded.",
-      "industry": "Lifestyle",
-      "location": "Copenhagen, DK",
-      "year": "2023",
-      "services": [
-        "Brand Strategy",
-        "Identity",
-        "Packaging"
-      ],
-      "role": "Strategist & Designer",
-      "description": "Strategy and identity for a home goods label making quiet upgrades of everyday objects. The identity plays with botanical etching and cartographic lines — an atlas of small pleasures. Packaging, retail language and photography follow one rule: nothing shouts.",
-      "deliverables": [
-        "Brand strategy and positioning",
-        "Visual identity and packaging system",
-        "Retail launch language",
-        "Lookbook photography direction"
-      ],
-      "preview": {
-        "type": "image",
-        "src": "/media/lifestyle-still.jpg",
-        "alt": "Atlas & Ivy — still life"
-      },
-      "media": [
-        {
-          "type": "image",
-          "src": "/media/lifestyle-still.jpg",
-          "alt": "Atlas & Ivy — still life",
-          "span": "full"
-        },
-        {
-          "type": "image",
-          "src": "/media/lifestyle-shelf.jpg",
-          "alt": "Atlas & Ivy — retail shelf",
-          "span": "half"
-        },
-        {
-          "type": "image",
-          "src": "/media/lifestyle-detail.jpg",
-          "alt": "Atlas & Ivy — packaging detail",
-          "span": "half"
-        }
-      ]
-    }
-  ],
   "pages": {
-    "home": {
-      "heroIntro": "Hi, my name is",
-      "heroName": "Adlene Benmechta",
-      "heroLine": "and this is",
-      "heroBox": "my portfolio",
-      "workTitle": "Brands I've had the opportunity to work with."
-    },
     "about": {
-      "headline": "I work at the intersection of strategy, culture and visual storytelling.",
       "bio1": "I'm Adlene Benmechta — a creative director and brand strategist based between Algiers and Europe. For the past eight years I've helped fashion houses, hotels, technology companies and lifestyle brands define how they look, speak and are remembered. My work moves from strategy to the final frame: positioning, identity, campaigns, photography and the digital experiences that carry them.",
       "bio2": "I believe a brand is not what it says about itself — it's the feeling that remains when the lights go out. That's the standard I hold every project to: work that is intentional enough to feel inevitable, and distinctive enough to be remembered.",
-      "portraitName": "Adlene Benmechta",
-      "portraitRole": "Creative Director — Algiers / Worldwide",
-      "teaserHeadline": "I work at the intersection of strategy, culture and visual storytelling.",
-      "teaserBio": "I'm Adlene Benmechta — a creative director and brand strategist based between Algiers and Europe. For the past eight years I've helped fashion houses, hotels, technology companies and lifestyle brands define how they look, speak and are remembered.",
+      "capabilities": [
+        {
+          "index": "01",
+          "note": "Concept to campaign — one held vision",
+          "title": "Creative Direction"
+        },
+        {
+          "index": "02",
+          "note": "Systems built to age slowly and well",
+          "title": "Brand Identity"
+        },
+        {
+          "index": "03",
+          "note": "Direction and photography for moving image",
+          "title": "Campaign & Film"
+        },
+        {
+          "index": "04",
+          "note": "Editorial, campaign and portrait work",
+          "title": "Photography"
+        },
+        {
+          "index": "05",
+          "note": "Websites and interactive worlds with editorial pacing",
+          "title": "Digital Experiences"
+        },
+        {
+          "index": "06",
+          "note": "Positioning, narrative and brand architecture",
+          "title": "Creative Strategy"
+        }
+      ],
       "capabilitiesTitle": "What I bring to the table.",
       "facts": [
         {
@@ -322,85 +62,345 @@
           "value": "Select projects — Q1 2026"
         }
       ],
-      "capabilities": [
-        {
-          "index": "01",
-          "title": "Creative Direction",
-          "note": "Concept to campaign — one held vision"
-        },
-        {
-          "index": "02",
-          "title": "Brand Identity",
-          "note": "Systems built to age slowly and well"
-        },
-        {
-          "index": "03",
-          "title": "Campaign & Film",
-          "note": "Direction and photography for moving image"
-        },
-        {
-          "index": "04",
-          "title": "Photography",
-          "note": "Editorial, campaign and portrait work"
-        },
-        {
-          "index": "05",
-          "title": "Digital Experiences",
-          "note": "Websites and interactive worlds with editorial pacing"
-        },
-        {
-          "index": "06",
-          "title": "Creative Strategy",
-          "note": "Positioning, narrative and brand architecture"
-        }
-      ]
-    },
-    "work": {
-      "kicker": "( 01 ) — Selected Work",
-      "headline": "The work, in its own room.",
-      "intro": "Every project below opens its own page — campaign films, photography, identities and digital experiences, each with the full story behind it."
-    },
-    "contact": {
-      "headline": "Have a project\nin mind?",
-      "subline": "Let's create something worth remembering.",
-      "ctaButton": "Start a Project",
-      "stepsTitle": "What Happens Next",
-      "steps": [
-        {
-          "index": "01",
-          "title": "The Brief",
-          "note": "Tell me about the brand, the ambition and the timeline — a voice note is enough."
-        },
-        {
-          "index": "02",
-          "title": "The Proposal",
-          "note": "Within a week you receive a direction, a scope and a transparent budget."
-        },
-        {
-          "index": "03",
-          "title": "The Work",
-          "note": "Concept to final frame — with review checkpoints you can follow live."
-        }
-      ],
-      "location": "Algiers, DZ",
-      "locationSub": "working worldwide",
-      "availability": "Select projects",
-      "availabilitySub": "booking Q1 2026",
-      "response": "Within 48 hours",
-      "responseSub": "via email",
-      "locationTag": "Algiers · Worldwide"
+      "headline": "I work at the intersection of strategy, culture and visual storytelling.",
+      "portraitName": "Adlene Benmechta",
+      "portraitRole": "Creative Director — Algiers / Worldwide",
+      "teaserBio": "I'm Adlene Benmechta — a creative director and brand strategist based between Algiers and Europe. For the past eight years I've helped fashion houses, hotels, technology companies and lifestyle brands define how they look, speak and are remembered.",
+      "teaserHeadline": "I work at the intersection of strategy, culture and visual storytelling."
     },
     "caseStudy": {
       "backLabel": "All Work",
       "briefTitle": "The Brief",
-      "workTitle": "The work.",
       "nextLabel": "Next Project",
-      "openLabel": "Open Case Study"
+      "openLabel": "Open Case Study",
+      "workTitle": "The work."
+    },
+    "contact": {
+      "availability": "Select projects",
+      "availabilitySub": "booking Q1 2026",
+      "ctaButton": "Start a Project",
+      "headline": "Have a project\nin mind?",
+      "location": "Algiers, DZ",
+      "locationSub": "working worldwide",
+      "locationTag": "Algiers · Worldwide",
+      "response": "Within 48 hours",
+      "responseSub": "via email",
+      "steps": [
+        {
+          "index": "01",
+          "note": "Tell me about the brand, the ambition and the timeline — a voice note is enough.",
+          "title": "The Brief"
+        },
+        {
+          "index": "02",
+          "note": "Within a week you receive a direction, a scope and a transparent budget.",
+          "title": "The Proposal"
+        },
+        {
+          "index": "03",
+          "note": "Concept to final frame — with review checkpoints you can follow live.",
+          "title": "The Work"
+        }
+      ],
+      "stepsTitle": "What Happens Next",
+      "subline": "Let's create something worth remembering."
     },
     "footer": {
-      "tagline": "Campaign films, photography and identities — a portfolio of selected work, made with patience and light.",
+      "bottomLine": "Films · Photography · Identity",
       "copyright": "© 2026 Adlene Benmechta — All rights reserved",
-      "bottomLine": "Films · Photography · Identity"
+      "tagline": "Campaign films, photography and identities — a portfolio of selected work, made with patience and light."
+    },
+    "home": {
+      "heroBox": "my portfolio",
+      "heroIntro": "Hi, my name is",
+      "heroLine": "and this is",
+      "heroName": "Adlene Benmechta",
+      "workTitle": "Brands I've had the opportunity to work with."
+    },
+    "work": {
+      "headline": "The work, in its own room.",
+      "intro": "Every project below opens its own page — campaign films, photography, identities and digital experiences, each with the full story behind it.",
+      "kicker": "( 01 ) — Selected Work"
     }
+  },
+  "portrait": {
+    "alt": "Adlene Benmechta — creative director, portrait",
+    "src": "/media/portrait-director.jpg"
+  },
+  "projects": [
+    {
+      "brand": "Maison Noire",
+      "deliverables": [
+        "60-second campaign film — NOIRE/SS25",
+        "18 campaign photographs — full key visual set",
+        "Social content system — 40+ assets",
+        "Campaign photography book — 48 pages"
+      ],
+      "description": "Developed an autumn campaign designed to reintroduce the house to a younger international audience. The visual language pairs the brand's couture heritage with a raw, nocturnal Paris — deep blacks, sculptural silhouettes and street-cast energy. Every frame was built to feel like the beginning of a film rather than the end of a lookbook.",
+      "id": "maison-noire",
+      "index": "01",
+      "industry": "Fashion & Luxury",
+      "location": "Paris, FR",
+      "logo": "/gh/media/uploads/photo_2026-06-15_23-40-50-muk7cbc6.jpg",
+      "media": [
+        {
+          "alt": "Maison Noire — SS25 campaign film",
+          "label": "Campaign Film — SS25",
+          "poster": "/media/hero-poster.jpg",
+          "span": "full",
+          "src": "/video.mp4",
+          "type": "video"
+        },
+        {
+          "alt": "Maison Noire hero — sculptural black couture",
+          "span": "wide",
+          "src": "/media/fashion-hero.png",
+          "type": "image"
+        },
+        {
+          "alt": "Maison Noire — couture detail study",
+          "span": "half",
+          "src": "/media/fashion-detail.png",
+          "type": "image"
+        },
+        {
+          "alt": "Maison Noire — backstage portrait",
+          "span": "half-tall",
+          "src": "/media/fashion-portrait-02.jpg",
+          "type": "image"
+        }
+      ],
+      "preview": {
+        "alt": "Maison Noire campaign — portrait in black couture",
+        "src": "/media/fashion-portrait-01.jpg",
+        "type": "image"
+      },
+      "role": "Creative Director",
+      "services": [
+        "Creative Direction",
+        "Campaign",
+        "Photography",
+        "Social Content"
+      ],
+      "shortName": "Noire",
+      "tagline": "Parisian couture, reimagined for a new generation.",
+      "year": "2025"
+    },
+    {
+      "brand": "Halcyon",
+      "deliverables": [
+        "Brand identity — full system and guidelines",
+        "45 photographs — property and experience",
+        "Printed suite — stationery, menus, wayfinding",
+        "Booking website art direction"
+      ],
+      "description": "A complete identity for a family-run lakeside hotel trading noise for stillness. We built a quiet system — editorial serif typography, a desaturated palette drawn from morning fog, and photography that treats empty rooms as portraits. The result is a brand that feels like the first hour of daylight.",
+      "id": "halcyon",
+      "index": "02",
+      "industry": "Hospitality",
+      "location": "Lake Como, IT",
+      "logo": "/media/logos/halcyon.svg",
+      "media": [
+        {
+          "alt": "Halcyon — lobby in warm evening light",
+          "span": "full",
+          "src": "/media/hotel-lobby.jpg",
+          "type": "image"
+        },
+        {
+          "alt": "Halcyon — architectural detail",
+          "span": "half",
+          "src": "/media/hotel-detail.jpg",
+          "type": "image"
+        },
+        {
+          "alt": "Halcyon — suite morning light",
+          "span": "half",
+          "src": "/media/hotel-suite.jpg",
+          "type": "image"
+        },
+        {
+          "alt": "Halcyon — dining room",
+          "span": "wide",
+          "src": "/media/hotel-dining.jpg",
+          "type": "image"
+        }
+      ],
+      "preview": {
+        "alt": "Halcyon — lobby in warm evening light",
+        "src": "/media/hotel-lobby.jpg",
+        "type": "image"
+      },
+      "role": "Brand Director",
+      "services": [
+        "Brand Identity",
+        "Art Direction",
+        "Photography"
+      ],
+      "shortName": "Halcyon",
+      "tagline": "A quiet language for slow hospitality.",
+      "year": "2024"
+    },
+    {
+      "brand": "Obsidian Labs",
+      "deliverables": [
+        "Naming and verbal identity",
+        "Visual identity system",
+        "Product UI design — 3 core flows",
+        "Motion language and launch film"
+      ],
+      "description": "Naming, identity and product design for a developer tooling startup that treats software like craft. The system is built on a strict monochrome core with a single signal colour, engineered type, and motion principles borrowed from oscilloscopes — precise, calm, always in motion.",
+      "id": "obsidian-labs",
+      "index": "03",
+      "industry": "Technology",
+      "location": "Berlin, DE",
+      "logo": "/media/logos/obsidian-labs.svg",
+      "media": [
+        {
+          "alt": "Obsidian Labs — product on dark surface",
+          "span": "full",
+          "src": "/media/tech-dark.jpg",
+          "type": "image"
+        },
+        {
+          "alt": "Obsidian Labs — workspace study",
+          "span": "half",
+          "src": "/media/tech-desk.jpg",
+          "type": "image"
+        },
+        {
+          "alt": "Obsidian Labs — motion frames",
+          "span": "half-tall",
+          "src": "/media/tech-motion.jpg",
+          "type": "image"
+        }
+      ],
+      "preview": {
+        "alt": "Obsidian Labs — product on dark surface",
+        "src": "/media/tech-dark.jpg",
+        "type": "image"
+      },
+      "role": "Creative Lead",
+      "services": [
+        "Brand Identity",
+        "Product Design",
+        "Motion"
+      ],
+      "shortName": "Obsidian",
+      "tagline": "Precision instruments for teams who ship.",
+      "year": "2025"
+    },
+    {
+      "brand": "Veloce",
+      "deliverables": [
+        "90-second launch film",
+        "24 campaign photographs",
+        "Social teaser system",
+        "Launch event visual language"
+      ],
+      "description": "A launch campaign for a limited-run coachbuilt roadster. We filmed the car where it is happiest — empty mountain roads before dawn — and built the campaign around a single idea: speed as silence. Stills, film and sound design all move in one direction.",
+      "id": "veloce",
+      "index": "04",
+      "industry": "Automotive",
+      "location": "Turin, IT",
+      "logo": "/media/logos/veloce.svg",
+      "media": [
+        {
+          "alt": "Veloce — roadster at night",
+          "span": "full",
+          "src": "/media/auto-night.png",
+          "type": "image"
+        },
+        {
+          "alt": "Veloce — front study",
+          "span": "half",
+          "src": "/media/auto-front.jpg",
+          "type": "image"
+        },
+        {
+          "alt": "Veloce — the mountain road",
+          "span": "half",
+          "src": "/media/auto-curve.jpg",
+          "type": "image"
+        },
+        {
+          "alt": "Veloce — detail portrait",
+          "span": "portrait",
+          "src": "/media/auto-portrait-01.png",
+          "type": "image"
+        }
+      ],
+      "preview": {
+        "alt": "Veloce — roadster at night",
+        "src": "/media/auto-night.png",
+        "type": "image"
+      },
+      "role": "Campaign Director",
+      "services": [
+        "Campaign",
+        "Film Direction",
+        "Photography"
+      ],
+      "shortName": "Veloce",
+      "tagline": "An automotive house tuned for emotion.",
+      "year": "2024"
+    },
+    {
+      "brand": "Atlas & Ivy",
+      "deliverables": [
+        "Brand strategy and positioning",
+        "Visual identity and packaging system",
+        "Retail launch language",
+        "Lookbook photography direction"
+      ],
+      "description": "Strategy and identity for a home goods label making quiet upgrades of everyday objects. The identity plays with botanical etching and cartographic lines — an atlas of small pleasures. Packaging, retail language and photography follow one rule: nothing shouts.",
+      "id": "atlas-ivy",
+      "index": "05",
+      "industry": "Lifestyle",
+      "location": "Copenhagen, DK",
+      "logo": "/media/logos/atlas-ivy.svg",
+      "media": [
+        {
+          "alt": "Atlas & Ivy — still life",
+          "span": "full",
+          "src": "/media/lifestyle-still.jpg",
+          "type": "image"
+        },
+        {
+          "alt": "Atlas & Ivy — retail shelf",
+          "span": "half",
+          "src": "/media/lifestyle-shelf.jpg",
+          "type": "image"
+        },
+        {
+          "alt": "Atlas & Ivy — packaging detail",
+          "span": "half",
+          "src": "/media/lifestyle-detail.jpg",
+          "type": "image"
+        }
+      ],
+      "preview": {
+        "alt": "Atlas & Ivy — still life",
+        "src": "/media/lifestyle-still.jpg",
+        "type": "image"
+      },
+      "role": "Strategist & Designer",
+      "services": [
+        "Brand Strategy",
+        "Identity",
+        "Packaging"
+      ],
+      "shortName": "Atlas",
+      "tagline": "Everyday objects, quietly upgraded.",
+      "year": "2023"
+    }
+  ],
+  "settings": {
+    "email": "hello@adlenebenmechta.com"
+  },
+  "version": 1,
+  "workFilm": {
+    "poster": "/media/work-poster.jpg",
+    "video": "/work-video.mp4"
   }
 }
