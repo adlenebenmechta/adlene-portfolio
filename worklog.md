@@ -331,3 +331,25 @@ Stage Summary:
 - Local repo commit faf2942 + script fixes; Railway service 5a8b172b-20e9-4998-bbaf-6923b32104d6 ("adlene-portfolio"), domain id 3a75c6b7-f942-4c5d-9288-4099138c30c0 (state scripts/railway.env).
 - Admin password unchanged: Adlene@2026.
 - deploy script now verifies domain release + rename — Railway silent-failure handled automatically next time.
+
+---
+Task ID: 16
+Agent: Super Z (main agent)
+Task: User (Arabic): "في نافذة الادمن لا استطيع ان اعدل في خانة URL slug" — cannot edit the URL slug field in the admin panel.
+
+Work Log:
+- Root cause: BrandForm.tsx rendered the slug Field for EXISTING brands with onChange={() => {}} + hint "locked (renaming would break the page URL)" — the input looked editable but typing did nothing.
+- Sandbox was reset again: local repo was behind (task-12 state), scripts/railway.env + .env.local wiped. Recovered: git reset --hard origin/main (task-15 code), .env.local rebuilt (ADMIN_PASSWORD=Adlene@2026 + GITHUB_TOKEN from git remote), railway.env rebuilt (SERVICE_ID 5a8b172b / DOMAIN_ID 3a75c6b7 from task 15) — RAILWAY_TOKEN value is NOT recoverable (was only in the wiped gitignored state file).
+- FIX (commit 505c93d, rebased over the user's 2 new "content: update via admin" commits):
+  * BrandForm: slug field editable for new AND existing brands (slugify on input); live hint shows "Page lives at /work/<slug>" / "Page will move to … — the old link will stop working"; duplicate slug (another brand's) blocks Apply-changes with red error; rename asks for confirm() (old → new URL, 404 warning) before applying.
+  * AdminApp passes existingIds to BrandForm.
+  * Field (admin ui.tsx) gained optional error prop (red hint).
+  * API /api/admin/content validate(): duplicate project ids → 400 (server-side guard).
+- Verified locally: tsc/eslint clean on changed files; next build succeeds; agent-browser UI test — typing "Maison Noire — Nuit 2025" slugifies to maison-noire-nuit-2025 with move-warning hint, "halcyon" shows duplicate error + Apply disabled (DOM-verified disabled=true), restore works.
+- NEW E2E scripts/e2e-slug-test.py (takes BASE arg, password from railway.env or env): 12/12 PASSED locally — rename via PUT → new page 200 + old 404 + work-index and home links point to new slug; duplicate-slug PUT → 400; restore → byte-identical content.
+- Pushed to GitHub main (505c93d). Checked auto-deploy: NO Railway status/check-suite on the commit (only an unrelated Vercel check-suite) → pushes do NOT auto-deploy; live site still runs task-15 code.
+
+Stage Summary:
+- Code COMPLETE + fully tested, on GitHub main 505c93d. LIVE DEPLOY PENDING.
+- BLOCKED on: RAILWAY_TOKEN (wiped in sandbox reset — same as task 13). User must paste it again; then: railway-redeploy.sh --trigger-only → --set-vars → --finalize --wait → run scripts/e2e-slug-test.py against production.
+- Live admin today: slug field still locked (old code) until deploy.
