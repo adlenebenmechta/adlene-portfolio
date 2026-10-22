@@ -55,6 +55,7 @@ EOF
         if echo "$out" | python3 -c "import json,sys; d=json.load(sys.stdin); sys.exit(0 if d.get('data') and d['data'].get('githubRepoDeploy') else 1)" 2>/dev/null; then
           SID=$(echo "$out" | python3 -c "import json,sys; print(json.load(sys.stdin)['data']['githubRepoDeploy'])")
           save_state "NEW_SERVICE_ID" "\"$SID\""
+          NEW_SERVICE_ID="$SID"
           say "TRIGGER ACCEPTED at $(date +%H:%M:%S) — service $SID"
           ok=1; break
         fi

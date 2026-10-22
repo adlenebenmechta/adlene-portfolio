@@ -8,7 +8,8 @@ upload listing + delete, logout, noindex, hidden from public UI.
 """
 import json, time, io, urllib.request, urllib.error, uuid
 
-BASE = "https://adlene-portfolio-production.up.railway.app"
+import sys as _sys
+BASE = _sys.argv[1] if len(_sys.argv) > 1 else "https://adlene-portfolio-production-b82e.up.railway.app"
 PASSWORD = None  # read from scripts/railway.env (gitignored)
 for _line in open(__import__('os').path.join(__import__('os').path.dirname(__file__), 'railway.env')):
     if _line.startswith('ADMIN_PASSWORD='):

@@ -391,3 +391,28 @@ Work Log:
 Stage Summary:
 - ARMED: `bash scripts/hobby-deploy.sh trigger` (then wait/domain/verify) — completes full deployment in ~5 min once Railway lifts the Hobby pause. State in scripts/railway.env: PROJECT_ID=23737e9e (euroluxe), ENV_ID=43115e6e, RAILWAY_TOKEN=64d261ef (project-scoped), NEW_SERVICE_ID not yet set.
 - Waiting on Railway only. User pinged to retry anytime; status watch: status.railway.app.
+
+---
+Task ID: 18 (completion)
+Agent: Super Z (main agent)
+Task: Complete the fresh-account deployment on the user's Hobby workspace once Railway lifted the pause.
+
+Work Log:
+- Railway lifted the Hobby build pause at 16:52:06 UTC (after ~6h; I retried githubRepoDeploy every ~75s across 35 rounds).
+- TRIGGER ACCEPTED → service 046c17e8-a9d0-4d75-8a6e-ac0cf6610eb0 in project euroluxe (23737e9e), env 43115e6e. Fixed script bug: NEW_SERVICE_ID now exported in-process after save_state (trigger phase previously died at var-setting).
+- Env vars set during build (skipDeploys): ADMIN_PASSWORD=Adlene@2026 + GITHUB_TOKEN ✓. BUILD SUCCESS in ~2.5 min.
+- Domain: serviceDomainCreate (port 8080) → adlene-portfolio-production-b82e.up.railway.app (auto name has -b82e suffix because the exact old name is still held by the old account). Rename attempt didn't settle → keeping auto name. domain id 2d83ba00-0d5c-4198-bee2-5094187cc541.
+- VERIFIED LIVE: 11/11 routes 200 (/, /work, /about, /contact, /admin, /video.mp4, /work-video.mp4, 5 case studies).
+- PRODUCTION E2E (55/55 PASSED on the new deployment):
+  * slug suite 12/12 — NEW slug-editing feature LIVE in admin (rename moves the page, old URL 404s, links update, duplicate rejected 400, restore exact)
+  * admin suite 32/32 — auth gates, login, upload byte-exact via jsDelivr, brand add/edit/remove reflected live, file manager, logout, noindex, hidden from public UI
+  * texts suite 11/11 — page copy edits live in seconds, curtain signature follows heroName, revert exact
+- VLM visual QA: home (dark cinematic, serif typography, high quality — PASS), work index (PASS, no defects in visible area; navbar intentionally logo-free since task 6).
+- E2E scripts parameterized: e2e-admin-prod.py + e2e-texts-test.py now take BASE as argv[1] (default the new domain).
+
+Stage Summary:
+- NEW LIVE URL: https://adlene-portfolio-production-b82e.up.railway.app (user's Hobby account, project "euroluxe", service 046c17e8 "adlene-portfolio")
+- Full stack live: site + hidden admin CMS (/admin, password Adlene@2026) + texts editing + URL-slug editing (task 16 feature now in production)
+- Old deployment (old account) still running at adlene-portfolio-production.up.railway.app — user can delete the old project from the old Railway dashboard to free the exact domain name; then I can rename the new service domain onto it.
+- State: scripts/railway.env has RAILWAY_TOKEN (project-scoped 64d261ef…), PROJECT_ID 23737e9e, ENV_ID 43115e6e, SERVICE_ID 046c17e8, DOMAIN_ID 2d83ba00, DOMAIN adlene-portfolio-production-b82e.up.railway.app.
+- GitHub main HEAD: 4747955+ (hobby-deploy pipeline + parameterized E2E).
