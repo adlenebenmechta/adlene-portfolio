@@ -373,3 +373,21 @@ Stage Summary:
 - BLOCKED ONLY by the Railway incident's free-tier build pause — re-check status.railway.app; once Free/Trial builds are enabled the whole deployment takes ~5 minutes.
 - SECURITY ADVICE given to user: Railway's incident may have exposed env vars (they recommend revoking ALL stored credentials). The old deployment stores GITHUB_TOKEN + ADMIN_PASSWORD there → rotate the GitHub PAT after the move; I can wire the new one into railway.env + the service vars.
 - Old site: LIVE and healthy throughout; admin CMS, texts, brands all working there (password Adlene@2026).
+
+---
+Task ID: 18
+Agent: Super Z (main agent)
+Task: Continue fresh-account deployment — user clarified the account is Hobby PAID and supplied a new project-scoped token (64d261ef…).
+
+Work Log:
+- New token verified: PROJECT-SCOPED (cannot query `me`, but can access projects tikocraft d054d345 + euroluxe 23737e9e). Both live in workspace e9d9856e ("euroluxedz-web's Projects") — same workspace as the earlier account token, plan confirmed via workspace.plan = HOBBY (8 vCPU / 8 GB / 3 concurrent builds / 4 service domains). User was right: Hobby paid.
+- Chose target: euroluxe project (user's main: postgres + euroluxe + wonderful-endurance services) → portfolio deploys as a NEW service (no interference). production env 43115e6e.
+- Wrote scripts/hobby-deploy.sh — phased re-runnable deploy: trigger (retry githubRepoDeploy ≤8 min → set ADMIN_PASSWORD+GITHUB_TOKEN via variableUpsert → persist NEW_SERVICE_ID) → wait (poll deployment status) → domain (serviceDomainCreate port 8080 + rename to adlene-portfolio-production.up.railway.app with verify + auto-name fallback) → verify (11 routes). Exit 42 = "call again" (pause continues), 0 = phase done.
+- BLOCKED: githubRepoDeploy still returns "Deploys have been paused due to an upstream issue" — Railway's Oct-21 security incident: builds re-enabled in stages (Enterprise → Pro done at 07:11 UTC; Hobby NOT yet as of 14:03 UTC despite ~70 retries 11:03–14:03 UTC). Status page last update 10:15 UTC (promised 11:00 — stale).
+- Checked alternatives while waiting: no imageDeploy mutation; serviceInstanceDeployV2 requires an existing service+repo connection; docker not available in sandbox; project-scoped token cannot query GitHub connection status (will surface at deploy time — if "no one in the project has access" appears after the pause lifts, the user must reconnect GitHub in Railway dashboard per Railway's incident guide).
+- Old site still LIVE and healthy (all routes 200, runs task-15 code).
+- Domain note: adlene-portfolio-production.up.railway.app is still held by the OLD account's project → new service will take the auto domain first; renaming onto the old name requires deleting the old project from the old account (only after the new deployment is verified).
+
+Stage Summary:
+- ARMED: `bash scripts/hobby-deploy.sh trigger` (then wait/domain/verify) — completes full deployment in ~5 min once Railway lifts the Hobby pause. State in scripts/railway.env: PROJECT_ID=23737e9e (euroluxe), ENV_ID=43115e6e, RAILWAY_TOKEN=64d261ef (project-scoped), NEW_SERVICE_ID not yet set.
+- Waiting on Railway only. User pinged to retry anytime; status watch: status.railway.app.
