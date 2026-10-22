@@ -353,3 +353,23 @@ Stage Summary:
 - Code COMPLETE + fully tested, on GitHub main 505c93d. LIVE DEPLOY PENDING.
 - BLOCKED on: RAILWAY_TOKEN (wiped in sandbox reset — same as task 13). User must paste it again; then: railway-redeploy.sh --trigger-only → --set-vars → --finalize --wait → run scripts/e2e-slug-test.py against production.
 - Live admin today: slug field still locked (old code) until deploy.
+
+---
+Task ID: 17
+Agent: Super Z (main agent)
+Task: User (Arabic): "هل ممكن ان تنشر مرة اخرى الموقع كاملا هنا على هذا railway" + a fresh Railway token — publish the ENTIRE site on a NEW Railway account.
+
+Work Log:
+- Sandbox had been reset again: local repo was ahead with task-16 commits intact after git fetch/reset to origin/main (505c93d slug feature + 80495d0 worklog). scripts/railway.env + .env.local wiped → rebuilt (GitHub token from git remote, ADMIN_PASSWORD=Adlene@2026, old SERVICE_ID/DOMAIN_ID from task 15).
+- Token verified via GraphQL `me`: account euroluxe.dz@gmail.com (DIFFERENT from the original adlenebenmechta@gmail.com) — user's intent confirmed: full fresh deployment on this new account. Old project (2f17b86f) NOT accessible with this token → separate account. Workspace found: e9d9856e-4d60-415e-ad5c-c60249077ff2 ("euroluxedz-web's Projects", subscriptionModel USER = free tier, account verified).
+- Wrote scripts/railway-new-account-deploy.sh — complete fresh-account pipeline: --create-project (projectCreate with workspaceId — REQUIRED on v2 API) → --deploy (githubRepoDeploy from GitHub main + variableUpsert ADMIN_PASSWORD/GITHUB_TOKEN during build + build-wait poll) → --domain (serviceDomainCreate port 8080 + rename attempt to adlene-portfolio-production.up.railway.app with verified settle-check, graceful fallback to auto name if taken) → --verify (11 routes).
+- BLOCKED BY RAILWAY PLATFORM INCIDENT (status.railway.app — Major Outage): security incident Oct 21 evening → Railway paused ALL builds/deploys, rotated bucket credentials, and INVALIDATED ALL API TOKENS (Oct 22 04:17 UTC — explains why a new token was needed). Re-enabling in stages: Enterprise ✅ → Pro ✅ (07:11 UTC) → Hobby (next) → Free/Trial (last, still paused as of 11:17 UTC). projectCreate returns "Deploys have been paused due to an upstream issue" for this workspace. Retried ~25 times over ~40 minutes — still blocked.
+- OLD SITE UNAFFECTED: https://adlene-portfolio-production.up.railway.app all routes 200 (running deploys continue; only NEW builds are paused). It still runs task-15 code — slug fix (task 16) remains undeployed there.
+- GitHub token re-verified working (adlenebenmechta, repo accessible). GitHub main HEAD = 80495d0 (includes slug feature).
+- Note for domain: *.up.railway.app names are globally unique — the old account still holds adlene-portfolio-production.up.railway.app. The deploy script tries to rename to it and falls back to the auto-assigned domain if rejected; getting the SAME name requires deleting the old project (dashboard login with the old email) or just using the new auto domain.
+
+Stage Summary:
+- READY TO FIRE: bash scripts/railway-new-account-deploy.sh --create-project && ... --deploy && ... --domain && ... --verify  (state in scripts/railway.env incl. RAILWAY_TOKEN, WORKSPACE_ID)
+- BLOCKED ONLY by the Railway incident's free-tier build pause — re-check status.railway.app; once Free/Trial builds are enabled the whole deployment takes ~5 minutes.
+- SECURITY ADVICE given to user: Railway's incident may have exposed env vars (they recommend revoking ALL stored credentials). The old deployment stores GITHUB_TOKEN + ADMIN_PASSWORD there → rotate the GitHub PAT after the move; I can wire the new one into railway.env + the service vars.
+- Old site: LIVE and healthy throughout; admin CMS, texts, brands all working there (password Adlene@2026).
