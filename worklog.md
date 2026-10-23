@@ -416,3 +416,26 @@ Stage Summary:
 - Old deployment (old account) still running at adlene-portfolio-production.up.railway.app — user can delete the old project from the old Railway dashboard to free the exact domain name; then I can rename the new service domain onto it.
 - State: scripts/railway.env has RAILWAY_TOKEN (project-scoped 64d261ef…), PROJECT_ID 23737e9e, ENV_ID 43115e6e, SERVICE_ID 046c17e8, DOMAIN_ID 2d83ba00, DOMAIN adlene-portfolio-production-b82e.up.railway.app.
 - GitHub main HEAD: 4747955+ (hobby-deploy pipeline + parameterized E2E).
+
+---
+Task ID: 19
+Agent: Super Z (main agent)
+Task: User (Arabic): "هل ممكن ان تجعله في مشروع وحده و ليس داخل مشروع euroluxe" — move the portfolio into its OWN standalone Railway project instead of living as a service inside the euroluxe project.
+
+Work Log:
+- Sandbox reset again → restored scripts/railway.env from worklog state (token 64d261ef, GitHub token from git remote) + .env.local.
+- Token re-verified: still valid, workspace-wide visibility (projects visible: wenov8 ×2, tikocraft, euroluxe) — richer than the 2 projects seen in task 18, so I attempted projectCreate directly.
+- projectCreate SUCCEEDED with the current token: new standalone project "adlene-portfolio" (cb1f5415-c241-43c6-b53a-4252481d51a5, production env 9d97be12-12a9-4d16-b6c0-b233d33337d6) in workspace e9d9856e — no new token needed.
+- Repointed railway.env PROJECT_ID/ENV_ID to the new project and reused scripts/hobby-deploy.sh end-to-end:
+  * trigger: githubRepoDeploy accepted instantly → service 9c67ec73-3b0e-4535-9d31-8f263e8820f7; ADMIN_PASSWORD + GITHUB_TOKEN vars set ✓
+  * wait: BUILD SUCCESS (~3 min)
+  * domain: serviceDomainCreate port 8080 → adlene-portfolio-production-b8e6.up.railway.app (id 4fa5ef73-52ee-43bf-90b5-169c9673f43e); rename to the exact old name still impossible (held by OLD account) → kept auto name
+  * verify: 11/11 routes 200 ✓
+- PRODUCTION E2E on the new standalone URL (55/55 PASSED): slug 12/12, admin 32/32, texts 11/11 (all state restored exactly).
+- CLEANUP: serviceDelete 046c17e8 (old "adlene-portfolio" service inside euroluxe) → euroluxe now holds only its own 3 services (postgres, wonderful-endurance, euroluxe). Old -b82e domain confirmed dead (404); new -b8e6 live (200).
+
+Stage Summary:
+- Portfolio now runs in its OWN project "adlene-portfolio" (cb1f5415) on the user's Hobby account — completely separate from euroluxe.
+- LIVE URL: https://adlene-portfolio-production-b8e6.up.railway.app (site + hidden admin CMS /admin, password Adlene@2026 + texts + slug editing, all verified).
+- Note: the -b82e URL from task 18 is DEAD (service deleted on purpose). Only the OLD ACCOUNT (adlenebenmechta@gmail.com) still serves the original unsuffixed domain adlene-portfolio-production.up.railway.app — delete that project from the old dashboard to free the exact name, then I can rename the new domain onto it.
+- State in scripts/railway.env: PROJECT_ID cb1f5415, ENV_ID 9d97be12, SERVICE_ID 9c67ec73, DOMAIN_ID 4fa5ef73, DOMAIN -b8e6.
