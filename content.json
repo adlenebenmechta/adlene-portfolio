@@ -846,39 +846,6 @@
       "shortName": "The Salon",
       "tagline": "Sole content lead — Ministry of Youth official page.",
       "year": "2025"
-    },
-    {
-      "id": "test-brand-e2e",
-      "index": "06",
-      "brand": "Test Brand E2E",
-      "shortName": "Test",
-      "logo": "/gh/media/uploads/e2e-prod-6afafe-mw2bexiq.jpg",
-      "tagline": "Edited tagline — v2 verified.",
-      "industry": "Testing",
-      "location": "Algiers, DZ",
-      "year": "2025",
-      "services": [
-        "Testing",
-        "Automation"
-      ],
-      "role": "Tester",
-      "description": "Exists only to verify the admin panel end-to-end on production.",
-      "deliverables": [
-        "A passing test"
-      ],
-      "preview": {
-        "type": "image",
-        "src": "/gh/media/uploads/e2e-prod-6afafe-mw2bexiq.jpg",
-        "alt": "Test brand preview"
-      },
-      "media": [
-        {
-          "type": "image",
-          "src": "/gh/media/uploads/e2e-prod-6afafe-mw2bexiq.jpg",
-          "alt": "Test media",
-          "span": "full"
-        }
-      ]
     }
   ],
   "settings": {
