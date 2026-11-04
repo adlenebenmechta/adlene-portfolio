@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Task 24 — local visual QA: salon card as 'Ministry of Youth' + detail header."""
+import os
+
 from playwright.sync_api import sync_playwright
 
-BASE = "http://localhost:3000"
+BASE = os.environ.get("BASE", "http://localhost:3000")
 
 with sync_playwright() as pw:
     b = pw.chromium.launch()
