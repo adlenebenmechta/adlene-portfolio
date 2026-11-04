@@ -3,8 +3,9 @@
 
 Covers: auth gates (401s), wrong password, login, content read,
 image upload (served via jsDelivr), brand add -> live site reflects,
-brand edit -> live site reflects, brand remove -> gone + 404,
-upload listing + delete, logout, noindex, hidden from public UI.
+brand edit -> live site reflects, NON-DESTRUCTIVE MERGE SAVE
+(stale-tab edits no longer revert concurrent changes), brand remove ->
+gone + 404, upload listing + delete, logout, noindex, hidden from public UI.
 """
 import json, time, io, urllib.request, urllib.error, uuid
 
@@ -150,6 +151,48 @@ while time.time() - t0 < 90 and not ok:
     _, h = req("GET", "/work"); h = h.decode() if isinstance(h, bytes) else ""
     ok = "Edited tagline" in h
 check("edited tagline visible on /work", ok)
+
+# ─── 6b. non-destructive merge save (task 23 regression) ───────
+print("[6b] envelope save {base, draft} — concurrent changes survive")
+s, base = jreq("GET", "/api/admin/content")
+check("GET base for merge test -> 200", s == 200 and isinstance(base, dict), f"{s}")
+
+# simulate a concurrent change committed outside the admin tab (legacy raw PUT)
+remote = json.loads(json.dumps(base))
+for p in remote["projects"]:
+    if p["id"] == "test-brand-e2e":
+        p["tagline"] = "Remote edit v3 — made outside the admin tab."
+s, r = jreq("PUT", "/api/admin/content", remote)
+check("legacy raw PUT (remote edit) -> 200", s == 200, f"{s} {r}")
+
+# the user's STALE tab: edit a different field, based on the outdated content
+draft = json.loads(json.dumps(base))
+for p in draft["projects"]:
+    if p["id"] == "test-brand-e2e":
+        p["year"] = "2024"
+s, r = jreq("PUT", "/api/admin/content", {"base": base, "draft": draft})
+check("envelope PUT (stale-tab edit) -> 200", s == 200, f"{s} {r}")
+check("server reports merged:true", isinstance(r, dict) and r.get("merged") is True,
+      f"{r if isinstance(r, str) else 'merged=' + str(r.get('merged'))}")
+merged_ok = isinstance(r, dict) and any(
+    p.get("id") == "test-brand-e2e"
+    and p.get("tagline", "").startswith("Remote edit v3")
+    and p.get("year") == "2024"
+    for p in r.get("content", {}).get("projects", []))
+check("BOTH the remote edit and the user's stale-tab edit survive", merged_ok)
+
+s, c = jreq("GET", "/api/admin/content")
+live_ok = s == 200 and any(
+    p.get("id") == "test-brand-e2e"
+    and p.get("tagline", "").startswith("Remote edit v3")
+    and p.get("year") == "2024"
+    for p in c.get("projects", []))
+check("live content carries both edits", live_ok)
+
+# no-drift fast path: base is current -> merged:false, change applied
+s, r = jreq("PUT", "/api/admin/content", {"base": c, "draft": c})
+check("envelope PUT with no drift -> merged:false",
+      s == 200 and isinstance(r, dict) and r.get("merged") is False, f"{s} {r}")
 
 # ─── 7. remove test brand ─────────────────────────────────────────
 print("[7] remove the test brand")

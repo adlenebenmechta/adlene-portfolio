@@ -50,7 +50,8 @@ const base = {
   check("no-drift merge equals draft", deepEqual(out, draft));
 }
 
-/* 3 ── user edited the same project the agent edited → user wins (last writer) */
+/* 3 ── user edited ONE field of a project, agent edited ANOTHER field
+ *       of the SAME project → both survive (per-field merge) */
 {
   const draft = structuredClone(base);
   (draft.projects[0] as { brand: string }).brand = "ACF Algeria";
@@ -58,7 +59,17 @@ const base = {
   (latest.projects[0] as { logo: string }).logo = "/media/logos/acf.png";
   const out = mergeContent(base, draft, latest) as typeof base;
   const acf = out.projects.find((p) => p.id === "acf")!;
-  check("same-project conflict → user's edit wins", acf.brand === "ACF Algeria");
+  check("same-project different fields → BOTH survive", acf.brand === "ACF Algeria" && acf.logo === "/media/logos/acf.png");
+}
+
+/* 3b ── same single field edited by both → user wins (last writer) */
+{
+  const draft = structuredClone(base);
+  (draft.projects[0] as { logo: string }).logo = "/media/logos/user-edit.png";
+  const latest = structuredClone(base);
+  (latest.projects[0] as { logo: string }).logo = "/media/logos/acf.png";
+  const out = mergeContent(base, draft, latest) as typeof base;
+  check("same-field conflict → user's edit wins", out.projects.find((p) => p.id === "acf")!.logo === "/media/logos/user-edit.png");
 }
 
 /* 4 ── texts section: user edited a page text, agent edited hero remotely */
@@ -102,11 +113,12 @@ const base = {
   draft.projects.push(moved); // acf moved to the end
   draft.projects.forEach((p, k) => (p.index = String(k + 1).padStart(2, "0")));
   const latest = structuredClone(base);
-  (latest.projects[1] as { logo: string }).logo = "/media/logos/armoray-agent.svg"; // agent edited armoray
+  (latest.projects[1] as { logo: string }).logo = "/media/logos/armoray-agent.svg"; // agent edited armoray logo
   const out = mergeContent(base, draft, latest) as typeof base;
   check("reorder applied (acf last)", out.projects.map((p) => p.id).join(",") === "armoray,salon,acf");
   const arm = out.projects.find((p) => p.id === "armoray")!;
-  check("reorder renumbered every project → draft wins for armoray (accepted trade-off)", arm.index === "01");
+  check("reorder renumber → draft's index wins", arm.index === "01");
+  check("agent's armoray logo edit survives the reorder", arm.logo === "/media/logos/armoray-agent.svg");
 }
 
 /* 8 ── user ADDED a project remotely unknown */
