@@ -80,6 +80,11 @@ export interface ProjectChapter {
   role: string;
   description: string;
   sections: ProjectSection[];
+  /** official credentials — the event badge scan/photo, shown framed
+   *  in the credentials strip on the chapter page (optional) */
+  badge?: { src: string; alt?: string };
+  /** official credentials — the certificate scan (optional) */
+  certificate?: { src: string; alt?: string };
 }
 
 export interface SiteSettings {

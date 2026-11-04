@@ -33,8 +33,15 @@ def jbody(status, raw):
     except Exception:
         return status, raw.decode()[:200]
 
-# 1. login
-s, r = jbody(*req("POST", "/api/admin/session", {"password": "admin123"}))
+# 1. login (password from scripts/railway.env — same as the site's admin)
+import os as _os
+PASSWORD = "admin123"
+_envf = _os.path.join(_os.path.dirname(__file__), "railway.env")
+if _os.path.exists(_envf):
+    for _line in open(_envf):
+        if _line.startswith("ADMIN_PASSWORD="):
+            PASSWORD = _line.strip().split("=", 1)[1].strip('"\'')
+s, r = jbody(*req("POST", "/api/admin/session", {"password": PASSWORD}))
 assert s == 200, (s, r)
 print("login ✓")
 

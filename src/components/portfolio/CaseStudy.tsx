@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import type { Project, PageTexts, ProjectSection } from "@/lib/site-content";
 import { mediaUrl } from "@/lib/media";
-import { Reveal, SectionLabel } from "./shared";
+import { Reveal, SectionLabel, TitleLockup } from "./shared";
 import { MediaGallery } from "./MediaGallery";
 import { SmartVideo } from "./SmartVideo";
 
@@ -303,10 +303,10 @@ export function CaseStudy({ project, next, position, total, texts }: CaseStudyPr
 
           <div className="mt-10 grid gap-5 md:grid-cols-2">
             {chapters.map((ch, i) => (
-              <Reveal key={ch.id} delay={0.08 * i} y={30}>
+              <Reveal key={ch.id} delay={0.08 * i} y={30} className="h-full">
                 <Link
                   href={`/work/${project.id}/${ch.id}`}
-                  className="group relative flex min-h-[300px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-8 outline-none transition-colors duration-700 hover:border-white/30 md:min-h-[360px] md:p-12"
+                  className="group relative flex h-full min-h-[300px] flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-8 outline-none transition-colors duration-700 hover:border-white/30 md:min-h-[360px] md:p-12"
                 >
                   {/* sheen follows the hover */}
                   <div
@@ -317,11 +317,16 @@ export function CaseStudy({ project, next, position, total, texts }: CaseStudyPr
                     <p className="text-[10px] uppercase tracking-[0.3em] text-white/40 md:text-[11px]">
                       {ch.role}
                     </p>
-                    <p className="mt-6 font-serif text-[3.2rem] font-semibold leading-none tracking-[-0.02em] text-white/95 transition-transform duration-700 ease-out group-hover:-translate-y-1 md:text-[4.5rem]">
+                    <p className="mt-6 font-serif text-[3.2rem] font-medium leading-none tracking-[-0.02em] text-white/95 transition-transform duration-700 ease-out group-hover:-translate-y-1 md:text-[4.5rem]">
                       {ch.year}
                     </p>
-                    <p className="mt-4 text-xl font-medium tracking-[0.06em] text-white md:text-2xl">
-                      {ch.title}
+                    {/* the role in the same couture lockup as the chapter
+                        header — roman words, final word in italic */}
+                    <p className="mt-5 font-serif text-xl tracking-[0.04em] text-white md:text-[1.45rem]">
+                      <TitleLockup
+                        title={ch.title}
+                        italicClassName="font-light text-[#C9C3B4]"
+                      />
                     </p>
                     <p className="mt-4 max-w-sm text-[13px] leading-relaxed text-white/45">
                       {ch.description.split(".")[0]}.

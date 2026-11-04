@@ -290,6 +290,67 @@ function SectionsEditor({
 
 /* ── chapters — sub-pages like ACF 2025 / ACF 2026 ──────────────── */
 
+/* one official document uploader — badge or certificate */
+function CredentialField({
+  label,
+  uploadLabel,
+  hint,
+  value,
+  onChange,
+}: {
+  label: string;
+  uploadLabel: string;
+  hint: string;
+  value?: { src: string; alt?: string };
+  onChange: (v: { src: string; alt?: string } | undefined) => void;
+}) {
+  return (
+    <div className="rounded-lg border border-white/10 bg-black/30 p-4">
+      <p className="text-[11px] uppercase tracking-[0.18em] text-white/55">
+        {label}
+      </p>
+      <div className="mt-3 flex flex-wrap items-center gap-3">
+        {value?.src ? (
+          <img
+            src={mediaUrl(value.src)}
+            alt=""
+            className="h-16 w-16 shrink-0 rounded-md border border-white/10 bg-[#F4F1E8] object-contain p-1.5"
+          />
+        ) : (
+          <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-md border border-dashed border-white/15 bg-white/[0.015] text-[8px] uppercase tracking-[0.18em] text-white/30">
+            {label.split(" ")[0]}
+          </div>
+        )}
+        <Uploader
+          label={value?.src ? "Upload / replace" : uploadLabel}
+          accept="image/*"
+          compact
+          onDone={(url) =>
+            onChange({ src: url, alt: value?.alt })
+          }
+        />
+        {value?.src && (
+          <Btn ghost onClick={() => onChange(undefined)}>
+            ✕
+          </Btn>
+        )}
+      </div>
+      <div className="mt-3">
+        <Field
+          label="Caption (optional — shown under the frame)"
+          value={value?.alt ?? ""}
+          onChange={(v) =>
+            value?.src
+              ? onChange({ ...value, alt: v })
+              : onChange(v ? { src: "", alt: v } : undefined)
+          }
+          placeholder={hint}
+        />
+      </div>
+    </div>
+  );
+}
+
 function ChapterBlock({
   chapter,
   existingIds,
@@ -363,6 +424,34 @@ function ChapterBlock({
             onChange={(v) => onChange({ ...chapter, description: v })}
             rows={4}
           />
+
+          {/* badge & certification — the official documents */}
+          <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
+            <p className="text-[10px] uppercase tracking-[0.22em] text-white/40">
+              Badge &amp; Certification
+            </p>
+            <p className="mt-2 text-[11px] leading-relaxed text-white/30">
+              Optional — shown as an elegant framed credentials strip on the
+              chapter page (dark frame, ivory mat, click to enlarge). Leave
+              empty to hide the strip.
+            </p>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <CredentialField
+                label="Event badge"
+                uploadLabel="Upload badge"
+                hint="Event Badge"
+                value={chapter.badge}
+                onChange={(v) => onChange({ ...chapter, badge: v })}
+              />
+              <CredentialField
+                label="Certification"
+                uploadLabel="Upload certification"
+                hint="Certification"
+                value={chapter.certificate}
+                onChange={(v) => onChange({ ...chapter, certificate: v })}
+              />
+            </div>
+          </div>
           <SectionsEditor
             title="Chapter sections"
             sections={chapter.sections}

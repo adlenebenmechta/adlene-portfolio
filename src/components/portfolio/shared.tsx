@@ -78,6 +78,28 @@ export function SectionLabel({ index, children, className = "" }: SectionLabelPr
   );
 }
 
+/** Role-title lockup — the final word set in italic serif
+ *  (e.g. "TEAM <i>MANAGER</i>"), the couture treatment shared by the
+ *  chapter header and the edition cards. Single words pass through. */
+export function TitleLockup({
+  title,
+  italicClassName = "",
+}: {
+  title: string;
+  italicClassName?: string;
+}) {
+  const words = title.trim().split(/\s+/);
+  if (words.length < 2) return <>{title}</>;
+  return (
+    <>
+      {words.slice(0, -1).join(" ")}{" "}
+      <span className={`italic ${italicClassName}`.trim()}>
+        {words[words.length - 1]}
+      </span>
+    </>
+  );
+}
+
 /** Brand logo card — the box visual while no preview image is uploaded.
  *  The logo floats large on the studio sheen — no frame, no box edges,
  *  so both transparent wordmarks and cut-out logos blend into the card.
