@@ -25,6 +25,9 @@ export interface Project {
   shortName: string;
   /** brand logo — replace the file in /public/media/logos/ with the real one */
   logo: string;
+  /** short serif initials shown in small page-header tiles (wide wordmarks
+   *  shrink to nothing in a square tile — e.g. "ACF", "A", "HS") */
+  monogram?: string;
   tagline: string;
   industry: string;
   location: string;
@@ -319,6 +322,7 @@ const seedProjects: Project[] = [
     brand: "ACF",
     shortName: "ACF",
     logo: "/media/logos/acf.svg",
+    monogram: "ACF",
     tagline: "Two editions. Two roles. One exhibition floor.",
     industry: "Events & Exhibitions",
     location: "Algeria",
@@ -389,6 +393,7 @@ const seedProjects: Project[] = [
     brand: "Armoray",
     shortName: "Armoray",
     logo: "/media/logos/armoray.svg",
+    monogram: "A",
     tagline: "Performance e-commerce — ads built to convert.",
     industry: "E-Commerce",
     location: "Online — Worldwide",
@@ -421,6 +426,7 @@ const seedProjects: Project[] = [
     brand: "HolyStrips",
     shortName: "HolyStrips",
     logo: "/media/logos/holystrips.svg",
+    monogram: "HS",
     tagline: "Direct-response creatives for paid social.",
     industry: "E-Commerce",
     location: "Online — Worldwide",
@@ -448,6 +454,7 @@ const seedProjects: Project[] = [
     brand: "Zero Trace",
     shortName: "Zero Trace",
     logo: "/media/logos/zero-trace.svg",
+    monogram: "ZT",
     tagline: "Creatives that carry the brand.",
     industry: "E-Commerce",
     location: "Online — Worldwide",
@@ -475,6 +482,7 @@ const seedProjects: Project[] = [
     brand: "GemstoneWell",
     shortName: "GemstoneWell",
     logo: "/media/logos/gemstonewell.svg",
+    monogram: "GW",
     tagline: "A tighter edit — films, styles, results.",
     industry: "E-Commerce",
     location: "Online — Worldwide",
@@ -501,6 +509,7 @@ const seedProjects: Project[] = [
     brand: "National Salon of Girls' Creativity & Women Entrepreneurs",
     shortName: "The Salon",
     logo: "/media/logos/salon-annaba.svg",
+    monogram: "SA",
     tagline: "Sole content lead — Ministry of Youth official page.",
     industry: "Events & Public Institutions",
     location: "Annaba, DZ",

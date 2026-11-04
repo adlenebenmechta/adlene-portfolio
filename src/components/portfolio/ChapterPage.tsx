@@ -71,12 +71,27 @@ export function ChapterPage({
         <div ref={ref}>
           <Reveal y={16}>
             <div className="flex items-center gap-4">
-              <figure className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] p-1.5 md:h-16 md:w-16 md:p-2">
-                <img
-                  src={mediaUrl(project.logo)}
-                  alt={`${project.brand} logo`}
-                  className="h-full w-full object-contain"
-                />
+              <figure className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] md:h-16 md:w-16">
+                {project.monogram ? (
+                  <span
+                    aria-label={project.brand}
+                    className={`font-serif tracking-[0.18em] text-[#E8E4DC] ${
+                      project.monogram.length >= 3
+                        ? "text-base md:text-lg"
+                        : project.monogram.length === 2
+                          ? "text-xl md:text-2xl"
+                          : "text-2xl md:text-3xl"
+                    }`}
+                  >
+                    {project.monogram}
+                  </span>
+                ) : (
+                  <img
+                    src={mediaUrl(project.logo)}
+                    alt={`${project.brand} logo`}
+                    className="h-full w-full object-contain p-1.5 md:p-2"
+                  />
+                )}
               </figure>
               <p className="text-[9px] uppercase tracking-[0.3em] text-white/40 md:text-[10px]">
                 {chapter.role}&ensp;·&ensp;{chapter.year}

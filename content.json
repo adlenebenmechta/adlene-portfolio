@@ -264,6 +264,7 @@
       "industry": "Events & Exhibitions",
       "location": "Algeria",
       "logo": "/media/logos/acf.svg",
+      "monogram": "ACF",
       "media": [],
       "preview": {
         "alt": "ACF",
@@ -296,6 +297,7 @@
       "linkUrl": "https://www.amazon.com/stores/ARMORAY/page/FCC26F19-5AC4-4005-B645-112A68B5B70C",
       "location": "Online — Worldwide",
       "logo": "/media/logos/armoray.svg",
+      "monogram": "A",
       "media": [],
       "preview": {
         "alt": "Armoray",
@@ -412,6 +414,7 @@
       "industry": "E-Commerce",
       "location": "Online — Worldwide",
       "logo": "/media/logos/holystrips.svg",
+      "monogram": "HS",
       "media": [],
       "preview": {
         "alt": "HolyStrips",
@@ -526,6 +529,7 @@
       "industry": "E-Commerce",
       "location": "Online — Worldwide",
       "logo": "/media/logos/zero-trace.svg",
+      "monogram": "ZT",
       "media": [],
       "preview": {
         "alt": "Zero Trace",
@@ -639,6 +643,7 @@
       "industry": "E-Commerce",
       "location": "Online — Worldwide",
       "logo": "/media/logos/gemstonewell.svg",
+      "monogram": "GW",
       "media": [],
       "preview": {
         "alt": "GemstoneWell",
@@ -735,6 +740,7 @@
       "industry": "Events & Public Institutions",
       "location": "Annaba, DZ",
       "logo": "/media/logos/salon-annaba.svg",
+      "monogram": "SA",
       "media": [],
       "preview": {
         "alt": "National Salon — Annaba",

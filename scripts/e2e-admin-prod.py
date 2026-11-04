@@ -71,7 +71,7 @@ check("session check after login -> authed:true", s == 200 and r.get("authed") i
 print("[3] content read")
 s, content = jreq("GET", "/api/admin/content")
 check("GET content -> 200", s == 200 and isinstance(content, dict), f"{s}")
-check("5 projects present", s == 200 and len(content.get("projects", [])) == 5,
+check("6 projects present", s == 200 and len(content.get("projects", [])) == 6,
       f"got {len(content.get('projects', [])) if s==200 else s}")
 orig_ids = [p["id"] for p in content.get("projects", [])]
 print(f"      brands: {', '.join(orig_ids)}")
@@ -166,7 +166,7 @@ check("brand gone from /work", ok)
 s2, _ = req("GET", "/work/test-brand-e2e")
 check("case study now 404", s2 == 404, f"got {s2}")
 s, c4 = jreq("GET", "/api/admin/content")
-check("content back to exactly the 5 original brands",
+check("content back to exactly the 6 original brands",
       [p["id"] for p in c4.get("projects", [])] == orig_ids)
 
 # ─── 8. upload file manager ─────────────────────────────────────
