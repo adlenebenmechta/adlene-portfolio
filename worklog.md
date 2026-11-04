@@ -439,3 +439,33 @@ Stage Summary:
 - LIVE URL: https://adlene-portfolio-production-b8e6.up.railway.app (site + hidden admin CMS /admin, password Adlene@2026 + texts + slug editing, all verified).
 - Note: the -b82e URL from task 18 is DEAD (service deleted on purpose). Only the OLD ACCOUNT (adlenebenmechta@gmail.com) still serves the original unsuffixed domain adlene-portfolio-production.up.railway.app — delete that project from the old dashboard to free the exact name, then I can rename the new domain onto it.
 - State in scripts/railway.env: PROJECT_ID cb1f5415, ENV_ID 9d97be12, SERVICE_ID 9c67ec73, DOMAIN_ID 4fa5ef73, DOMAIN -b8e6.
+
+---
+Task ID: 20
+Agent: Super Z (main agent)
+Task: User (Arabic): replace the 5 demo projects with 6 real ones as BOXES, not numbered — (1) ACF with two edition choices 2026 TEAM MANAGER (managed 20 staff + social media across the 3 exhibition days) / 2025 STAFF MEMBER, text+image places left for later; (2–5) Armoray (armoray.com, "+5m trusted athletes & happy customers", Amazon store link in context) / HolyStrips (holystrips.com) / Zero Trace (zerotraceliving.com) / GemstoneWell (gemstonewell.com) — organized sections for his video ads + styles + result images; (6) National Salon of Girls' Creativity and Women Entrepreneurs in Annaba — sole creator of ALL content on the Ministry of Youth official page before/during the salon, with media slots. Simple animations, professional & attractive.
+
+Work Log:
+- DATA MODEL (src/lib/site-content.ts): new ProjectSection {id,label,note,media[]} + ProjectChapter {id,year,title,role,description,sections[]} + Project extensions: website (name click → external site), stat/statLabel (+5M social proof), linkLabel/linkUrl (Amazon chip), sections, chapters. New caseStudy texts: visitLabel/editionsLabel/exploreLabel (also added to admin TextsTab).
+- content.json fully regenerated from DEFAULT_CONTENT: 6 new projects (acf, armoray, holystrips, zero-trace, gemstonewell, national-salon-annaba), demo projects removed. E-com brands get sections Video Ads (video slots) / Static Ads & Styles / Results (image slots); ACF gets chapters 2026 TEAM MANAGER ("responsible for a team of twenty staff members… in charge of the event's social media pages… three days") + 2025 STAFF MEMBER; Salon gets Photography / Films & Reels / Published Content with slots. All years/roles are editable placeholders (2025 default) — user can adjust in admin.
+- 6 serif wordmark SVGs generated (scripts/make-brand-logos.py) → public/media/logos/{acf,armoray,holystrips,zero-trace,gemstonewell,salon-annaba}.svg (fixed centering bug x=60→w/2 after VLM caught clipped "AR").
+- WORK INDEX (WorkIndexPage.tsx): full redesign — wall of brand boxes (grid 1/2/3 cols, aspect 4/5), NO numbering anywhere, box = Link to project page; the brand NAME itself is an external <a> (new tab) when website set; stat shows as big serif line; chips "View My Work" + pretty host; empty previews render BrandCard (wordmark on studio sheen + faint frame, hover scale). Floating cursor preview removed (redundant with boxes).
+- HOME WorkGrid.tsx: same box treatment, no index chips, brand-card fallback, "+5M" stat, external name links.
+- CaseStudy.tsx: two modes — MODE A chapters (ACF): header + description + "Choose an edition" grid of 2 big year cards → /work/acf/2025|2026; MODE B single-page: external name link, stat block, Visit Website + Amazon Store chips, metadata panel, brief+deliverables, then organised SECTIONS (each with label + note + media grid). Next-project nav keeps working without numbers.
+- ChapterPage.tsx (new) + route /work/[slug]/[chapter]/page.tsx: breadcrumb back to project, big chapter title (TEAM MANAGER), liquid-glass meta panel, story, its sections, next-edition nav + links back.
+- MediaItem.tsx: empty src → elegant dashed placeholder slot (Film/Photo icon + label) — the "leave places for my media" requirement; slots keep their grid span so layout is pre-designed.
+- ADMIN BrandForm.tsx rebuilt: new fields (website, stat, statLabel, linkLabel, linkUrl), MediaListEditor (upload/replace/reorder/remove per item incl. filling placeholder slots), SectionsEditor (add/rename/reorder sections + media per section), ChaptersEditor (add/edit chapters with unique-id validation + their sections). TextsTab: 3 new labels.
+- content.ts: LOCAL_CONTENT=1 env — reads local ./content.json first (offline dev & preview testing); production flow unchanged (GitHub API → raw → defaults).
+- Navbar.tsx: fixed pre-existing TS error (WebkitBackdropFilter → style prop).
+- Deleted resurrected legacy files (About/App/BrandIndex/BrandNav/BrandSection.tsx — untracked leftovers).
+- LOCAL VERIFICATION (standalone server + LOCAL_CONTENT=1): all 11 routes 200 (/, /work, /about, /contact, /admin, 6 project pages, 2 chapter pages); old slugs 404; rendered HTML checks: 4 external site links, +5M ×2, Amazon Store chip, all three e-com sections, ACF edition cards, "twenty staff members" text, Ministry of Youth text; placeholder slots counted exactly (Armoray 10, Salon 10, ACF2026 7, ACF2025 5); home 6 boxes.
+- VISUAL QA via playwright screenshots + VLM: work boxes (wordmarks centered after fix, no numbering, clean), Armoray box zoomed (clean hierarchy, no overlap — earlier report was scale misread), ACF editions cards (elegant, clickable), chapter page top (title clear below nav). E2E scripts updated (slug test → armoray; default BASE → -b8e6).
+- tsc --noEmit clean; bun run build clean (new route /work/[slug]/[chapter] listed).
+
+BLOCKED AT PUSH: git push → 401 "Invalid username or token" — the GitHub PAT (the one in the remote URL, railway.env, .env.local and the Railway service env) EXPIRED/ROTATED mid-session (it worked for the task-19 worklog push ~1h earlier). Production admin CMS also returns 502 on /api/admin/content (server-side GitHub read uses the same dead token); public pages still 200 via raw.githubusercontent fallback. ALL new work is committed LOCALLY (665bf3b) and fully tested — only the push + Railway deploy + prod E2E remain, which need a fresh GitHub PAT from the user.
+
+Stage Summary:
+- READY: complete new brand-boxes system implemented, built, typechecked, and verified locally (routes + rendered HTML + VLM visual QA).
+- NEED FROM USER: a fresh GitHub PAT (repo scope) → then I: update remote URL + railway.env + .env.local, push 665bf3b, variableUpsert GITHUB_TOKEN on Railway service 9c67ec73, wait for auto-deploy, run full production E2E (admin 32 + texts 11 + slug 12) on the -b8e6 domain.
+- Production admin CMS is broken (502) until the Railway GITHUB_TOKEN is updated — same fix.
+- Public site unaffected (old content keeps serving from raw fallback).
