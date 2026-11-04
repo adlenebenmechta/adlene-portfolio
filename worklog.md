@@ -547,3 +547,30 @@ Stage Summary:
 - LIVE: https://adlene-portfolio-production-b8e6.up.railway.app/work — the ACF logo (and any future transparent logo) now floats large on the dark boxes with zero box edges; wordmark brands got the same bigger, frameless treatment on /work and the home grid.
 - For future logos: upload transparent PNG/SVG (the admin now says so). If only a JPG with background exists, ask the agent — the cutout pipeline (scripts/cutout-acf-logo.py) is reusable.
 - Watch-item for future sessions: stale local E2E commits in the sandbox repo can carry accidental deletions — always `git status`/`git log` against origin/main before rebasing, and run the admin E2E (upload test) after every deploy.
+
+---
+Task ID: 23
+Agent: Super Z (main agent)
+Task: User (Arabic): "when I tried to put the Armoray logo, I went back and refreshed and found ACF had returned as before" — the ACF cutout logo reverted to the raw uploaded JPG when the Armoray logo was saved.
+
+Diagnosis:
+- Git forensics: the user's save (e93acd4 "content: update via admin") set armoray.logo → /gh/media/uploads/armoray-log-mw2bzefs.png (their real transparent 926×590 PNG) BUT also reverted acf.logo → /gh/media/uploads/acf-logo-mw2at0n5.jpg (the raw purple-background JPG from before task 22).
+- Root cause: the admin loaded content.json ONCE on mount and PUT the WHOLE form state on save. The user's tab had been opened before the task-22 deploy (which set acf.logo → /media/logos/acf.png), so their save committed an outdated picture of the entire file — classic lost-update. The upload itself worked; the clobbering was the bug.
+
+Work Log:
+- SANDBOX RECOVERY: .env.local rebuilt from scripts/railway.env (bare KEY=value format). A stale local E2E commit (d4252d4, UUID message — QA screenshots + build artifacts only, no content/source changes) was dropped via reset to origin/main; the user's commits fe95574 + e93acd4 kept.
+- REMEDIATION (scripts/restore-acf-logo-t23.py): acf.logo → /media/logos/acf.png restored with a single-line diff (formatting preserved); the user's Armoray PNG kept — verified in repo AND live raw.githubusercontent after deploy.
+- ROOT FIX — three-way content merge (src/lib/content-merge.ts): the admin now PUTs { base, draft }; the server re-reads the newest content.json, re-applies only what the user actually changed, and commits at the read sha. mergeValue recurses through plain objects: untouched-by-user → remote value wins (agent fixes survive); changed-by-user → user value wins; projects array keeps by-id entity semantics (draft order, user removals dropped, remote additions appended) with per-field merging inside each project; other arrays last-writer-wins as a unit. A first E2E run caught per-PROJECT granularity losing a remote tagline edit vs a user year edit on the same brand → rewritten to per-FIELD (both now survive; the production failure mode is covered by unit test 1).
+- OPTIMISTIC LOCKING (github.ts): readContentFileWithSha() + commitContentFile() commit at the observed sha; GitHub 409 (concurrent commit between read and write) triggers re-read → re-merge → retry (3 attempts) instead of clobbering. Legacy raw-object PUT (E2E suites, scripts) still full-replaces.
+- ADMIN UX (AdminApp.tsx): baseRef tracks the loaded content (merge base); save sends the envelope, then ADOPTS the server's committed result (so the user sees remote fixes merged in); flash says "merged with newer site changes ✓" when drift was reconciled; window focus silently re-syncs the form when nothing is unsaved — a tab left open overnight can no longer save an outdated picture.
+- BRANDCARD ZONE HARDENING (shared.tsx): DOM measurement showed the tall user logo (333×212) came within 7px of the stat, and a near-square logo at the old max-h-[46%] would have overlapped. The logo now sits in a deterministic top-62% zone (max-h 72% of it ≈ old 46% cap), sheen/vignette recentered to 50% 34%. Measured after: Armoray 85px clear of the stat; worst-case square logo bottoms out at ~53% of the card.
+- VERIFICATION: bun build clean; 19/19 merge unit tests (scripts/test-merge-t23.ts) including the exact regression; scripts/zone-qa-t23.py — all 6 /work cards OK locally AND on production (logos load, zone respected, ≥12px clearance); VLM confirms both logos clean & prominent; the recurring "+5M overlaps Armoray" VLM alarm was disproven TWICE by DOM geometry (85px gap) and a 2x-zoom VLM check of the cropped card ("cleanly separated with visible spacing", spelled "Armoray") — same false alarm as task 22, treat as a low-res misread.
+- E2E HARDENED: e2e-admin-prod.py gained section [6b] — 7 new checks proving on PRODUCTION that a stale-tab envelope save keeps BOTH a remote edit and the user's edit (the first run caught the per-project flaw; fixed and re-proven).
+- DEPLOYS: 20ccd90 (merge + content restore) → SUCCESS; e6a8e9f (logo zone) → SUCCESS; 9f54115 (per-field merge) → SUCCESS. Live 13/13 routes 200. CDN serves the Armoray PNG byte-exact.
+- PRODUCTION E2E after the final deploy: slug 12/12, texts 11/11, admin 39/39 — 62/62 total (was 55/55; +7 merge checks). E2E content commits synced via pull --rebase; live content.json re-checked: 6 brands, acf → /media/logos/acf.png, armoray → the user's upload.
+
+Stage Summary:
+- LIVE: https://adlene-portfolio-production-b8e6.up.railway.app/work — ACF shows the cutout logo again AND Armoray shows the user's real transparent logo (orange helmet emblem), both floating large and edge-free in the new logo zone.
+- The CMS is now safe against the lost-update class of bug: saves merge per-field onto the newest content, commits are sha-locked with retry, and the admin tab re-syncs on focus. The user can upload logos from any tab state without reverting fixes.
+- Tooling: scripts/deploy-railway.sh <sha> is the reusable manual-deploy entry (mutation + poll + live check); scripts/test-merge-t23.ts is the merge regression suite; scripts/zone-qa-t23.py validates logo placement on any BASE.
+- If the user uploads a JPG logo with its own background again, the cutout pipeline (scripts/cutout-acf-logo.py) is reusable — but transparent PNG/SVG (like this Armoray file) needs nothing.
