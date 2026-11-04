@@ -130,6 +130,14 @@
     "alt": "Adlene Benmechta — creative director, portrait",
     "src": "/media/portrait-director.jpg"
   },
+  "settings": {
+    "email": "hello@adlenebenmechta.com"
+  },
+  "version": 1,
+  "workFilm": {
+    "poster": "/media/work-poster.jpg",
+    "video": "/work-video.mp4"
+  },
   "projects": [
     {
       "brand": "ACF",
@@ -853,10 +861,10 @@
       "brand": "Test Brand E2E",
       "shortName": "Test",
       "logo": "/gh/media/uploads/e2e-prod-565e8c-mw2cpwif.jpg",
-      "tagline": "Remote edit v3 — made outside the admin tab.",
+      "tagline": "Edited tagline — v2 verified.",
       "industry": "Testing",
       "location": "Algiers, DZ",
-      "year": "2025",
+      "year": "2024",
       "services": [
         "Testing",
         "Automation"
@@ -880,13 +888,5 @@
         }
       ]
     }
-  ],
-  "settings": {
-    "email": "hello@adlenebenmechta.com"
-  },
-  "version": 1,
-  "workFilm": {
-    "poster": "/media/work-poster.jpg",
-    "video": "/work-video.mp4"
-  }
+  ]
 }
