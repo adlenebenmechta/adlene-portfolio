@@ -846,6 +846,39 @@
       "shortName": "Ministry of Youth",
       "tagline": "Sole content lead for the National Salon of Girls' Creativity — Annaba.",
       "year": "2026"
+    },
+    {
+      "id": "test-brand-e2e",
+      "index": "06",
+      "brand": "Test Brand E2E",
+      "shortName": "Test",
+      "logo": "/gh/media/uploads/e2e-prod-62b5e1-mw2fayoz.jpg",
+      "tagline": "Temporary E2E verification brand.",
+      "industry": "Testing",
+      "location": "Algiers, DZ",
+      "year": "2026",
+      "services": [
+        "Testing",
+        "Automation"
+      ],
+      "role": "Tester",
+      "description": "Exists only to verify the admin panel end-to-end on production.",
+      "deliverables": [
+        "A passing test"
+      ],
+      "preview": {
+        "type": "image",
+        "src": "/gh/media/uploads/e2e-prod-62b5e1-mw2fayoz.jpg",
+        "alt": "Test brand preview"
+      },
+      "media": [
+        {
+          "type": "image",
+          "src": "/gh/media/uploads/e2e-prod-62b5e1-mw2fayoz.jpg",
+          "alt": "Test media",
+          "span": "full"
+        }
+      ]
     }
   ],
   "settings": {
