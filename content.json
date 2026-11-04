@@ -1,742 +1,44 @@
 {
-  "version": 1,
-  "settings": {
-    "email": "hello@adlenebenmechta.com"
-  },
   "hero": {
-    "video": "/video.mp4",
-    "poster": "/media/hero-poster.jpg"
+    "poster": "/media/hero-poster.jpg",
+    "video": "/video.mp4"
   },
-  "workFilm": {
-    "video": "/work-video.mp4",
-    "poster": "/media/work-poster.jpg"
-  },
-  "portrait": {
-    "src": "/media/portrait-director.jpg",
-    "alt": "Adlene Benmechta — creative director, portrait"
-  },
-  "projects": [
-    {
-      "id": "acf",
-      "index": "",
-      "brand": "ACF",
-      "shortName": "ACF",
-      "logo": "/media/logos/acf.svg",
-      "tagline": "Two editions. Two roles. One exhibition floor.",
-      "industry": "Events & Exhibitions",
-      "location": "Algeria",
-      "year": "2025 — 2026",
-      "services": [
-        "On-Ground Team",
-        "Social Media",
-        "Content Creation"
-      ],
-      "role": "Staff Member → Team Manager",
-      "description": "My journey with ACF across two editions of the exhibition — from STAFF MEMBER in 2025 to TEAM MANAGER in 2026, leading a twenty-person team and running the event's social media presence across the three days of the salon.",
-      "deliverables": [
-        "On-ground team coordination — 20 staff members",
-        "Social media management — live across the 3 days",
-        "Photo & video content from the exhibition floor"
-      ],
-      "preview": {
-        "type": "image",
-        "src": "",
-        "alt": "ACF"
-      },
-      "media": [],
-      "chapters": [
-        {
-          "id": "2026",
-          "year": "2026",
-          "title": "TEAM MANAGER",
-          "role": "Team Manager",
-          "description": "In the 2026 edition I served as TEAM MANAGER — responsible for a team of twenty staff members, coordinating their briefings, schedules and on-ground operations across the three days of the exhibition. I was also in charge of the event's social media pages throughout the salon — planning, creating and publishing content in real time.",
-          "sections": [
-            {
-              "id": "team",
-              "label": "The Team",
-              "note": "The twenty-person staff team I led across the three days.",
-              "media": [
-                {
-                  "type": "image",
-                  "src": "",
-                  "alt": "",
-                  "span": "half"
-                },
-                {
-                  "type": "image",
-                  "src": "",
-                  "alt": "",
-                  "span": "half"
-                },
-                {
-                  "type": "image",
-                  "src": "",
-                  "alt": "",
-                  "span": "half"
-                }
-              ]
-            },
-            {
-              "id": "coverage",
-              "label": "Social Media Coverage",
-              "note": "Content created and published live from the exhibition floor.",
-              "media": [
-                {
-                  "type": "video",
-                  "src": "",
-                  "alt": "",
-                  "span": "wide"
-                },
-                {
-                  "type": "video",
-                  "src": "",
-                  "alt": "",
-                  "span": "half"
-                },
-                {
-                  "type": "image",
-                  "src": "",
-                  "alt": "",
-                  "span": "half"
-                },
-                {
-                  "type": "image",
-                  "src": "",
-                  "alt": "",
-                  "span": "half"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "2025",
-          "year": "2025",
-          "title": "STAFF MEMBER",
-          "role": "Staff Member",
-          "description": "In the 2025 edition I joined the exhibition as a STAFF MEMBER — part of the on-site team delivering the visitor experience across the three days of the show.",
-          "sections": [
-            {
-              "id": "photography",
-              "label": "Photography",
-              "note": "Moments from the exhibition floor.",
-              "media": [
-                {
-                  "type": "image",
-                  "src": "",
-                  "alt": "",
-                  "span": "half"
-                },
-                {
-                  "type": "image",
-                  "src": "",
-                  "alt": "",
-                  "span": "half"
-                },
-                {
-                  "type": "image",
-                  "src": "",
-                  "alt": "",
-                  "span": "half"
-                }
-              ]
-            },
-            {
-              "id": "films",
-              "label": "Films",
-              "note": "Video content from the edition.",
-              "media": [
-                {
-                  "type": "video",
-                  "src": "",
-                  "alt": "",
-                  "span": "wide"
-                },
-                {
-                  "type": "video",
-                  "src": "",
-                  "alt": "",
-                  "span": "half"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "armoray-slug-e2e",
-      "index": "",
-      "brand": "Armoray",
-      "shortName": "Armoray",
-      "logo": "/media/logos/armoray.svg",
-      "tagline": "Performance e-commerce — ads built to convert.",
-      "industry": "E-Commerce",
-      "location": "Online — Worldwide",
-      "year": "2025",
-      "services": [
-        "Video Ads",
-        "Static Ads",
-        "Social Content"
-      ],
-      "role": "Creative — Video & Static Ads",
-      "website": "https://armoray.com",
-      "stat": "+5M",
-      "statLabel": "Trusted Athletes & Happy Customers",
-      "linkLabel": "Amazon Store",
-      "linkUrl": "https://www.amazon.com/stores/ARMORAY/page/FCC26F19-5AC4-4005-B645-112A68B5B70C",
-      "description": "Armoray is an e-commerce performance brand with a community of more than five million trusted athletes and happy customers — available at armoray.com and on its Amazon storefront. I produce the brand's video ads and static creatives: concepts, scripts, filming and the final cuts, built to stop the scroll and convert across paid social and the brand's own channels.",
-      "deliverables": [
-        "Video ads — concept, script, final cut",
-        "Static ad styles for paid social",
-        "Amazon storefront creatives",
-        "Always-on social content"
-      ],
-      "preview": {
-        "type": "image",
-        "src": "",
-        "alt": "Armoray"
-      },
-      "media": [],
-      "sections": [
-        {
-          "id": "video-ads",
-          "label": "Video Ads",
-          "note": "Video creatives produced for the brand — paid social and the brand's own channels.",
-          "media": [
-            {
-              "type": "video",
-              "src": "",
-              "alt": "",
-              "span": "wide"
-            },
-            {
-              "type": "video",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "video",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            }
-          ]
-        },
-        {
-          "id": "static-styles",
-          "label": "Static Ads & Styles",
-          "note": "Static creatives — feed posts, stories and display styles.",
-          "media": [
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            }
-          ]
-        },
-        {
-          "id": "results",
-          "label": "Results",
-          "note": "Campaign performance — the numbers behind the creatives.",
-          "media": [
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "holystrips",
-      "index": "",
-      "brand": "HolyStrips",
-      "shortName": "HolyStrips",
-      "logo": "/media/logos/holystrips.svg",
-      "tagline": "Direct-response creatives for paid social.",
-      "industry": "E-Commerce",
-      "location": "Online — Worldwide",
-      "year": "2025",
-      "services": [
-        "Video Ads",
-        "Static Ads",
-        "Social Content"
-      ],
-      "role": "Creative — Video & Static Ads",
-      "website": "https://holystrips.com",
-      "description": "HolyStrips is a direct-to-consumer e-commerce brand sold through holystrips.com. I create the brand's video ads and static ad styles — direct-response creatives built for paid social, with the performance results to show for it.",
-      "deliverables": [
-        "Video ads — concept to final cut",
-        "Static ad styles",
-        "Social content",
-        "Creative testing iterations"
-      ],
-      "preview": {
-        "type": "image",
-        "src": "",
-        "alt": "HolyStrips"
-      },
-      "media": [],
-      "sections": [
-        {
-          "id": "video-ads",
-          "label": "Video Ads",
-          "note": "Video creatives produced for the brand — paid social and the brand's own channels.",
-          "media": [
-            {
-              "type": "video",
-              "src": "",
-              "alt": "",
-              "span": "wide"
-            },
-            {
-              "type": "video",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "video",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            }
-          ]
-        },
-        {
-          "id": "static-styles",
-          "label": "Static Ads & Styles",
-          "note": "Static creatives — feed posts, stories and display styles.",
-          "media": [
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            }
-          ]
-        },
-        {
-          "id": "results",
-          "label": "Results",
-          "note": "Campaign performance — the numbers behind the creatives.",
-          "media": [
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "zero-trace",
-      "index": "",
-      "brand": "Zero Trace",
-      "shortName": "Zero Trace",
-      "logo": "/media/logos/zero-trace.svg",
-      "tagline": "Creatives that carry the brand.",
-      "industry": "E-Commerce",
-      "location": "Online — Worldwide",
-      "year": "2025",
-      "services": [
-        "Video Ads",
-        "Static Ads",
-        "Social Content"
-      ],
-      "role": "Creative — Video & Static Ads",
-      "website": "https://zerotraceliving.com",
-      "description": "Zero Trace is a direct-to-consumer e-commerce brand sold through zerotraceliving.com. I create the brand's video ads and static ad styles — direct-response creatives built for paid social, with the performance results to show for it.",
-      "deliverables": [
-        "Video ads — concept to final cut",
-        "Static ad styles",
-        "Social content",
-        "Creative testing iterations"
-      ],
-      "preview": {
-        "type": "image",
-        "src": "",
-        "alt": "Zero Trace"
-      },
-      "media": [],
-      "sections": [
-        {
-          "id": "video-ads",
-          "label": "Video Ads",
-          "note": "Video creatives produced for the brand — paid social and the brand's own channels.",
-          "media": [
-            {
-              "type": "video",
-              "src": "",
-              "alt": "",
-              "span": "wide"
-            },
-            {
-              "type": "video",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "video",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            }
-          ]
-        },
-        {
-          "id": "static-styles",
-          "label": "Static Ads & Styles",
-          "note": "Static creatives — feed posts, stories and display styles.",
-          "media": [
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            }
-          ]
-        },
-        {
-          "id": "results",
-          "label": "Results",
-          "note": "Campaign performance — the numbers behind the creatives.",
-          "media": [
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "gemstonewell",
-      "index": "",
-      "brand": "GemstoneWell",
-      "shortName": "GemstoneWell",
-      "logo": "/media/logos/gemstonewell.svg",
-      "tagline": "A tighter edit — films, styles, results.",
-      "industry": "E-Commerce",
-      "location": "Online — Worldwide",
-      "year": "2025",
-      "services": [
-        "Video Ads",
-        "Static Ads",
-        "Social Content"
-      ],
-      "role": "Creative — Video & Static Ads",
-      "website": "https://gemstonewell.com",
-      "description": "GemstoneWell is an e-commerce brand sold through gemstonewell.com. A tighter selection of my work — video ads and static styles built for paid social, with the results behind them.",
-      "deliverables": [
-        "Video ads — concept to final cut",
-        "Static ad styles",
-        "Social content"
-      ],
-      "preview": {
-        "type": "image",
-        "src": "",
-        "alt": "GemstoneWell"
-      },
-      "media": [],
-      "sections": [
-        {
-          "id": "video-ads",
-          "label": "Video Ads",
-          "note": "Video creatives produced for the brand — paid social and the brand's own channels.",
-          "media": [
-            {
-              "type": "video",
-              "src": "",
-              "alt": "",
-              "span": "wide"
-            },
-            {
-              "type": "video",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            }
-          ]
-        },
-        {
-          "id": "static-styles",
-          "label": "Static Ads & Styles",
-          "note": "Static creatives — feed posts, stories and display styles.",
-          "media": [
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            }
-          ]
-        },
-        {
-          "id": "results",
-          "label": "Results",
-          "note": "Campaign performance — the numbers behind the creatives.",
-          "media": [
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "national-salon-annaba",
-      "index": "",
-      "brand": "National Salon of Girls' Creativity & Women Entrepreneurs",
-      "shortName": "The Salon",
-      "logo": "/media/logos/salon-annaba.svg",
-      "tagline": "Sole content lead — Ministry of Youth official page.",
-      "industry": "Events & Public Institutions",
-      "location": "Annaba, DZ",
-      "year": "2025",
-      "services": [
-        "Content Creation",
-        "Photography",
-        "Film & Reels",
-        "Social Media"
-      ],
-      "role": "Sole Content Creator — Ministry of Youth Page",
-      "description": "The National Salon of Girls' Creativity and Women Entrepreneurs in Annaba. I was the sole person responsible for every piece of content published on the Ministry of Youth's official page — before and throughout the exhibition: planning, shooting, editing and publishing every photo, video and post across the salon's full run.",
-      "deliverables": [
-        "Official page content — planning to publishing",
-        "Photography coverage",
-        "Films & reels from the salon",
-        "Real-time social coverage"
-      ],
-      "preview": {
-        "type": "image",
-        "src": "",
-        "alt": "National Salon — Annaba"
-      },
-      "media": [],
-      "sections": [
-        {
-          "id": "photography",
-          "label": "Photography",
-          "note": "Coverage from the salon — exhibitors, visitors and the floor.",
-          "media": [
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            }
-          ]
-        },
-        {
-          "id": "films",
-          "label": "Films & Reels",
-          "note": "Video coverage published during the event.",
-          "media": [
-            {
-              "type": "video",
-              "src": "",
-              "alt": "",
-              "span": "wide"
-            },
-            {
-              "type": "video",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "video",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            }
-          ]
-        },
-        {
-          "id": "published",
-          "label": "Published Content",
-          "note": "Posts as they appeared on the official page.",
-          "media": [
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            },
-            {
-              "type": "image",
-              "src": "",
-              "alt": "",
-              "span": "half"
-            }
-          ]
-        }
-      ]
-    }
-  ],
   "pages": {
-    "home": {
-      "heroIntro": "Hi, my name is",
-      "heroName": "Adlene Benmechta",
-      "heroLine": "and this is",
-      "heroBox": "my portfolio",
-      "workTitle": "Brands I've had the opportunity to work with."
-    },
     "about": {
-      "headline": "I work at the intersection of strategy, culture and visual storytelling.",
       "bio1": "I'm Adlene Benmechta — a creative director and brand strategist based between Algiers and Europe. For the past eight years I've helped fashion houses, hotels, technology companies and lifestyle brands define how they look, speak and are remembered. My work moves from strategy to the final frame: positioning, identity, campaigns, photography and the digital experiences that carry them.",
       "bio2": "I believe a brand is not what it says about itself — it's the feeling that remains when the lights go out. That's the standard I hold every project to: work that is intentional enough to feel inevitable, and distinctive enough to be remembered.",
-      "portraitName": "Adlene Benmechta",
-      "portraitRole": "Creative Director — Algiers / Worldwide",
-      "teaserHeadline": "I work at the intersection of strategy, culture and visual storytelling.",
-      "teaserBio": "I'm Adlene Benmechta — a creative director and brand strategist based between Algiers and Europe. For the past eight years I've helped fashion houses, hotels, technology companies and lifestyle brands define how they look, speak and are remembered.",
+      "capabilities": [
+        {
+          "index": "01",
+          "note": "Concept to campaign — one held vision",
+          "title": "Creative Direction"
+        },
+        {
+          "index": "02",
+          "note": "Systems built to age slowly and well",
+          "title": "Brand Identity"
+        },
+        {
+          "index": "03",
+          "note": "Direction and photography for moving image",
+          "title": "Campaign & Film"
+        },
+        {
+          "index": "04",
+          "note": "Editorial, campaign and portrait work",
+          "title": "Photography"
+        },
+        {
+          "index": "05",
+          "note": "Websites and interactive worlds with editorial pacing",
+          "title": "Digital Experiences"
+        },
+        {
+          "index": "06",
+          "note": "Positioning, narrative and brand architecture",
+          "title": "Creative Strategy"
+        }
+      ],
       "capabilitiesTitle": "What I bring to the table.",
       "facts": [
         {
@@ -760,88 +62,786 @@
           "value": "Select projects — Q1 2026"
         }
       ],
-      "capabilities": [
-        {
-          "index": "01",
-          "title": "Creative Direction",
-          "note": "Concept to campaign — one held vision"
-        },
-        {
-          "index": "02",
-          "title": "Brand Identity",
-          "note": "Systems built to age slowly and well"
-        },
-        {
-          "index": "03",
-          "title": "Campaign & Film",
-          "note": "Direction and photography for moving image"
-        },
-        {
-          "index": "04",
-          "title": "Photography",
-          "note": "Editorial, campaign and portrait work"
-        },
-        {
-          "index": "05",
-          "title": "Digital Experiences",
-          "note": "Websites and interactive worlds with editorial pacing"
-        },
-        {
-          "index": "06",
-          "title": "Creative Strategy",
-          "note": "Positioning, narrative and brand architecture"
-        }
-      ]
-    },
-    "work": {
-      "kicker": "Selected Work",
-      "headline": "The work, in its own room.",
-      "intro": "Every box opens its own page — films, photography, campaigns and coverage, each with the full story behind it."
-    },
-    "contact": {
-      "headline": "Have a project\nin mind?",
-      "subline": "Let's create something worth remembering.",
-      "ctaButton": "Start a Project",
-      "stepsTitle": "What Happens Next",
-      "steps": [
-        {
-          "index": "01",
-          "title": "The Brief",
-          "note": "Tell me about the brand, the ambition and the timeline — a voice note is enough."
-        },
-        {
-          "index": "02",
-          "title": "The Proposal",
-          "note": "Within a week you receive a direction, a scope and a transparent budget."
-        },
-        {
-          "index": "03",
-          "title": "The Work",
-          "note": "Concept to final frame — with review checkpoints you can follow live."
-        }
-      ],
-      "location": "Algiers, DZ",
-      "locationSub": "working worldwide",
-      "availability": "Select projects",
-      "availabilitySub": "booking Q1 2026",
-      "response": "Within 48 hours",
-      "responseSub": "via email",
-      "locationTag": "Algiers · Worldwide"
+      "headline": "I work at the intersection of strategy, culture and visual storytelling.",
+      "portraitName": "Adlene Benmechta",
+      "portraitRole": "Creative Director — Algiers / Worldwide",
+      "teaserBio": "I'm Adlene Benmechta — a creative director and brand strategist based between Algiers and Europe. For the past eight years I've helped fashion houses, hotels, technology companies and lifestyle brands define how they look, speak and are remembered.",
+      "teaserHeadline": "I work at the intersection of strategy, culture and visual storytelling."
     },
     "caseStudy": {
       "backLabel": "All Work",
       "briefTitle": "The Brief",
-      "workTitle": "The work.",
+      "editionsLabel": "Choose an edition",
+      "exploreLabel": "Explore the edition",
       "nextLabel": "Next Project",
       "openLabel": "Open Case Study",
       "visitLabel": "Visit Website",
-      "editionsLabel": "Choose an edition",
-      "exploreLabel": "Explore the edition"
+      "workTitle": "The work."
+    },
+    "contact": {
+      "availability": "Select projects",
+      "availabilitySub": "booking Q1 2026",
+      "ctaButton": "Start a Project",
+      "headline": "Have a project\nin mind?",
+      "location": "Algiers, DZ",
+      "locationSub": "working worldwide",
+      "locationTag": "Algiers · Worldwide",
+      "response": "Within 48 hours",
+      "responseSub": "via email",
+      "steps": [
+        {
+          "index": "01",
+          "note": "Tell me about the brand, the ambition and the timeline — a voice note is enough.",
+          "title": "The Brief"
+        },
+        {
+          "index": "02",
+          "note": "Within a week you receive a direction, a scope and a transparent budget.",
+          "title": "The Proposal"
+        },
+        {
+          "index": "03",
+          "note": "Concept to final frame — with review checkpoints you can follow live.",
+          "title": "The Work"
+        }
+      ],
+      "stepsTitle": "What Happens Next",
+      "subline": "Let's create something worth remembering."
     },
     "footer": {
-      "tagline": "Campaign films, photography and identities — a portfolio of selected work, made with patience and light.",
+      "bottomLine": "Films · Photography · Identity",
       "copyright": "© 2026 Adlene Benmechta — All rights reserved",
-      "bottomLine": "Films · Photography · Identity"
+      "tagline": "Campaign films, photography and identities — a portfolio of selected work, made with patience and light."
+    },
+    "home": {
+      "heroBox": "my portfolio",
+      "heroIntro": "Hi, my name is",
+      "heroLine": "and this is",
+      "heroName": "Adlene Benmechta",
+      "workTitle": "Brands I've had the opportunity to work with."
+    },
+    "work": {
+      "headline": "The work, in its own room.",
+      "intro": "Every box opens its own page — films, photography, campaigns and coverage, each with the full story behind it.",
+      "kicker": "Selected Work"
     }
+  },
+  "portrait": {
+    "alt": "Adlene Benmechta — creative director, portrait",
+    "src": "/media/portrait-director.jpg"
+  },
+  "projects": [
+    {
+      "brand": "ACF",
+      "chapters": [
+        {
+          "description": "In the 2026 edition I served as TEAM MANAGER — responsible for a team of twenty staff members, coordinating their briefings, schedules and on-ground operations across the three days of the exhibition. I was also in charge of the event's social media pages throughout the salon — planning, creating and publishing content in real time.",
+          "id": "2026",
+          "role": "Team Manager",
+          "sections": [
+            {
+              "id": "team",
+              "label": "The Team",
+              "media": [
+                {
+                  "alt": "",
+                  "span": "half",
+                  "src": "",
+                  "type": "image"
+                },
+                {
+                  "alt": "",
+                  "span": "half",
+                  "src": "",
+                  "type": "image"
+                },
+                {
+                  "alt": "",
+                  "span": "half",
+                  "src": "",
+                  "type": "image"
+                }
+              ],
+              "note": "The twenty-person staff team I led across the three days."
+            },
+            {
+              "id": "coverage",
+              "label": "Social Media Coverage",
+              "media": [
+                {
+                  "alt": "",
+                  "span": "wide",
+                  "src": "",
+                  "type": "video"
+                },
+                {
+                  "alt": "",
+                  "span": "half",
+                  "src": "",
+                  "type": "video"
+                },
+                {
+                  "alt": "",
+                  "span": "half",
+                  "src": "",
+                  "type": "image"
+                },
+                {
+                  "alt": "",
+                  "span": "half",
+                  "src": "",
+                  "type": "image"
+                }
+              ],
+              "note": "Content created and published live from the exhibition floor."
+            }
+          ],
+          "title": "TEAM MANAGER",
+          "year": "2026"
+        },
+        {
+          "description": "In the 2025 edition I joined the exhibition as a STAFF MEMBER — part of the on-site team delivering the visitor experience across the three days of the show.",
+          "id": "2025",
+          "role": "Staff Member",
+          "sections": [
+            {
+              "id": "photography",
+              "label": "Photography",
+              "media": [
+                {
+                  "alt": "",
+                  "span": "half",
+                  "src": "",
+                  "type": "image"
+                },
+                {
+                  "alt": "",
+                  "span": "half",
+                  "src": "",
+                  "type": "image"
+                },
+                {
+                  "alt": "",
+                  "span": "half",
+                  "src": "",
+                  "type": "image"
+                }
+              ],
+              "note": "Moments from the exhibition floor."
+            },
+            {
+              "id": "films",
+              "label": "Films",
+              "media": [
+                {
+                  "alt": "",
+                  "span": "wide",
+                  "src": "",
+                  "type": "video"
+                },
+                {
+                  "alt": "",
+                  "span": "half",
+                  "src": "",
+                  "type": "video"
+                }
+              ],
+              "note": "Video content from the edition."
+            }
+          ],
+          "title": "STAFF MEMBER",
+          "year": "2025"
+        }
+      ],
+      "deliverables": [
+        "On-ground team coordination — 20 staff members",
+        "Social media management — live across the 3 days",
+        "Photo & video content from the exhibition floor"
+      ],
+      "description": "My journey with ACF across two editions of the exhibition — from STAFF MEMBER in 2025 to TEAM MANAGER in 2026, leading a twenty-person team and running the event's social media presence across the three days of the salon.",
+      "id": "acf",
+      "index": "",
+      "industry": "Events & Exhibitions",
+      "location": "Algeria",
+      "logo": "/media/logos/acf.svg",
+      "media": [],
+      "preview": {
+        "alt": "ACF",
+        "src": "",
+        "type": "image"
+      },
+      "role": "Staff Member → Team Manager",
+      "services": [
+        "On-Ground Team",
+        "Social Media",
+        "Content Creation"
+      ],
+      "shortName": "ACF",
+      "tagline": "Two editions. Two roles. One exhibition floor.",
+      "year": "2025 — 2026"
+    },
+    {
+      "brand": "Armoray",
+      "deliverables": [
+        "Video ads — concept, script, final cut",
+        "Static ad styles for paid social",
+        "Amazon storefront creatives",
+        "Always-on social content"
+      ],
+      "description": "Armoray is an e-commerce performance brand with a community of more than five million trusted athletes and happy customers — available at armoray.com and on its Amazon storefront. I produce the brand's video ads and static creatives: concepts, scripts, filming and the final cuts, built to stop the scroll and convert across paid social and the brand's own channels.",
+      "id": "armoray",
+      "index": "",
+      "industry": "E-Commerce",
+      "linkLabel": "Amazon Store",
+      "linkUrl": "https://www.amazon.com/stores/ARMORAY/page/FCC26F19-5AC4-4005-B645-112A68B5B70C",
+      "location": "Online — Worldwide",
+      "logo": "/media/logos/armoray.svg",
+      "media": [],
+      "preview": {
+        "alt": "Armoray",
+        "src": "",
+        "type": "image"
+      },
+      "role": "Creative — Video & Static Ads",
+      "sections": [
+        {
+          "id": "video-ads",
+          "label": "Video Ads",
+          "media": [
+            {
+              "alt": "",
+              "span": "wide",
+              "src": "",
+              "type": "video"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "video"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "video"
+            }
+          ],
+          "note": "Video creatives produced for the brand — paid social and the brand's own channels."
+        },
+        {
+          "id": "static-styles",
+          "label": "Static Ads & Styles",
+          "media": [
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            }
+          ],
+          "note": "Static creatives — feed posts, stories and display styles."
+        },
+        {
+          "id": "results",
+          "label": "Results",
+          "media": [
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            }
+          ],
+          "note": "Campaign performance — the numbers behind the creatives."
+        }
+      ],
+      "services": [
+        "Video Ads",
+        "Static Ads",
+        "Social Content"
+      ],
+      "shortName": "Armoray",
+      "stat": "+5M",
+      "statLabel": "Trusted Athletes & Happy Customers",
+      "tagline": "Performance e-commerce — ads built to convert.",
+      "website": "https://armoray.com",
+      "year": "2025"
+    },
+    {
+      "brand": "HolyStrips",
+      "deliverables": [
+        "Video ads — concept to final cut",
+        "Static ad styles",
+        "Social content",
+        "Creative testing iterations"
+      ],
+      "description": "HolyStrips is a direct-to-consumer e-commerce brand sold through holystrips.com. I create the brand's video ads and static ad styles — direct-response creatives built for paid social, with the performance results to show for it.",
+      "id": "holystrips",
+      "index": "",
+      "industry": "E-Commerce",
+      "location": "Online — Worldwide",
+      "logo": "/media/logos/holystrips.svg",
+      "media": [],
+      "preview": {
+        "alt": "HolyStrips",
+        "src": "",
+        "type": "image"
+      },
+      "role": "Creative — Video & Static Ads",
+      "sections": [
+        {
+          "id": "video-ads",
+          "label": "Video Ads",
+          "media": [
+            {
+              "alt": "",
+              "span": "wide",
+              "src": "",
+              "type": "video"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "video"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "video"
+            }
+          ],
+          "note": "Video creatives produced for the brand — paid social and the brand's own channels."
+        },
+        {
+          "id": "static-styles",
+          "label": "Static Ads & Styles",
+          "media": [
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            }
+          ],
+          "note": "Static creatives — feed posts, stories and display styles."
+        },
+        {
+          "id": "results",
+          "label": "Results",
+          "media": [
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            }
+          ],
+          "note": "Campaign performance — the numbers behind the creatives."
+        }
+      ],
+      "services": [
+        "Video Ads",
+        "Static Ads",
+        "Social Content"
+      ],
+      "shortName": "HolyStrips",
+      "tagline": "Direct-response creatives for paid social.",
+      "website": "https://holystrips.com",
+      "year": "2025"
+    },
+    {
+      "brand": "Zero Trace",
+      "deliverables": [
+        "Video ads — concept to final cut",
+        "Static ad styles",
+        "Social content",
+        "Creative testing iterations"
+      ],
+      "description": "Zero Trace is a direct-to-consumer e-commerce brand sold through zerotraceliving.com. I create the brand's video ads and static ad styles — direct-response creatives built for paid social, with the performance results to show for it.",
+      "id": "zero-trace",
+      "index": "",
+      "industry": "E-Commerce",
+      "location": "Online — Worldwide",
+      "logo": "/media/logos/zero-trace.svg",
+      "media": [],
+      "preview": {
+        "alt": "Zero Trace",
+        "src": "",
+        "type": "image"
+      },
+      "role": "Creative — Video & Static Ads",
+      "sections": [
+        {
+          "id": "video-ads",
+          "label": "Video Ads",
+          "media": [
+            {
+              "alt": "",
+              "span": "wide",
+              "src": "",
+              "type": "video"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "video"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "video"
+            }
+          ],
+          "note": "Video creatives produced for the brand — paid social and the brand's own channels."
+        },
+        {
+          "id": "static-styles",
+          "label": "Static Ads & Styles",
+          "media": [
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            }
+          ],
+          "note": "Static creatives — feed posts, stories and display styles."
+        },
+        {
+          "id": "results",
+          "label": "Results",
+          "media": [
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            }
+          ],
+          "note": "Campaign performance — the numbers behind the creatives."
+        }
+      ],
+      "services": [
+        "Video Ads",
+        "Static Ads",
+        "Social Content"
+      ],
+      "shortName": "Zero Trace",
+      "tagline": "Creatives that carry the brand.",
+      "website": "https://zerotraceliving.com",
+      "year": "2025"
+    },
+    {
+      "brand": "GemstoneWell",
+      "deliverables": [
+        "Video ads — concept to final cut",
+        "Static ad styles",
+        "Social content"
+      ],
+      "description": "GemstoneWell is an e-commerce brand sold through gemstonewell.com. A tighter selection of my work — video ads and static styles built for paid social, with the results behind them.",
+      "id": "gemstonewell",
+      "index": "",
+      "industry": "E-Commerce",
+      "location": "Online — Worldwide",
+      "logo": "/media/logos/gemstonewell.svg",
+      "media": [],
+      "preview": {
+        "alt": "GemstoneWell",
+        "src": "",
+        "type": "image"
+      },
+      "role": "Creative — Video & Static Ads",
+      "sections": [
+        {
+          "id": "video-ads",
+          "label": "Video Ads",
+          "media": [
+            {
+              "alt": "",
+              "span": "wide",
+              "src": "",
+              "type": "video"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "video"
+            }
+          ],
+          "note": "Video creatives produced for the brand — paid social and the brand's own channels."
+        },
+        {
+          "id": "static-styles",
+          "label": "Static Ads & Styles",
+          "media": [
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            }
+          ],
+          "note": "Static creatives — feed posts, stories and display styles."
+        },
+        {
+          "id": "results",
+          "label": "Results",
+          "media": [
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            }
+          ],
+          "note": "Campaign performance — the numbers behind the creatives."
+        }
+      ],
+      "services": [
+        "Video Ads",
+        "Static Ads",
+        "Social Content"
+      ],
+      "shortName": "GemstoneWell",
+      "tagline": "A tighter edit — films, styles, results.",
+      "website": "https://gemstonewell.com",
+      "year": "2025"
+    },
+    {
+      "brand": "National Salon of Girls' Creativity & Women Entrepreneurs",
+      "deliverables": [
+        "Official page content — planning to publishing",
+        "Photography coverage",
+        "Films & reels from the salon",
+        "Real-time social coverage"
+      ],
+      "description": "The National Salon of Girls' Creativity and Women Entrepreneurs in Annaba. I was the sole person responsible for every piece of content published on the Ministry of Youth's official page — before and throughout the exhibition: planning, shooting, editing and publishing every photo, video and post across the salon's full run.",
+      "id": "national-salon-annaba",
+      "index": "",
+      "industry": "Events & Public Institutions",
+      "location": "Annaba, DZ",
+      "logo": "/media/logos/salon-annaba.svg",
+      "media": [],
+      "preview": {
+        "alt": "National Salon — Annaba",
+        "src": "",
+        "type": "image"
+      },
+      "role": "Sole Content Creator — Ministry of Youth Page",
+      "sections": [
+        {
+          "id": "photography",
+          "label": "Photography",
+          "media": [
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            }
+          ],
+          "note": "Coverage from the salon — exhibitors, visitors and the floor."
+        },
+        {
+          "id": "films",
+          "label": "Films & Reels",
+          "media": [
+            {
+              "alt": "",
+              "span": "wide",
+              "src": "",
+              "type": "video"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "video"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "video"
+            }
+          ],
+          "note": "Video coverage published during the event."
+        },
+        {
+          "id": "published",
+          "label": "Published Content",
+          "media": [
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            },
+            {
+              "alt": "",
+              "span": "half",
+              "src": "",
+              "type": "image"
+            }
+          ],
+          "note": "Posts as they appeared on the official page."
+        }
+      ],
+      "services": [
+        "Content Creation",
+        "Photography",
+        "Film & Reels",
+        "Social Media"
+      ],
+      "shortName": "The Salon",
+      "tagline": "Sole content lead — Ministry of Youth official page.",
+      "year": "2025"
+    }
+  ],
+  "settings": {
+    "email": "hello@adlenebenmechta.com"
+  },
+  "version": 1,
+  "workFilm": {
+    "poster": "/media/work-poster.jpg",
+    "video": "/work-video.mp4"
   }
 }
