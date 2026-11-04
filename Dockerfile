@@ -2,9 +2,10 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 
-# Install dependencies (fresh resolution, no lockfile required)
-COPY package.json ./
-RUN npm install --legacy-peer-deps --no-audit --no-fund
+# Install exact pinned dependencies from the lockfile (reproducible:
+# prevents npm from resolving newer, potentially broken package versions)
+COPY package.json package-lock.json ./
+RUN npm ci --legacy-peer-deps --no-audit --no-fund
 
 # Build the Next.js standalone application
 COPY . .
