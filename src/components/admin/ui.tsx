@@ -12,6 +12,7 @@ export function Field({
   placeholder,
   type = "text",
   hint,
+  warn,
   error,
 }: {
   label: string;
@@ -20,6 +21,8 @@ export function Field({
   placeholder?: string;
   type?: string;
   hint?: string;
+  /** amber notice — shown instead of the hint (e.g. a pasted link was moved) */
+  warn?: string;
   error?: string;
 }) {
   return (
@@ -36,6 +39,8 @@ export function Field({
       />
       {error ? (
         <span className="mt-1 block text-[11px] text-red-400/90">{error}</span>
+      ) : warn ? (
+        <span className="mt-1 block text-[11px] text-amber-300/90">{warn}</span>
       ) : (
         hint && (
           <span className="mt-1 block text-[11px] text-white/30">{hint}</span>

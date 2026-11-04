@@ -33,6 +33,33 @@ function slugify(s: string): string {
     .slice(0, 40);
 }
 
+/* a pasted web link — "https://…" or "www.…" — does not belong in the
+   page-address field; the form moves it to the Website field for you */
+function looksLikeLink(v: string): boolean {
+  return /^(https?:\/\/|www\.)/i.test(v.trim());
+}
+
+/* derive a page slug from a pasted link:
+   https://www.instagram.com/thimar_dz/ → "thimar-dz" */
+function slugFromLink(u: string): string {
+  try {
+    const url = new URL(/^https?:\/\//i.test(u) ? u : `https://${u}`);
+    const segs = url.pathname.split("/").filter(Boolean);
+    const host = url.hostname.replace(/^www\./, "").split(".")[0];
+    return slugify(segs[segs.length - 1] ?? "") || slugify(host) || "";
+  } catch {
+    return "";
+  }
+}
+
+/* external links need a scheme — without one the browser treats them
+   as pages of this site (https:// is prepended on save) */
+function withScheme(u: string | undefined): string | undefined {
+  const t = (u ?? "").trim();
+  if (!t) return undefined;
+  return /^(https?:\/\/|mailto:|tel:)/i.test(t) ? t : `https://${t}`;
+}
+
 /* ── media rows with upload / replace / reorder / remove ────────── */
 
 function MediaListEditor({
@@ -564,6 +591,10 @@ export function BrandForm({
   const set = <K extends keyof Project>(k: K, v: Project[K]) =>
     setP((d) => ({ ...d, [k]: v }));
 
+  /* shown under the page-address field after a web link was pasted
+     there — explains where the link went */
+  const [slugNote, setSlugNote] = useState<string | null>(null);
+
   /* slug rules — apply to new AND existing brands:
      valid format + must not collide with another brand's page */
   const slugTaken =
@@ -591,6 +622,8 @@ export function BrandForm({
               const out = structuredClone(p);
               if (isNew && !out.id) out.id = slugify(out.brand);
               if (!out.shortName) out.shortName = out.brand.split(" ")[0];
+              out.website = withScheme(out.website);
+              out.linkUrl = withScheme(out.linkUrl);
               if (!isNew && out.id !== project.id) {
                 if (
                   !confirm(
@@ -616,21 +649,37 @@ export function BrandForm({
           placeholder="e.g. Armoray"
         />
         <Field
-          label="URL slug"
+          label="Page address (slug)"
           value={p.id}
-          onChange={(v) => set("id", slugify(v))}
+          onChange={(v) => {
+            const t = v.trim();
+            if (looksLikeLink(t)) {
+              /* a web link was pasted where the page address goes —
+                 move it to the Website field, derive the slug from it */
+              const link = /^https?:\/\//i.test(t) ? t : `https://${t}`;
+              const derived = slugFromLink(t);
+              setSlugNote(
+                `Web link detected — moved to the Website field; page address set to “${derived}”.`,
+              );
+              setP((d) => ({ ...d, id: derived || d.id, website: link }));
+            } else {
+              setSlugNote(null);
+              set("id", slugify(v));
+            }
+          }}
           placeholder="auto from name"
           error={
             slugTaken
               ? `"${p.id}" is already used by another brand — pick a different slug`
               : undefined
           }
+          warn={slugNote ?? undefined}
           hint={
             isNew
-              ? `Page will live at /work/${p.id || "…"}`
+              ? `This page's own address — /work/${p.id || "…"}. Web links go in the Website field below.`
               : p.id !== project.id
                 ? `Page will move to /work/${p.id || "…"} — the old link will stop working`
-                : `Page lives at /work/${p.id}`
+                : `This page's own address — /work/${p.id}. Web links go in the Website field below.`
           }
         />
         <Field
@@ -666,10 +715,11 @@ export function BrandForm({
           placeholder="Creative — Video & Static Ads"
         />
         <Field
-          label="Website — clicking the brand name opens it"
+          label="Website — the brand name opens this link"
           value={p.website ?? ""}
           onChange={(v) => set("website", v || undefined)}
-          placeholder="https://armoray.com"
+          placeholder="https://www.instagram.com/yourbrand"
+          hint="Full link (https://…) — the brand's site, store or Instagram page"
         />
         <div className="grid grid-cols-2 gap-4">
           <Field
@@ -696,6 +746,7 @@ export function BrandForm({
           value={p.linkUrl ?? ""}
           onChange={(v) => set("linkUrl", v || undefined)}
           placeholder="https://www.amazon.com/stores/…"
+          hint="Full link (https://…)"
         />
       </div>
 

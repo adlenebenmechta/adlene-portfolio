@@ -567,6 +567,60 @@ const seedProjects: Project[] = [
       },
     ],
   },
+
+  /* ── Thimar — restaurant (Instagram) ───────────────────────── */
+  {
+    id: "thimar",
+    index: "",
+    brand: "Thimar",
+    shortName: "Thimar",
+    logo: "/media/logos/thimar.png",
+    monogram: "T",
+    tagline: "A restaurant — plate by plate.",
+    industry: "Restaurant",
+    location: "Algeria",
+    year: "2026",
+    services: ["Video Ads", "Static Ads", "Social Content"],
+    role: "Creative — Video & Static Ads",
+    website: "https://www.instagram.com/thimar_dz/",
+    description:
+      "Thimar (ثمار) is a restaurant. I create the brand's video and static content for social — the dishes, the room and the moments around the table, shot to make people arrive hungry.",
+    deliverables: [
+      "Video ads — concept to final cut",
+      "Static ad styles",
+      "Social content",
+    ],
+    preview: { type: "image", src: "", alt: "Thimar" },
+    media: [],
+    sections: ecomSections(2, 3, 2),
+  },
+
+  /* ── Bona — soft drinks (Instagram) ────────────────────────── */
+  {
+    id: "bona",
+    index: "",
+    brand: "Bona",
+    shortName: "Bona",
+    logo: "/media/logos/bona.svg",
+    monogram: "B",
+    tagline: "Soft drinks — served cold, shot bright.",
+    industry: "Beverages — Soft Drinks",
+    location: "Algeria",
+    year: "2026",
+    services: ["Video Ads", "Static Ads", "Social Content"],
+    role: "Creative — Video & Static Ads",
+    website: "https://www.instagram.com/bona_algerie_officiel/?hl=fr",
+    description:
+      "Bona is an Algerian soft-drinks company. I create the brand's video and static content for social — product, refreshment and the brand's world, built to stop the scroll.",
+    deliverables: [
+      "Video ads — concept to final cut",
+      "Static ad styles",
+      "Social content",
+    ],
+    preview: { type: "image", src: "", alt: "Bona" },
+    media: [],
+    sections: ecomSections(2, 3, 2),
+  },
 ];
 
 export const DEFAULT_CONTENT: SiteContent = {

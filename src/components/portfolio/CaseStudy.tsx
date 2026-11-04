@@ -35,10 +35,12 @@ function Meta({ label, children }: { label: string; children: React.ReactNode })
   );
 }
 
-/** host display for an external link, e.g. "armoray.com" */
+/** host display for an external link, e.g. "armoray.com"
+ *  (query strings like Instagram's ?hl=fr are dropped for the chip) */
 function prettyHost(url: string): string {
   return url
     .replace(/^https?:\/\//, "")
+    .replace(/[?#].*$/, "")
     .replace(/\/$/, "")
     .replace(/^www\./, "");
 }
