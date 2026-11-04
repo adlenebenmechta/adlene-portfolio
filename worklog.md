@@ -469,3 +469,30 @@ Stage Summary:
 - NEED FROM USER: a fresh GitHub PAT (repo scope) → then I: update remote URL + railway.env + .env.local, push 665bf3b, variableUpsert GITHUB_TOKEN on Railway service 9c67ec73, wait for auto-deploy, run full production E2E (admin 32 + texts 11 + slug 12) on the -b8e6 domain.
 - Production admin CMS is broken (502) until the Railway GITHUB_TOKEN is updated — same fix.
 - Public site unaffected (old content keeps serving from raw fallback).
+
+---
+Task ID: 20 (completion)
+Agent: Super Z (main agent)
+Task: User supplied a fresh GitHub PAT — finish the task-20 push, deploy the six brand boxes to production, and run the full production E2E.
+
+Work Log:
+- Sandbox had reset again: rebuilt scripts/railway.env + .env.local (RAILWAY_TOKEN 64d261ef…, new GITHUB_TOKEN, project/service/domain IDs from task 19, ADMIN_PASSWORD) and repointed the git remote at the new PAT (verified via /user: adlenebenmechta, repo push permission OK).
+- LINEAGE FIX: remote main was at 2e278cc (task-19 worklog, pushed successfully before the old PAT died) while local had re-created the same worklog as 657a19e — that local commit had accidentally LOST src/app/api/admin/upload/route.ts (the admin media-upload API, present at af377b6) plus an old bun.lock delta + mode changes. Rebased the two task-20 commits (feat + worklog) onto origin/main via cherry-pick after verifying trees; HEAD became a SUPERSET (upload route restored + task-20 code). Dropped junk commit 1c4c624 (build artifact tsconfig.tsbuildinfo only).
+- SET Railway GITHUB_TOKEN first: variableUpsert on service 9c67ec73 with skipDeploys=true (fixes the 502 admin CMS on next deploy; no double build).
+- Local re-verification of the merged tree: bun run build clean (13 routes incl. /api/admin/upload + /work/[slug]/[chapter]); LOCAL_CONTENT=1 server: 14 route checks + 15/15 task-20 content markers (external links ×4, Amazon chip, +5M, ACF editions/TEAM MANAGER/20 staff/social media/3 days, Ministry of Youth, sections, 6 boxes, no numbering).
+- PUSH 71f9b60 → GitHub main OK.
+- RAILWAY DEPLOY #1 FAILED (db7c5896): Dockerfile ran `npm install` from package.json only (no lockfile) → fresh resolution pulled next@16.4.2 (released after Oct 23), whose Turbopack fails Google Fonts with "Can't resolve '@vercel/turbopack-next/internal/font/google/font'" (32 errors, exit 1). Local build was green because node_modules pins next@16.1.3. Confirmed via buildLogs GraphQL query (introspected the schema: buildLogs(deploymentId){message severity}).
+- FIX — reproducible builds: Dockerfile now COPYs package.json + package-lock.json and runs `npm ci --legacy-peer-deps` (lockfile pins next@16.1.3, includes all platform optionals @next/swc-linux-*-gnu/musl). Verified npm ci --dry-run sync + a full local simulation (git archive → npm ci → npm run build) succeeded with next 16.1.3 before pushing.
+- Auto-deploy on push does NOT work for this project (no repo webhook; deploymentCreate doesn't exist) → discovered serviceInstanceDeployV2(commitSha, environmentId, serviceId) and triggered deploys manually (3570558 → build a9158233-lineage).
+- DEPLOY #2 SUCCESS (880cb331): all 13 routes 200, old demo slug 404, 17/17 production content markers, Playfair woff2 files served 200.
+- PRODUCTION E2E: slug 12/12, texts 11/11, admin 31/32 → the single failure was the suite's own stale "5 projects present" assertion (task 20 made it 6) → updated e2e-admin-prod.py (5→6 in two places) → 32/32.
+- VLM visual QA on 5 production screenshots: clean, no numbering, no overlaps — BUT the small square page-header tile (h-12/h-16) rendered wide 4:1 wordmark SVGs at ~4px (Salon tile looked empty). FIX: added optional Project.monogram ("ACF","A","HS","ZT","GW","SA") rendered as large serif initials in the tile (CaseStudy + ChapterPage; wordmark SVGs stay in the grid boxes); injected into content.json via scripts/inject-monograms.py; structuredClone in BrandForm keeps the field through admin edits (verified: monogram still rendered after the full admin E2E roundtrip).
+- PUSH complications: E2E content commits made remote diverge → git pull --rebase hit a content.json conflict (admin's latest commit reorders keys: hero-first; all keys intact) → resolved by taking the live remote content + re-injecting monograms → 83e8ab6 pushed, deployed (a9158233 SUCCESS).
+- FINAL PRODUCTION STATE: 8/8 monogram spans live (A/HS/ZT/GW/SA/ACF ×3); routes 200; VLM confirms "SA" tile clearly visible & centered, no layout issues; admin E2E 32/32 after the change; monogram survives CMS roundtrips.
+
+Stage Summary:
+- LIVE: https://adlene-portfolio-production-b8e6.up.railway.app runs the full task-20 brand-boxes system — 6 un-numbered project boxes, ACF edition pages (2025 STAFF MEMBER / 2026 TEAM MANAGER), e-com pages (external site links, +5M stat, Amazon Store chip, Video Ads / Static Ads & Styles / Results sections with media placeholder slots), National Salon of Annaba ministry coverage, serif monogram header tiles.
+- Production E2E after all changes: admin 32/32 · texts 11/11 · slug 12/12 (55/55).
+- Build pipeline now reproducible (npm ci from lockfile, next pinned at tested 16.1.3) — no more surprise breakage from fresh npm resolution.
+- GitHub main HEAD 83e8ab6; Railway service 9c67ec73 deployment a9158233; GITHUB_TOKEN var updated (admin CMS healthy).
+- Deploys are manual for now: use serviceInstanceDeployV2 with the new commit SHA (auto-deploy webhook is not installed on the repo).
