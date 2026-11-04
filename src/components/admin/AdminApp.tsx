@@ -103,6 +103,15 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
   const [msg, setMsg] = useState("");
   const [editing, setEditing] = useState<number | "new" | null>(null);
   const msgTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  /** the content this form was loaded from — the merge base for saves,
+   *  so only the user's own edits ever get committed (stale tabs can
+   *  no longer revert changes made elsewhere) */
+  const baseRef = useRef<SiteContent | null>(null);
+  const dirtyRef = useRef(false);
+
+  useEffect(() => {
+    dirtyRef.current = dirty;
+  }, [dirty]);
 
   const flash = (t: string) => {
     setMsg(t);
@@ -113,13 +122,26 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
   const load = useCallback(async () => {
     const r = await fetch("/api/admin/content");
     if (r.status === 401) return onLogout();
-    setContent(await r.json());
+    const data = (await r.json()) as SiteContent;
+    setContent(data);
+    baseRef.current = data;
     setDirty(false);
   }, [onLogout]);
 
   useEffect(() => {
     load();
   }, [load]);
+
+  /* Returning to the tab re-syncs with the live content — silently
+   * when nothing is unsaved, so a tab left open overnight can never
+   * save an outdated picture of the site again. */
+  useEffect(() => {
+    const onFocus = () => {
+      if (!dirtyRef.current && !saving) load();
+    };
+    window.addEventListener("focus", onFocus);
+    return () => window.removeEventListener("focus", onFocus);
+  }, [load, saving]);
 
   /** resolved page texts (defaults fill any missing field) */
   const pages: PageTexts | null = content
@@ -149,12 +171,27 @@ function Dashboard({ onLogout }: { onLogout: () => void }) {
       const r = await fetch("/api/admin/content", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(content),
+        body: JSON.stringify({ base: baseRef.current, draft: content }),
       });
       if (r.status === 401) return onLogout();
       if (!r.ok) throw new Error((await r.json()).error ?? "save failed");
+      const res = (await r.json()) as {
+        ok?: boolean;
+        merged?: boolean;
+        content?: SiteContent;
+      };
+      /* adopt the committed result — includes any newer changes the
+       * server merged in (e.g. a logo fix made on the repo) */
+      if (res.content) {
+        setContent(res.content);
+        baseRef.current = res.content;
+      }
       setDirty(false);
-      flash("Saved — the site updates within a few seconds ✓");
+      flash(
+        res.merged
+          ? "Saved — merged with newer site changes ✓"
+          : "Saved — the site updates within a few seconds ✓",
+      );
     } catch (e) {
       flash(`Save failed: ${e instanceof Error ? e.message : "error"}`);
     } finally {

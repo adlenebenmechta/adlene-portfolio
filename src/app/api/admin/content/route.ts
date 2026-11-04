@@ -1,5 +1,13 @@
 import { NextResponse } from "next/server";
-import { ADMIN_COOKIE, isAuthed, readContentFile, writeContentFile } from "@/lib/github";
+import {
+  ADMIN_COOKIE,
+  commitContentFile,
+  isAuthed,
+  readContentFile,
+  readContentFileWithSha,
+  writeContentFile,
+} from "@/lib/github";
+import { deepEqual, mergeContent } from "@/lib/content-merge";
 import type { SiteContent } from "@/lib/site-content";
 
 export const runtime = "nodejs";
@@ -61,6 +69,53 @@ export async function PUT(req: Request): Promise<NextResponse> {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   try {
     const body = await req.json();
+
+    /* Envelope { base, draft } — the admin UI's non-destructive save:
+     * only what the user changed since loading gets applied onto the
+     * newest remote content, so concurrent changes (agent fixes,
+     * other tabs) survive instead of being silently reverted. */
+    const isEnvelope =
+      body &&
+      typeof body === "object" &&
+      !Array.isArray(body) &&
+      "draft" in body &&
+      ((body as Record<string, unknown>).draft &&
+        typeof (body as Record<string, unknown>).draft === "object");
+
+    if (isEnvelope) {
+      const { base, draft } = body as {
+        base: unknown;
+        draft: unknown;
+      };
+      if (!validate(draft))
+        return NextResponse.json(
+          { error: "Invalid content shape" },
+          { status: 400 },
+        );
+
+      let result: unknown = draft;
+      let merged = false;
+      /* read → merge → commit-at-sha; retry when a concurrent commit
+       * slips in between read and write (GitHub answers 409) */
+      for (let attempt = 0; attempt < 3; attempt++) {
+        const { content: latest, sha } = await readContentFileWithSha();
+        if (base != null && deepEqual(base, latest)) {
+          result = draft; // no drift — the user's state IS the newest
+        } else {
+          merged = true;
+          result = base == null ? draft : mergeContent(base, draft, latest);
+        }
+        if (await commitContentFile(result, sha)) break;
+        if (attempt === 2)
+          throw new Error(
+            "content.json kept changing during save — please retry",
+          );
+      }
+      return NextResponse.json({ ok: true, merged, content: result });
+    }
+
+    /* Legacy shape: a raw content object replaces the file (used by
+     * the E2E suites and any scripted API client). */
     if (!validate(body))
       return NextResponse.json({ error: "Invalid content shape" }, { status: 400 });
     await writeContentFile(body);

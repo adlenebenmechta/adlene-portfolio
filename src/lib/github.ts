@@ -49,12 +49,52 @@ export async function readContentFile(): Promise<unknown> {
   return JSON.parse(Buffer.from(j.content, "base64").toString("utf8"));
 }
 
+/** Read content.json together with its blob sha (for optimistic locking). */
+export async function readContentFileWithSha(): Promise<{
+  content: unknown;
+  sha: string | null;
+}> {
+  const res = await gh(
+    `/contents/content.json?ref=${BRANCH}&t=${Date.now()}`,
+  );
+  if (!res.ok) throw new Error(`read content.json failed (${res.status})`);
+  const j = await res.json();
+  return {
+    content: JSON.parse(Buffer.from(j.content, "base64").toString("utf8")),
+    sha: typeof j.sha === "string" ? j.sha : null,
+  };
+}
+
 /** Commit the given object as content.json on main. */
 export async function writeContentFile(content: unknown): Promise<void> {
   const res = await gh(`/contents/content.json?ref=${BRANCH}`, {});
   const sha = res.ok ? (await res.json()).sha : undefined;
 
-  const put = await gh(`/contents/content.json`, {
+  await putContentFile(content, sha);
+  await purgeCdn("content.json");
+}
+
+/**
+ * Commit content.json at the given sha (optimistic locking).
+ * Returns false when GitHub answers 409 — the file changed concurrently —
+ * so the caller can re-read, re-merge and retry instead of clobbering.
+ */
+export async function commitContentFile(
+  content: unknown,
+  sha: string | null,
+): Promise<boolean> {
+  const put = await putContentFile(content, sha ?? undefined, true);
+  if (put === "conflict") return false;
+  await purgeCdn("content.json");
+  return true;
+}
+
+async function putContentFile(
+  content: unknown,
+  sha: string | undefined,
+  soft409 = false,
+): Promise<Response | "conflict"> {
+  const res = await gh(`/contents/content.json`, {
     method: "PUT",
     body: JSON.stringify({
       message: "content: update via admin",
@@ -66,12 +106,13 @@ export async function writeContentFile(content: unknown): Promise<void> {
       ).toString("base64"),
     }),
   });
-  if (!put.ok) {
+  if (soft409 && res.status === 409) return "conflict";
+  if (!res.ok) {
     throw new Error(
-      `commit content.json failed (${put.status}): ${await put.text()}`,
+      `commit content.json failed (${res.status}): ${await res.text()}`,
     );
   }
-  await purgeCdn("content.json");
+  return res;
 }
 
 const EXT_OK = new Set([
