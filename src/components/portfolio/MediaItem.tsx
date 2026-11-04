@@ -10,10 +10,12 @@ import { SmartVideo } from "./SmartVideo";
 const SPAN: Record<PortfolioMedia["span"], string> = {
   full: "col-span-2 aspect-[16/10] md:col-span-12 md:aspect-[21/10]",
   wide: "col-span-2 aspect-[16/10] md:col-span-12 md:aspect-[21/9]",
+  landscape: "col-span-2 aspect-[16/9] md:col-span-6",
   half: "col-span-2 aspect-[4/3] md:col-span-6",
   "half-tall": "col-span-2 aspect-[3/4] md:col-span-6 md:aspect-[4/5]",
   third: "col-span-1 aspect-[3/4] md:col-span-4",
   portrait: "col-span-1 aspect-[3/4] md:col-span-3",
+  reel: "col-span-1 aspect-[9/16] md:col-span-4",
 };
 
 interface MediaItemProps {
@@ -23,8 +25,17 @@ interface MediaItemProps {
 }
 
 export function MediaItem({ item, cta = false }: MediaItemProps) {
-  /* reserved slot — no media uploaded yet: elegant dashed frame */
+  /* reserved slot — no media uploaded yet: elegant dashed frame
+     that states the format the slot is designed for */
   if (!item.src) {
+    const formatHint =
+      item.type === "video"
+        ? item.span === "reel"
+          ? "Film — 9:16"
+          : item.span === "landscape"
+            ? "Film — 16:9"
+            : "Film"
+        : "Photo";
     return (
       <Reveal variant="clip" className={SPAN[item.span]} amount={0.25}>
         <figure className="relative flex h-full w-full flex-col items-center justify-center gap-3 overflow-hidden rounded-md border border-dashed border-white/[0.14] bg-white/[0.015] md:rounded-lg">
@@ -34,7 +45,7 @@ export function MediaItem({ item, cta = false }: MediaItemProps) {
             <ImageIcon size={22} aria-hidden="true" className="text-white/20" />
           )}
           <span className="text-[9px] uppercase tracking-[0.3em] text-white/25">
-            {item.type === "video" ? "Film" : "Photo"}
+            {formatHint}
           </span>
         </figure>
       </Reveal>

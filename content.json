@@ -170,13 +170,13 @@
               "media": [
                 {
                   "alt": "",
-                  "span": "wide",
+                  "span": "reel",
                   "src": "",
                   "type": "video"
                 },
                 {
                   "alt": "",
-                  "span": "half",
+                  "span": "reel",
                   "src": "",
                   "type": "video"
                 },
@@ -193,7 +193,7 @@
                   "type": "image"
                 }
               ],
-              "note": "Content created and published live from the exhibition floor."
+              "note": "Content created and published live from the exhibition floor — vertical 9:16 films and photos."
             }
           ],
           "title": "TEAM MANAGER",
@@ -235,18 +235,18 @@
               "media": [
                 {
                   "alt": "",
-                  "span": "wide",
+                  "span": "reel",
                   "src": "",
                   "type": "video"
                 },
                 {
                   "alt": "",
-                  "span": "half",
+                  "span": "reel",
                   "src": "",
                   "type": "video"
                 }
               ],
-              "note": "Video content from the edition."
+              "note": "Vertical 9:16 video content from the edition."
             }
           ],
           "title": "STAFF MEMBER",
@@ -312,24 +312,24 @@
           "media": [
             {
               "alt": "",
-              "span": "wide",
+              "span": "reel",
               "src": "",
               "type": "video"
             },
             {
               "alt": "",
-              "span": "half",
+              "span": "reel",
               "src": "",
               "type": "video"
             },
             {
               "alt": "",
-              "span": "half",
+              "span": "reel",
               "src": "",
               "type": "video"
             }
           ],
-          "note": "Video creatives produced for the brand — paid social and the brand's own channels."
+          "note": "Vertical 9:16 video creatives produced for the brand — paid social and the brand's own channels."
         },
         {
           "id": "static-styles",
@@ -429,24 +429,24 @@
           "media": [
             {
               "alt": "",
-              "span": "wide",
+              "span": "reel",
               "src": "",
               "type": "video"
             },
             {
               "alt": "",
-              "span": "half",
+              "span": "reel",
               "src": "",
               "type": "video"
             },
             {
               "alt": "",
-              "span": "half",
+              "span": "reel",
               "src": "",
               "type": "video"
             }
           ],
-          "note": "Video creatives produced for the brand — paid social and the brand's own channels."
+          "note": "Vertical 9:16 video creatives produced for the brand — paid social and the brand's own channels."
         },
         {
           "id": "static-styles",
@@ -544,24 +544,24 @@
           "media": [
             {
               "alt": "",
-              "span": "wide",
+              "span": "reel",
               "src": "",
               "type": "video"
             },
             {
               "alt": "",
-              "span": "half",
+              "span": "reel",
               "src": "",
               "type": "video"
             },
             {
               "alt": "",
-              "span": "half",
+              "span": "reel",
               "src": "",
               "type": "video"
             }
           ],
-          "note": "Video creatives produced for the brand — paid social and the brand's own channels."
+          "note": "Vertical 9:16 video creatives produced for the brand — paid social and the brand's own channels."
         },
         {
           "id": "static-styles",
@@ -658,18 +658,18 @@
           "media": [
             {
               "alt": "",
-              "span": "wide",
+              "span": "reel",
               "src": "",
               "type": "video"
             },
             {
               "alt": "",
-              "span": "half",
+              "span": "reel",
               "src": "",
               "type": "video"
             }
           ],
-          "note": "Video creatives produced for the brand — paid social and the brand's own channels."
+          "note": "Vertical 9:16 video creatives produced for the brand — paid social and the brand's own channels."
         },
         {
           "id": "static-styles",
@@ -782,28 +782,34 @@
         },
         {
           "id": "films",
-          "label": "Films & Reels",
+          "label": "Films & Coverage",
           "media": [
             {
-              "alt": "",
-              "span": "wide",
+              "type": "video",
               "src": "",
-              "type": "video"
+              "alt": "",
+              "span": "landscape"
             },
             {
-              "alt": "",
-              "span": "half",
+              "type": "video",
               "src": "",
-              "type": "video"
+              "alt": "",
+              "span": "landscape"
             },
             {
-              "alt": "",
-              "span": "half",
+              "type": "video",
               "src": "",
-              "type": "video"
+              "alt": "",
+              "span": "landscape"
+            },
+            {
+              "type": "video",
+              "src": "",
+              "alt": "",
+              "span": "landscape"
             }
           ],
-          "note": "Video coverage published during the event."
+          "note": "Horizontal 16:9 video coverage published during the event."
         },
         {
           "id": "published",

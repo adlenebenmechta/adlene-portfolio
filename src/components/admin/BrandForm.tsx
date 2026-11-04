@@ -13,8 +13,15 @@ import { Field, Area, Btn, Uploader } from "./ui";
 /* Add / edit a brand — full case-study fields + organised sections,
    chapters (sub-pages) and media managers for all of them. */
 
-const SPANS: MediaItem["span"][] = [
-  "full", "wide", "half", "half-tall", "third", "portrait",
+const SPANS: { value: MediaItem["span"]; hint: string }[] = [
+  { value: "reel", hint: "9:16 vertical video" },
+  { value: "landscape", hint: "16:9 horizontal video" },
+  { value: "full", hint: "panoramic banner" },
+  { value: "wide", hint: "cinematic 21:9" },
+  { value: "half", hint: "4:3 half row" },
+  { value: "half-tall", hint: "portrait half row" },
+  { value: "third", hint: "3:4 third of row" },
+  { value: "portrait", hint: "3:4 column" },
 ];
 
 function slugify(s: string): string {
@@ -60,7 +67,7 @@ function MediaListEditor({
           accept="video/mp4,video/webm,.mov"
           compact
           onDone={(url) =>
-            onChange([...media, { type: "video", src: url, alt: "", span: "full" }])
+            onChange([...media, { type: "video", src: url, alt: "", span: "reel" }])
           }
         />
         <span className="text-[11px] text-white/30">
@@ -113,8 +120,8 @@ function MediaListEditor({
                   className="w-full rounded-lg border border-white/12 bg-[#141414] px-3 py-2.5 text-[13px] text-white focus:border-white/35 focus:outline-none"
                 >
                   {SPANS.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
+                    <option key={s.value} value={s.value}>
+                      {s.value} — {s.hint}
                     </option>
                   ))}
                 </select>

@@ -14,8 +14,18 @@ export interface MediaItem {
   alt: string;
   /** small label chip, e.g. "Campaign Film — SS25" */
   label?: string;
-  /** grid placement inside the editorial gallery */
-  span: "full" | "wide" | "half" | "half-tall" | "third" | "portrait";
+  /** grid placement inside the editorial gallery
+   *  "reel"      → 9:16 vertical video (reels / shorts / paid social UGC-style)
+   *  "landscape" → 16:9 horizontal video (exhibition / event coverage) */
+  span:
+    | "full"
+    | "wide"
+    | "half"
+    | "half-tall"
+    | "third"
+    | "portrait"
+    | "reel"
+    | "landscape";
 }
 
 export interface Project {
@@ -286,8 +296,13 @@ const slot = (type: MediaKind, span: MediaItem["span"] = "half"): MediaItem => (
   span,
 });
 
+/* vertical 9:16 video slots — the default for ad creatives & social reels */
 const videoSlots = (n: number): MediaItem[] =>
-  Array.from({ length: n }, (_, i) => slot("video", i === 0 ? "wide" : "half"));
+  Array.from({ length: n }, () => slot("video", "reel"));
+
+/* horizontal 16:9 video slots — exhibition / event coverage (the Salon) */
+const landscapeSlots = (n: number): MediaItem[] =>
+  Array.from({ length: n }, () => slot("video", "landscape"));
 
 const imageSlots = (n: number): MediaItem[] =>
   Array.from({ length: n }, () => slot("image", "half"));
@@ -297,7 +312,7 @@ const ecomSections = (v: number, s: number, r: number): ProjectSection[] => [
   {
     id: "video-ads",
     label: "Video Ads",
-    note: "Video creatives produced for the brand — paid social and the brand's own channels.",
+    note: "Vertical 9:16 video creatives produced for the brand — paid social and the brand's own channels.",
     media: videoSlots(v),
   },
   {
@@ -356,7 +371,7 @@ const seedProjects: Project[] = [
           {
             id: "coverage",
             label: "Social Media Coverage",
-            note: "Content created and published live from the exhibition floor.",
+            note: "Content created and published live from the exhibition floor — vertical 9:16 films and photos.",
             media: [...videoSlots(2), ...imageSlots(2)],
           },
         ],
@@ -378,7 +393,7 @@ const seedProjects: Project[] = [
           {
             id: "films",
             label: "Films",
-            note: "Video content from the edition.",
+            note: "Vertical 9:16 video content from the edition.",
             media: videoSlots(2),
           },
         ],
@@ -535,9 +550,9 @@ const seedProjects: Project[] = [
       },
       {
         id: "films",
-        label: "Films & Reels",
-        note: "Video coverage published during the event.",
-        media: videoSlots(3),
+        label: "Films & Coverage",
+        note: "Horizontal 16:9 video coverage published during the event.",
+        media: landscapeSlots(4),
       },
       {
         id: "published",
