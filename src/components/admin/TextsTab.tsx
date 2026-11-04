@@ -255,6 +255,21 @@ export function TextsTab({
             value={pages.caseStudy.openLabel}
             onChange={(v) => update((d) => void (d.caseStudy.openLabel = v))}
           />
+          <Field
+            label="Visit-website button label"
+            value={pages.caseStudy.visitLabel}
+            onChange={(v) => update((d) => void (d.caseStudy.visitLabel = v))}
+          />
+          <Field
+            label="Editions section title (multi-edition projects)"
+            value={pages.caseStudy.editionsLabel}
+            onChange={(v) => update((d) => void (d.caseStudy.editionsLabel = v))}
+          />
+          <Field
+            label="Explore-edition button label"
+            value={pages.caseStudy.exploreLabel}
+            onChange={(v) => update((d) => void (d.caseStudy.exploreLabel = v))}
+          />
         </div>
       </Group>
 

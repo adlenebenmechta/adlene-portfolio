@@ -1,11 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import type { Project, MediaItem } from "@/lib/site-content";
+import type {
+  Project,
+  MediaItem,
+  ProjectSection,
+  ProjectChapter,
+} from "@/lib/site-content";
 import { mediaUrl } from "@/lib/media";
 import { Field, Area, Btn, Uploader } from "./ui";
 
-/* Add / edit a brand — full case-study fields + media manager. */
+/* Add / edit a brand — full case-study fields + organised sections,
+   chapters (sub-pages) and media managers for all of them. */
 
 const SPANS: MediaItem["span"][] = [
   "full", "wide", "half", "half-tall", "third", "portrait",
@@ -19,6 +25,410 @@ function slugify(s: string): string {
     .replace(/^-+|-+$/g, "")
     .slice(0, 40);
 }
+
+/* ── media rows with upload / replace / reorder / remove ────────── */
+
+function MediaListEditor({
+  media,
+  onChange,
+}: {
+  media: MediaItem[];
+  onChange: (m: MediaItem[]) => void;
+}) {
+  const set = (i: number, patch: Partial<MediaItem>) =>
+    onChange(media.map((m, j) => (j === i ? { ...m, ...patch } : m)));
+  const move = (i: number, dir: -1 | 1) => {
+    const next = [...media];
+    const j = Math.max(0, Math.min(media.length - 1, i + dir));
+    [next[i], next[j]] = [next[j], next[i]];
+    onChange(next);
+  };
+
+  return (
+    <>
+      <div className="flex flex-wrap items-center gap-3">
+        <Uploader
+          label="Add image"
+          accept="image/*"
+          compact
+          onDone={(url) =>
+            onChange([...media, { type: "image", src: url, alt: "", span: "half" }])
+          }
+        />
+        <Uploader
+          label="Add video"
+          accept="video/mp4,video/webm,.mov"
+          compact
+          onDone={(url) =>
+            onChange([...media, { type: "video", src: url, alt: "", span: "full" }])
+          }
+        />
+        <span className="text-[11px] text-white/30">
+          empty slots show as elegant placeholders on the site
+        </span>
+      </div>
+
+      <ul className="mt-4 space-y-3">
+        {media.map((m, i) => (
+          <li
+            key={i}
+            className="flex flex-wrap items-center gap-4 rounded-lg border border-white/10 bg-black/30 p-3"
+          >
+            {m.src && m.type === "image" ? (
+              <img
+                src={mediaUrl(m.src)}
+                alt=""
+                className="h-14 w-24 shrink-0 rounded-md object-cover"
+              />
+            ) : m.src ? (
+              <video
+                src={mediaUrl(m.src)}
+                className="h-14 w-24 shrink-0 rounded-md bg-black object-cover"
+                muted
+                playsInline
+              />
+            ) : (
+              <div className="flex h-14 w-24 shrink-0 items-center justify-center rounded-md border border-dashed border-white/15 bg-white/[0.015] text-[9px] uppercase tracking-[0.2em] text-white/30">
+                {m.type === "video" ? "film" : "photo"}
+              </div>
+            )}
+
+            <div className="grid min-w-0 flex-1 gap-2 sm:grid-cols-2">
+              {m.type === "video" && (
+                <Field
+                  label="Label chip (optional)"
+                  value={m.label ?? ""}
+                  onChange={(v) => set(i, { label: v || undefined })}
+                />
+              )}
+              <label className="block">
+                <span className="mb-1.5 block text-[10px] uppercase tracking-[0.22em] text-white/40">
+                  Grid placement
+                </span>
+                <select
+                  value={m.span}
+                  onChange={(e) =>
+                    set(i, { span: e.target.value as MediaItem["span"] })
+                  }
+                  className="w-full rounded-lg border border-white/12 bg-[#141414] px-3 py-2.5 text-[13px] text-white focus:border-white/35 focus:outline-none"
+                >
+                  {SPANS.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <div className="flex items-end">
+                <Uploader
+                  label={m.src ? "Upload / replace" : "Upload into slot"}
+                  accept={
+                    m.type === "video"
+                      ? "video/mp4,video/webm,.mov"
+                      : "image/*"
+                  }
+                  compact
+                  onDone={(url) => set(i, { src: url })}
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-1.5">
+              <Btn ghost onClick={() => move(i, -1)}>
+                ↑
+              </Btn>
+              <Btn ghost onClick={() => move(i, 1)}>
+                ↓
+              </Btn>
+              <Btn ghost onClick={() => onChange(media.filter((_, j) => j !== i))}>
+                ✕
+              </Btn>
+            </div>
+          </li>
+        ))}
+        {media.length === 0 && (
+          <li className="text-[13px] text-white/35">
+            No media yet — add images and videos, or keep slots empty as
+            placeholders.
+          </li>
+        )}
+      </ul>
+    </>
+  );
+}
+
+/* ── one organised section (Video Ads / Styles / Results …) ─────── */
+
+function SectionBlock({
+  section,
+  onChange,
+  onRemove,
+  onMove,
+}: {
+  section: ProjectSection;
+  onChange: (s: ProjectSection) => void;
+  onRemove: () => void;
+  onMove: (dir: -1 | 1) => void;
+}) {
+  const [open, setOpen] = useState(true);
+  return (
+    <li className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+      <div className="flex flex-wrap items-center gap-3">
+        <button
+          onClick={() => setOpen(!open)}
+          className="text-[11px] uppercase tracking-[0.2em] text-white/60 hover:text-white"
+        >
+          {open ? "▾" : "▸"} {section.label || "Untitled section"}
+          <span className="ml-2 text-white/30">({section.media.length} items)</span>
+        </button>
+        <div className="ml-auto flex gap-1.5">
+          <Btn ghost onClick={() => onMove(-1)}>
+            ↑
+          </Btn>
+          <Btn ghost onClick={() => onMove(1)}>
+            ↓
+          </Btn>
+          <Btn ghost onClick={onRemove}>
+            ✕
+          </Btn>
+        </div>
+      </div>
+      {open && (
+        <div className="mt-4 space-y-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field
+              label="Section title"
+              value={section.label}
+              onChange={(v) => onChange({ ...section, label: v })}
+              placeholder="Video Ads"
+            />
+            <Field
+              label="Section note (optional)"
+              value={section.note ?? ""}
+              onChange={(v) => onChange({ ...section, note: v || undefined })}
+              placeholder="Shown beside the title"
+            />
+          </div>
+          <MediaListEditor
+            media={section.media}
+            onChange={(media) => onChange({ ...section, media })}
+          />
+        </div>
+      )}
+    </li>
+  );
+}
+
+function SectionsEditor({
+  sections,
+  onChange,
+  title = "Case-study sections",
+  hint,
+}: {
+  sections?: ProjectSection[];
+  onChange: (s: ProjectSection[]) => void;
+  title?: string;
+  hint?: string;
+}) {
+  const list = sections ?? [];
+  const move = (i: number, dir: -1 | 1) => {
+    const next = [...list];
+    const j = Math.max(0, Math.min(list.length - 1, i + dir));
+    [next[i], next[j]] = [next[j], next[i]];
+    onChange(next);
+  };
+
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-[10px] uppercase tracking-[0.22em] text-white/40">
+          {title} ({list.length})
+        </p>
+        <Btn
+          ghost
+          onClick={() =>
+            onChange([
+              ...list,
+              {
+                id: `section-${Date.now().toString(36)}`,
+                label: "New section",
+                media: [],
+              },
+            ])
+          }
+        >
+          + Add section
+        </Btn>
+      </div>
+      {hint && <p className="mt-2 text-[11px] leading-relaxed text-white/30">{hint}</p>}
+      <ul className="mt-4 space-y-3">
+        {list.map((s, i) => (
+          <SectionBlock
+            key={s.id}
+            section={s}
+            onChange={(ns) => onChange(list.map((x, j) => (j === i ? ns : x)))}
+            onRemove={() => onChange(list.filter((_, j) => j !== i))}
+            onMove={(dir) => move(i, dir)}
+          />
+        ))}
+        {list.length === 0 && (
+          <li className="text-[13px] text-white/35">
+            No sections — the page falls back to the plain media gallery.
+          </li>
+        )}
+      </ul>
+    </div>
+  );
+}
+
+/* ── chapters — sub-pages like ACF 2025 / ACF 2026 ──────────────── */
+
+function ChapterBlock({
+  chapter,
+  existingIds,
+  onChange,
+  onRemove,
+  onMove,
+}: {
+  chapter: ProjectChapter;
+  existingIds: string[];
+  onChange: (c: ProjectChapter) => void;
+  onRemove: () => void;
+  onMove: (dir: -1 | 1) => void;
+}) {
+  const [open, setOpen] = useState(true);
+  const idTaken = chapter.id.trim() === "" || (existingIds.filter((x) => x === chapter.id).length > 1);
+
+  return (
+    <li className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+      <div className="flex flex-wrap items-center gap-3">
+        <button
+          onClick={() => setOpen(!open)}
+          className="text-[11px] uppercase tracking-[0.2em] text-white/60 hover:text-white"
+        >
+          {open ? "▾" : "▸"} {chapter.year} — {chapter.title || "Untitled"}
+        </button>
+        <div className="ml-auto flex gap-1.5">
+          <Btn ghost onClick={() => onMove(-1)}>
+            ↑
+          </Btn>
+          <Btn ghost onClick={() => onMove(1)}>
+            ↓
+          </Btn>
+          <Btn ghost onClick={onRemove}>
+            ✕
+          </Btn>
+        </div>
+      </div>
+      {open && (
+        <div className="mt-4 space-y-4">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field
+              label="Chapter id (URL — e.g. 2026)"
+              value={chapter.id}
+              onChange={(v) => onChange({ ...chapter, id: slugify(v) })}
+              placeholder="2026"
+              error={idTaken ? "each chapter needs a unique id" : undefined}
+              hint={`Page lives at /work/…/${chapter.id || "…"}`}
+            />
+            <Field
+              label="Year (display)"
+              value={chapter.year}
+              onChange={(v) => onChange({ ...chapter, year: v })}
+              placeholder="2026"
+            />
+            <Field
+              label="Title (e.g. TEAM MANAGER)"
+              value={chapter.title}
+              onChange={(v) => onChange({ ...chapter, title: v })}
+              placeholder="TEAM MANAGER"
+            />
+            <Field
+              label="Role"
+              value={chapter.role}
+              onChange={(v) => onChange({ ...chapter, role: v })}
+              placeholder="Team Manager"
+            />
+          </div>
+          <Area
+            label="Description (the chapter story)"
+            value={chapter.description}
+            onChange={(v) => onChange({ ...chapter, description: v })}
+            rows={4}
+          />
+          <SectionsEditor
+            title="Chapter sections"
+            sections={chapter.sections}
+            onChange={(sections) => onChange({ ...chapter, sections })}
+          />
+        </div>
+      )}
+    </li>
+  );
+}
+
+function ChaptersEditor({
+  chapters,
+  onChange,
+}: {
+  chapters?: ProjectChapter[];
+  onChange: (c: ProjectChapter[]) => void;
+}) {
+  const list = chapters ?? [];
+  const ids = list.map((c) => c.id);
+  const move = (i: number, dir: -1 | 1) => {
+    const next = [...list];
+    const j = Math.max(0, Math.min(list.length - 1, i + dir));
+    [next[i], next[j]] = [next[j], next[i]];
+    onChange(next);
+  };
+
+  return (
+    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-[10px] uppercase tracking-[0.22em] text-white/40">
+          Chapters — sub-pages ({list.length})
+        </p>
+        <Btn
+          ghost
+          onClick={() =>
+            onChange([
+              ...list,
+              {
+                id: "",
+                year: String(new Date().getFullYear()),
+                title: "",
+                role: "",
+                description: "",
+                sections: [],
+              },
+            ])
+          }
+        >
+          + Add chapter
+        </Btn>
+      </div>
+      <p className="mt-2 text-[11px] leading-relaxed text-white/30">
+        When chapters exist, the project page shows one card per chapter
+        (e.g. ACF → 2025 / 2026) instead of its own sections.
+      </p>
+      <ul className="mt-4 space-y-3">
+        {list.map((c, i) => (
+          <ChapterBlock
+            key={i}
+            chapter={c}
+            existingIds={ids}
+            onChange={(nc) => onChange(list.map((x, j) => (j === i ? nc : x)))}
+            onRemove={() => onChange(list.filter((_, j) => j !== i))}
+            onMove={(dir) => move(i, dir)}
+          />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/* ── the brand form itself ──────────────────────────────────────── */
 
 export function BrandForm({
   project,
@@ -37,7 +447,7 @@ export function BrandForm({
     structuredClone(
       project ?? {
         id: "",
-        index: "00",
+        index: "",
         brand: "",
         shortName: "",
         logo: "",
@@ -46,7 +456,7 @@ export function BrandForm({
         location: "",
         year: String(new Date().getFullYear()),
         services: [],
-        role: "Creative Director",
+        role: "",
         description: "",
         deliverables: [],
         preview: { type: "image", src: "", alt: "" },
@@ -63,8 +473,12 @@ export function BrandForm({
   const slugTaken =
     p.id !== project?.id && existingIds.includes(p.id);
   const slugOk = /^[a-z0-9-]{2,40}$/.test(p.id);
+  const chaptersOk = (p.chapters ?? []).every(
+    (c) => c.id && (p.chapters ?? []).filter((x) => x.id === c.id).length === 1,
+  );
 
-  const valid = slugOk && !slugTaken && p.brand.trim() !== "";
+  const valid =
+    slugOk && !slugTaken && p.brand.trim() !== "" && chaptersOk;
 
   return (
     <section className="mt-8 space-y-6">
@@ -103,7 +517,7 @@ export function BrandForm({
           label="Brand name"
           value={p.brand}
           onChange={(v) => set("brand", v)}
-          placeholder="e.g. Maison Noire"
+          placeholder="e.g. Armoray"
         />
         <Field
           label="URL slug"
@@ -134,7 +548,7 @@ export function BrandForm({
             label="Industry"
             value={p.industry}
             onChange={(v) => set("industry", v)}
-            placeholder="Fashion & Luxury"
+            placeholder="E-Commerce"
           />
           <Field
             label="Year"
@@ -147,13 +561,45 @@ export function BrandForm({
           label="Location"
           value={p.location}
           onChange={(v) => set("location", v)}
-          placeholder="Paris, FR"
+          placeholder="Annaba, DZ"
         />
         <Field
           label="Role"
           value={p.role}
           onChange={(v) => set("role", v)}
-          placeholder="Creative Director"
+          placeholder="Creative — Video & Static Ads"
+        />
+        <Field
+          label="Website — clicking the brand name opens it"
+          value={p.website ?? ""}
+          onChange={(v) => set("website", v || undefined)}
+          placeholder="https://armoray.com"
+        />
+        <div className="grid grid-cols-2 gap-4">
+          <Field
+            label="Stat (big number, optional)"
+            value={p.stat ?? ""}
+            onChange={(v) => set("stat", v || undefined)}
+            placeholder="+5M"
+          />
+          <Field
+            label="Stat label"
+            value={p.statLabel ?? ""}
+            onChange={(v) => set("statLabel", v || undefined)}
+            placeholder="Trusted Athletes & Happy Customers"
+          />
+        </div>
+        <Field
+          label="Context link label (optional)"
+          value={p.linkLabel ?? ""}
+          onChange={(v) => set("linkLabel", v || undefined)}
+          placeholder="Amazon Store"
+        />
+        <Field
+          label="Context link URL"
+          value={p.linkUrl ?? ""}
+          onChange={(v) => set("linkUrl", v || undefined)}
+          placeholder="https://www.amazon.com/stores/…"
         />
       </div>
 
@@ -182,6 +628,9 @@ export function BrandForm({
             </Btn>
           )}
         </div>
+        <p className="mt-2 text-[11px] text-white/30">
+          The logo is also the box visual until an index preview image is uploaded.
+        </p>
       </div>
 
       {/* preview image */}
@@ -198,7 +647,7 @@ export function BrandForm({
             />
           )}
           <Uploader
-            label="Upload preview (16/10 landscape works best)"
+            label="Upload preview (4/5 portrait works best)"
             accept="image/*"
             compact
             onDone={(url) =>
@@ -245,160 +694,30 @@ export function BrandForm({
         />
       </div>
 
-      {/* media items */}
-      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
-        <div className="flex items-center justify-between">
-          <p className="text-[10px] uppercase tracking-[0.22em] text-white/40">
-            Case study media ({p.media.length})
-          </p>
-          <div className="flex gap-3">
-            <Uploader
-              label="Add image"
-              accept="image/*"
-              compact
-              onDone={(url) =>
-                setP((d) => ({
-                  ...d,
-                  media: [
-                    ...d.media,
-                    { type: "image", src: url, alt: d.brand, span: "half" },
-                  ],
-                }))
-              }
-            />
-            <Uploader
-              label="Add video"
-              accept="video/mp4,video/webm,.mov"
-              compact
-              onDone={(url) =>
-                setP((d) => ({
-                  ...d,
-                  media: [
-                    ...d.media,
-                    { type: "video", src: url, alt: d.brand, span: "full" },
-                  ],
-                }))
-              }
-            />
-          </div>
-        </div>
+      {/* organised sections */}
+      <SectionsEditor
+        sections={p.sections}
+        onChange={(sections) => set("sections", sections)}
+        hint="Each section renders as its own titled chapter on the page — keep the slots empty until the media is ready; they show as elegant placeholders."
+      />
 
-        <ul className="mt-5 space-y-3">
-          {p.media.map((m, i) => (
-            <li
-              key={i}
-              className="flex flex-wrap items-center gap-4 rounded-lg border border-white/10 bg-black/30 p-3"
-            >
-              {m.type === "image" ? (
-                <img
-                  src={mediaUrl(m.src)}
-                  alt=""
-                  className="h-14 w-24 shrink-0 rounded-md object-cover"
-                />
-              ) : (
-                <video
-                  src={mediaUrl(m.src)}
-                  className="h-14 w-24 shrink-0 rounded-md bg-black object-cover"
-                  muted
-                  playsInline
-                />
-              )}
-              <div className="grid min-w-0 flex-1 gap-2 sm:grid-cols-2">
-                <Field
-                  label="Alt text"
-                  value={m.alt}
-                  onChange={(v) =>
-                    setP((d) => {
-                      d.media[i].alt = v;
-                      return { ...d };
-                    })
-                  }
-                />
-                {m.type === "video" && (
-                  <Field
-                    label="Label chip (optional)"
-                    value={m.label ?? ""}
-                    onChange={(v) =>
-                      setP((d) => {
-                        d.media[i].label = v || undefined;
-                        return { ...d };
-                      })
-                    }
-                  />
-                )}
-                <label className="block">
-                  <span className="mb-1.5 block text-[10px] uppercase tracking-[0.22em] text-white/40">
-                    Grid placement
-                  </span>
-                  <select
-                    value={m.span}
-                    onChange={(e) =>
-                      setP((d) => {
-                        d.media[i].span = e.target
-                          .value as MediaItem["span"];
-                        return { ...d };
-                      })
-                    }
-                    className="w-full rounded-lg border border-white/12 bg-[#141414] px-3 py-2.5 text-[13px] text-white focus:border-white/35 focus:outline-none"
-                  >
-                    {SPANS.map((s) => (
-                      <option key={s} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-              </div>
-              <div className="flex gap-1.5">
-                <Btn
-                  ghost
-                  onClick={() =>
-                    setP((d) => {
-                      const [m2] = d.media.splice(i, 1);
-                      d.media.splice(Math.max(0, i - 1), 0, m2);
-                      return { ...d };
-                    })
-                  }
-                >
-                  ↑
-                </Btn>
-                <Btn
-                  ghost
-                  onClick={() =>
-                    setP((d) => {
-                      const [m2] = d.media.splice(i, 1);
-                      d.media.splice(
-                        Math.min(d.media.length, i + 1),
-                        0,
-                        m2,
-                      );
-                      return { ...d };
-                    })
-                  }
-                >
-                  ↓
-                </Btn>
-                <Btn
-                  ghost
-                  onClick={() =>
-                    setP((d) => {
-                      d.media.splice(i, 1);
-                      return { ...d };
-                    })
-                  }
-                >
-                  ✕
-                </Btn>
-              </div>
-            </li>
-          ))}
-          {p.media.length === 0 && (
-            <li className="text-[13px] text-white/35">
-              No media yet — upload images and videos for the case study
-              gallery.
-            </li>
-          )}
-        </ul>
+      {/* chapters — sub-pages */}
+      <ChaptersEditor
+        chapters={p.chapters}
+        onChange={(chapters) => set("chapters", chapters)}
+      />
+
+      {/* flat media gallery (legacy / simple mode) */}
+      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-5">
+        <p className="text-[10px] uppercase tracking-[0.22em] text-white/40">
+          Flat media gallery ({p.media.length}) — shown only when no sections
+        </p>
+        <div className="mt-4">
+          <MediaListEditor
+            media={p.media}
+            onChange={(media) => set("media", media)}
+          />
+        </div>
       </div>
     </section>
   );

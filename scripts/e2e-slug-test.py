@@ -50,8 +50,8 @@ s, content = jreq("GET", "/api/admin/content")
 check("read content", s == 200 and len(content.get("projects", [])) > 0, s)
 ORIG = json.dumps(content, sort_keys=True)
 
-target = next(p for p in content["projects"] if p["id"] == "maison-noire")
-OLD, NEW = "maison-noire", "maison-noire-slug-e2e"
+target = next(p for p in content["projects"] if p["id"] == "armoray")
+OLD, NEW = "armoray", "armoray-slug-e2e"
 
 # sanity: old page currently live
 s, _ = req("GET", f"/work/{OLD}")

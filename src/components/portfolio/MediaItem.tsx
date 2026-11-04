@@ -1,6 +1,7 @@
 "use client";
 
 import type { MediaItem as PortfolioMedia } from "@/lib/site-content";
+import { Film, Image as ImageIcon } from "lucide-react";
 import { mediaUrl } from "@/lib/media";
 import { Reveal } from "./shared";
 import { SmartVideo } from "./SmartVideo";
@@ -22,6 +23,24 @@ interface MediaItemProps {
 }
 
 export function MediaItem({ item, cta = false }: MediaItemProps) {
+  /* reserved slot — no media uploaded yet: elegant dashed frame */
+  if (!item.src) {
+    return (
+      <Reveal variant="clip" className={SPAN[item.span]} amount={0.25}>
+        <figure className="relative flex h-full w-full flex-col items-center justify-center gap-3 overflow-hidden rounded-md border border-dashed border-white/[0.14] bg-white/[0.015] md:rounded-lg">
+          {item.type === "video" ? (
+            <Film size={22} aria-hidden="true" className="text-white/20" />
+          ) : (
+            <ImageIcon size={22} aria-hidden="true" className="text-white/20" />
+          )}
+          <span className="text-[9px] uppercase tracking-[0.3em] text-white/25">
+            {item.type === "video" ? "Film" : "Photo"}
+          </span>
+        </figure>
+      </Reveal>
+    );
+  }
+
   return (
     <Reveal variant="clip" className={SPAN[item.span]} amount={0.25}>
       <figure className="group relative h-full w-full overflow-hidden rounded-md bg-white/[0.03] md:rounded-lg">

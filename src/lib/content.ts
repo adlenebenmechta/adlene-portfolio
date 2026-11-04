@@ -11,6 +11,7 @@
    only content.json needs read freshness.
    ──────────────────────────────────────────────────────────────── */
 
+import { readFile } from "fs/promises";
 import { DEFAULT_CONTENT, type SiteContent } from "./site-content";
 
 const OWNER = "adlenebenmechta";
@@ -25,6 +26,17 @@ let cache: { at: number; data: SiteContent } | null = null;
 
 function isContent(d: unknown): d is SiteContent {
   return !!d && typeof d === "object" && Array.isArray((d as SiteContent).projects);
+}
+
+/** local override — LOCAL_CONTENT=1 reads ./content.json (offline dev & previews) */
+async function fromLocal(): Promise<SiteContent | null> {
+  if (process.env.LOCAL_CONTENT !== "1") return null;
+  try {
+    const data = JSON.parse(await readFile("content.json", "utf8"));
+    return isContent(data) ? data : null;
+  } catch {
+    return null;
+  }
 }
 
 async function fromApi(): Promise<SiteContent | null> {
@@ -65,7 +77,8 @@ async function fromRaw(): Promise<SiteContent | null> {
 export async function getContent(): Promise<SiteContent> {
   if (cache && Date.now() - cache.at < CACHE_TTL_MS) return cache.data;
 
-  const fresh = (await fromApi()) ?? (await fromRaw());
+  const fresh =
+    (await fromLocal()) ?? (await fromApi()) ?? (await fromRaw());
   if (fresh) {
     cache = { at: Date.now(), data: fresh };
     return fresh;

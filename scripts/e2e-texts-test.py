@@ -4,7 +4,7 @@ verify the site reflects them, then revert everything."""
 import json, time, urllib.request, urllib.error, os, pathlib
 
 import sys as _sys
-BASE = _sys.argv[1] if len(_sys.argv) > 1 else "https://adlene-portfolio-production-b82e.up.railway.app"
+BASE = _sys.argv[1] if len(_sys.argv) > 1 else "https://adlene-portfolio-production-b8e6.up.railway.app"
 PASSWORD = None
 for _line in open(os.path.join(os.path.dirname(__file__), "railway.env")):
     if _line.startswith("ADMIN_PASSWORD="):

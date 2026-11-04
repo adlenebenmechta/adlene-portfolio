@@ -38,11 +38,11 @@ export function Navbar() {
         aria-label="Primary navigation"
         animate={{
           backdropFilter: scrolled ? "blur(16px)" : "blur(4px)",
-          WebkitBackdropFilter: scrolled ? "blur(16px)" : "blur(4px)",
           backgroundColor: scrolled
             ? "rgba(255, 255, 255, 0.055)"
             : "rgba(255, 255, 255, 0.01)",
         }}
+        style={{ WebkitBackdropFilter: scrolled ? "blur(16px)" : "blur(4px)" } as React.CSSProperties}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="liquid-glass flex items-center justify-center gap-7 rounded-full px-6 py-3 md:gap-10 md:px-8"
       >
