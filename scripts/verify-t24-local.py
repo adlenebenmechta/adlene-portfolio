@@ -24,7 +24,7 @@ s, work = get("/work")
 check("/work 200", s == 200)
 check("card title 'Ministry of Youth' on /work", work.count("Ministry of Youth") >= 1,
       f"count={work.count('Ministry of Youth')}")
-check("new wordmark used on /work", "/media/logos/ministry-of-youth.svg" in work)
+check("new ministry logo used on /work", "/media/logos/ministry-of-youth.png" in work)
 check("old wordmark gone from /work", "/media/logos/salon-annaba.svg" not in work)
 check("old long brand title gone from /work",
       "National Salon of Girls' Creativity &amp; Women Entrepreneurs" not in work
@@ -56,8 +56,10 @@ s, prev = get("/work/gemstonewell")
 check("previous project 200", s == 200)
 check("next-nav now says 'Ministry of Youth'", "Ministry of Youth" in prev)
 
-s, svg = get("/media/logos/ministry-of-youth.svg")
-check("wordmark SVG served", s == 200 and "MINISTRY OF YOUTH" in svg)
+req = urllib.request.Request(BASE + "/media/logos/ministry-of-youth.png")
+with urllib.request.urlopen(req, timeout=30) as r:
+    png_status, png_magic = r.status, r.read(8)
+check("ministry logo PNG served", png_status == 200 and png_magic == b"\x89PNG\r\n\x1a\n")
 
 s, arm = get("/work/armoray")
 check("armoray page still 200", s == 200)

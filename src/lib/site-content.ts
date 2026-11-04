@@ -523,7 +523,7 @@ const seedProjects: Project[] = [
     index: "",
     brand: "Ministry of Youth",
     shortName: "Ministry of Youth",
-    logo: "/media/logos/ministry-of-youth.svg",
+    logo: "/media/logos/ministry-of-youth.png",
     monogram: "MY",
     tagline: "Sole content lead for the National Salon of Girls' Creativity — Annaba.",
     industry: "Events & Public Institutions",
