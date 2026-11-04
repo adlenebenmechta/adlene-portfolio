@@ -521,3 +521,29 @@ Stage Summary:
 - LIVE: https://adlene-portfolio-production-b8e6.up.railway.app — every video placeholder is a 9:16 vertical reel slot (Armoray / HolyStrips / Zero Trace / GemstoneWell / ACF 2026 coverage / ACF 2025 films), EXCEPT the National Salon "Films & Coverage" section which holds four 16:9 horizontal slots. Each dashed slot states its format. Photos untouched (4:3 halfs).
 - Admin: grid-placement dropdown explains each span; new videos default to 9:16 reel.
 - When the real videos are uploaded via /admin, SmartVideo fills the slot frame with object-cover — vertical films sit in the 9:16 frames, Salon films in the 16:9 frames, no layout jumps.
+
+---
+Task ID: 22
+Agent: Super Z (main agent)
+Task: User (Arabic): "I don't like how the logo sits when you enter WORK and the names come up. I tried putting the ACF logo and it appeared small with ugly box edges — is there a solution?"
+
+Diagnosis:
+- The user had uploaded his real ACF logo via /admin → /gh/media/uploads/acf-logo-mw2at0n5.jpg (2036×2048 JPG).
+- Pixel analysis: 91% of the image is a dark-purple gradient background (with plexus pattern + glow); the actual lockup (blue circuit mark + white "ACF") is a central strip ~54%×52% — i.e. the file is mostly background. Two failure modes: BrandCard capped it at max-h-26%/max-w-58% (→ tiny), and the opaque JPG background drew a visible square on the #0a0a0b card (→ the "ugly box edges").
+
+Work Log:
+- CUTOUT (scripts/cutout-acf-logo.py): matte = max(luminance ramp for the white text, cyan ramp B×G/B×(B−R) for the circuit mark) — the purple glow fails the G/B test and goes transparent; connected-component filter (≥600px) removes sparkle specks; defringe clamps R≤1.12G on soft edges; cropped to content + 4% pad → the logo went from a 2036×2048 square to a clean 1812×405 transparent lockup, downscaled to 1200×268 (124KB) → public/media/logos/acf.png. VLM QA on a sheen-card composite: floats naturally, no box edges, no specks, sharp.
+- BrandCard (shared.tsx): logo enlarged max-h 26%→46% / max-w 58%→76%; the faint inset frame REMOVED (boxy edges); added a soft vignette to seat the logo. Both SVG wordmarks and cut-out bitmap logos now float edge-free on the studio sheen. Used by /work boxes AND the home WorkGrid — one fix, both surfaces.
+- WorkIndexPage: bottom block breathing room gap-1.5 → gap-2.5 (stat/title/label stack).
+- content.json: acf.logo → /media/logos/acf.png. Live/CDN verified after deploy.
+- ADMIN (BrandForm logo field): preview tile now dark like the card (#0a0a0b) + guidance text: "Transparent PNG or SVG floats cleanly on the dark box — a JPG with its own background shows as a square box around the logo."
+- MEASURED: prod ACF logo renders 333×74 px in a 440×550 box (76% width vs the old ~58% of a mostly-empty square — the visible mark is now several times larger).
+- VLM visual QA (correct-scroll screenshots): all logos float cleanly, ACF prominent/sharp/centered, no layout breakage. Two VLM false alarms ("+5M/1.5M overlap", "Amoray typo") were disproven by DOM inspection on production: stat is a single "+5M" node, gaps 10px/10px, overlap:False, title spelled "Armoray".
+- LINEAGE REGRESSION FOUND & FIXED: a stale local E2E commit (a6aa715, UUID message, leftover in the sandbox repo) had accidentally deleted src/app/api/admin/upload/route.ts; the task-22 rebase carried the deletion and production started 404ing the admin upload API (caught by the admin E2E suite). Restored byte-identical from f38c3e4 (blob de33d9c) → 2e5f34f → rebased to 3e648ff → deployed 674b8c6f SUCCESS → GET /api/admin/upload now 405 (POST-only route present).
+- Deploys this task: 1d30cb3 → c30d1e72 SUCCESS (brand-card redesign); 3e648ff → 674b8c6f SUCCESS (upload route restore). Railway API returned a transient "Not Authorized" once — retry succeeded; token itself is valid.
+- PRODUCTION E2E after the final deploy: slug 12/12, texts 11/11, admin 32/32 — 55/55.
+
+Stage Summary:
+- LIVE: https://adlene-portfolio-production-b8e6.up.railway.app/work — the ACF logo (and any future transparent logo) now floats large on the dark boxes with zero box edges; wordmark brands got the same bigger, frameless treatment on /work and the home grid.
+- For future logos: upload transparent PNG/SVG (the admin now says so). If only a JPG with background exists, ask the agent — the cutout pipeline (scripts/cutout-acf-logo.py) is reusable.
+- Watch-item for future sessions: stale local E2E commits in the sandbox repo can carry accidental deletions — always `git status`/`git log` against origin/main before rebasing, and run the admin E2E (upload test) after every deploy.
