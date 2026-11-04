@@ -290,7 +290,7 @@
         "Always-on social content"
       ],
       "description": "Armoray is an e-commerce performance brand with a community of more than five million trusted athletes and happy customers — available at armoray.com and on its Amazon storefront. I produce the brand's video ads and static creatives: concepts, scripts, filming and the final cuts, built to stop the scroll and convert across paid social and the brand's own channels.",
-      "id": "armoray-slug-e2e",
+      "id": "armoray",
       "index": "",
       "industry": "E-Commerce",
       "linkLabel": "Amazon Store",
@@ -872,7 +872,6 @@
         {
           "id": "video-ads",
           "label": "Video Ads",
-          "note": "Vertical 9:16 video creatives produced for the brand — paid social and the brand's own channels.",
           "media": [
             {
               "alt": "",
@@ -886,12 +885,12 @@
               "src": "",
               "type": "video"
             }
-          ]
+          ],
+          "note": "Vertical 9:16 video creatives produced for the brand — paid social and the brand's own channels."
         },
         {
           "id": "static-styles",
           "label": "Static Ads & Styles",
-          "note": "Static creatives — feed posts, stories and display styles.",
           "media": [
             {
               "alt": "",
@@ -911,12 +910,12 @@
               "src": "",
               "type": "image"
             }
-          ]
+          ],
+          "note": "Static creatives — feed posts, stories and display styles."
         },
         {
           "id": "results",
           "label": "Results",
-          "note": "Campaign performance — the numbers behind the creatives.",
           "media": [
             {
               "alt": "",
@@ -930,7 +929,8 @@
               "src": "",
               "type": "image"
             }
-          ]
+          ],
+          "note": "Campaign performance — the numbers behind the creatives."
         }
       ],
       "services": [
@@ -968,7 +968,6 @@
         {
           "id": "video-ads",
           "label": "Video Ads",
-          "note": "Vertical 9:16 video creatives produced for the brand — paid social and the brand's own channels.",
           "media": [
             {
               "alt": "",
@@ -982,12 +981,12 @@
               "src": "",
               "type": "video"
             }
-          ]
+          ],
+          "note": "Vertical 9:16 video creatives produced for the brand — paid social and the brand's own channels."
         },
         {
           "id": "static-styles",
           "label": "Static Ads & Styles",
-          "note": "Static creatives — feed posts, stories and display styles.",
           "media": [
             {
               "alt": "",
@@ -1007,12 +1006,12 @@
               "src": "",
               "type": "image"
             }
-          ]
+          ],
+          "note": "Static creatives — feed posts, stories and display styles."
         },
         {
           "id": "results",
           "label": "Results",
-          "note": "Campaign performance — the numbers behind the creatives.",
           "media": [
             {
               "alt": "",
@@ -1026,7 +1025,8 @@
               "src": "",
               "type": "image"
             }
-          ]
+          ],
+          "note": "Campaign performance — the numbers behind the creatives."
         }
       ],
       "services": [
