@@ -37,7 +37,7 @@ check("Thimar title on /work", work.count(">Thimar<") >= 1, work.count(">Thimar<
 check("Bona title on /work", work.count(">Bona<") >= 1, work.count(">Bona<"))
 check("thimar box link", 'href="/work/thimar"' in work)
 check("bona box link", 'href="/work/bona"' in work)
-check("thimar wordmark on /work", "/media/logos/thimar.svg" in work)
+check("thimar logo (user upload, trimmed) on /work", "/media/logos/thimar.png" in work)
 check("bona wordmark on /work", "/media/logos/bona.svg" in work)
 check("thimar IG link exact", f'href="{THIMAR_IG}"' in work)
 check("bona IG link exact (with ?hl=fr)", f'href="{BONA_IG}"' in work)

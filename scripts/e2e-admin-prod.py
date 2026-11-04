@@ -72,7 +72,7 @@ check("session check after login -> authed:true", s == 200 and r.get("authed") i
 print("[3] content read")
 s, content = jreq("GET", "/api/admin/content")
 check("GET content -> 200", s == 200 and isinstance(content, dict), f"{s}")
-check("6 projects present", s == 200 and len(content.get("projects", [])) == 6,
+check("8 projects present", s == 200 and len(content.get("projects", [])) == 8,
       f"got {len(content.get('projects', [])) if s==200 else s}")
 orig_ids = [p["id"] for p in content.get("projects", [])]
 print(f"      brands: {', '.join(orig_ids)}")

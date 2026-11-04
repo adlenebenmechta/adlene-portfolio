@@ -620,3 +620,33 @@ Stage Summary:
 - The badge/certificate fields ride the task-23 non-destructive merge, so uploading them from any admin tab state cannot revert other edits.
 - Tooling added: make-test-docs-t25.py, shot-t25-{before,after,admin}.py, probe-lightbox-t25.py, geometry-qa-t25.py, prod-qa-t25.py.
 - Watch-items: motion.main's retained filter means ANY future fixed-position overlay in page content must portal to body; .env.local + scripts/railway.env must be rebuilt after every sandbox reset (credentials in the task-23 summary).
+
+---
+Task ID: 26
+Agent: Super Z (main agent)
+Task: User (Arabic): "I wanted to add a new brand — a restaurant — but when I add the link, the / doesn't come, a - comes in its place. Fix this problem, and add a brand named Thimar (ثمار), a restaurant, linking to instagram.com/thimar_dz — and a brand named Bona, a soft-drinks company, linking to instagram.com/bona_algerie_officiel."
+
+Diagnosis:
+- The mangling lived in the admin's "URL slug" field (BrandForm.tsx): every keystroke runs through slugify() (/[a-z0-9]+/ → "-"), so pasting https://www.instagram.com/thimar_dz/ produced "https-www-instagram-com-thimar-dz". The field label literally starts with "URL" — the user reasonably pasted the brand's web link there; the actual external-link field ("Website") is separate and stores raw values.
+
+Work Log:
+- ADMIN FIX (BrandForm.tsx + ui.tsx): the page-address field now detects pasted web links (^(https?://|www.)).
+  - The link is MOVED to the Website field (https:// prepended for www.-only links).
+  - The page slug is derived from the link's last path segment (thimar_dz → "thimar-dz", bona_algerie_officiel → "bona-algerie-officiel"; falls back to the host).
+  - An amber note (new Field `warn` variant) explains exactly what happened: "Web link detected — moved to the Website field; page address set to 'thimar-dz'." Cleared on normal typing.
+  - Labels de-jargoned: "URL slug" → "Page address (slug)" with hint "This page's own address — /work/… Web links go in the Website field below."; Website field label/placeholder/hint now mention Instagram explicitly.
+  - withScheme() on save: website + context linkUrl get https:// when missing (a scheme-less link would otherwise navigate to a relative 404 on the site).
+  - 10/10 helper unit checks (both IG URLs, armoray.com, www.-only, plain text not treated as link).
+- PRETTYHOST (WorkIndexPage + CaseStudy): query strings (?hl=fr) and #fragments stripped from host chips, so Bona's card chip reads "instagram.com/bona_algerie_officiel" while the href keeps the user's exact URL verbatim.
+- TWO BRANDS (content.json + seeds mirrored, GemstoneWell structure): Thimar (ثمار) — Restaurant, /work/thimar, IG thimar_dz, description carries the Arabic name; Bona — Beverages/Soft Drinks, /work/bona, IG bona_algerie_officiel with ?hl=fr kept verbatim. Both: year 2026, e-com section rhythm (Video Ads 2×9:16 / Static Ads & Styles 3 / Results 2) with empty slots rendering as elegant placeholders, next-project nav wraps thimar→bona→acf.
+- THIMAR LOGO: the user had already uploaded their own transparent PNG (2048², 87.6% alpha, orange oval + THIMAR + ثمار + Freshshop badge — commit a4bd009) while fighting the slug bug. Kept THEIR pixels, trimmed the ~28%/59% transparent margin (task-24 pattern) → public/media/logos/thimar.png 1550×884. Bona got a generated serif BONA wordmark (make-brand-logos-t26.py, task-20 template).
+- GIT HYGIENE: stale local UUID commit bcd7664 (task-25 QA artifacts, additions only) dropped via stash + reset to origin/main; its 7 t25 tooling scripts preserved and re-committed (chore), PNGs left local.
+- VERIFY: build clean; tsc — only 2 pre-existing unrelated errors; local 42/42 (verify-t26-local.py: exact IG hrefs, chips clean, no ?hl=fr in visible text after stripping Next.js script payloads — first run's 5 "failures" were all test-side: script payload, &amp; escaping, dead prettyHost in CaseStudy) + 16/16 admin-form behavior (shot-t26.py — paste scenarios, NO save). VLM: grid + both detail pages clean; Arabic ثمار renders correctly; trimmed logo QA composite good.
+- DEPLOY bbac50b → 309fb3b5 SUCCESS (single build, no transient font failure). Production: 42/42, logos served (thimar.png 762,920B / bona.svg 259B), admin paste-fix live, VLM clean.
+- E2E: slug 12/12, texts 11/11, admin 39/39 — 62/62 after updating the suite's hardcoded "6 projects present" → 8 (stale expectation, not a regression). Live content.json re-verified post-round-trips: 8 brands, both IG links exact.
+
+Stage Summary:
+- LIVE: /work now shows 8 brand boxes — Thimar (user's own trimmed logo, links to instagram.com/thimar_dz) and Bona (serif wordmark, links to instagram.com/bona_algerie_officiel) included; both have full case-study pages with placeholder slots ready for media uploads via /admin.
+- The reported bug is fixed at the root: pasting any web link where the page address goes now does the right thing automatically and explains itself — no more dashes-instead-of-slashes.
+- For future brands: paste the link in "Website — the brand name opens this link" (or anywhere in the page-address field — it will be moved for you); the page address is only the slug of /work/<address>.
+- Tooling added: add-brands-t26.py, make-brand-logos-t26.py, trim-thimar-logo-t26.py, verify-t26-local.py (BASE-parameterized), shot-t26.py (admin paste behavior, save-safe), shot-t26-grid.py.
