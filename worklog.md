@@ -496,3 +496,28 @@ Stage Summary:
 - Build pipeline now reproducible (npm ci from lockfile, next pinned at tested 16.1.3) — no more surprise breakage from fresh npm resolution.
 - GitHub main HEAD 83e8ab6; Railway service 9c67ec73 deployment a9158233; GITHUB_TOKEN var updated (admin CMS healthy).
 - Deploys are manual for now: use serviceInstanceDeployV2 with the new commit SHA (auto-deploy webhook is not installed on the repo).
+
+---
+Task ID: 21
+Agent: Super Z (main agent)
+Task: User (Arabic): "the videos I will add will be 9:16, except the videos of the Girls' Salon" — design every video placeholder slot as 9:16 vertical (reels format), EXCEPT the National Salon of Girls' Creativity films which are horizontal.
+
+Work Log:
+- Sandbox had reset again: rebuilt scripts/railway.env (NOTE: bare KEY=value lines — e2e scripts parse them; export-prefixed lines broke PASSWORD detection once, fixed) + .env.local, repointed git remote at the fresh PAT (verified: repo access 200).
+- Local tree had drifted from the deployed state (deleted upload route + stray commit): git reset --hard origin/main (f38c3e4) — the verified task-20 lineage.
+- NEW MEDIA SPANS: MediaItem["span"] += "reel" (col-span-1 aspect-[9/16] md:col-span-4 → 2-up mobile / 3-up desktop) and "landscape" (col-span-2 aspect-[16/9] md:col-span-6 → full-width mobile / 2-up desktop). SPAN map in MediaItem.tsx extended; Record typing forces completeness.
+- PLACEHOLDER LABELS now state the expected format: "Film — 9:16" on reel slots, "Film — 16:9" on landscape slots, "Film"/"Photo" otherwise — the user sees exactly what to upload into each slot.
+- SEEDS (site-content.ts): videoSlots() → all-reel (was wide+half); new landscapeSlots() for the Salon; ACF films/coverage + e-com Video Ads → reels; Salon films → 4 × landscape (bumped 3→4 for a clean 2×2), section renamed "Films & Coverage", note "Horizontal 16:9 video coverage…"; section notes now state formats (e-com video-ads, ACF coverage, ACF 2025 films).
+- ADMIN (BrandForm.tsx): grid-placement dropdown now shows hints ("reel — 9:16 vertical video", "landscape — 16:9 horizontal video", …); newly added videos default to span "reel".
+- content.json patched via scripts/set-video-aspects.py: 16 slot updates (14 video slots → reel, Salon films → 4 × landscape + label/note), everything else preserved.
+- LOCAL VERIFICATION: bun run build clean (13 routes); LOCAL_CONTENT=1 server; rendered HTML: aspect-[9/16] ×3 on Armoray, ×2 on ACF chapters + GW, ×3 HS/ZT; aspect-[16/9] ×4 + "Films & Coverage" on Salon; zero leftover 21/9 video spans.
+- GEOMETRIC QA (scripts/geometry-qa-t21.py, Playwright DOM measurement): reels render at exactly 434×772 (9:16), Salon films at 659×371 (16:9), photos unchanged 659×495 (4:3) — measured on all 7 media pages.
+- VLM VISUAL QA: Armoray Video Ads — 3 clearly-vertical 9:16 slots, even spacing, "reads as deliberate, high-end placeholder treatment" (PASS). Salon Films & Coverage — 4 landscape 16:9 slots, 2 per row, "FILM — 16:9" labels (PASS; first screenshot caught the Photography section — scroll fixed).
+- PUSH 35613ff → GitHub main; manual Railway deploy via serviceInstanceDeployV2 (auto-deploy webhook still not installed) → deployment 37e747f9 SUCCESS.
+- PRODUCTION VERIFICATION: 13/13 routes 200; rendered HTML confirms reels (Armoray 3, HS 3, ZT 3, GW 2, ACF-2026 2, ACF-2025 2) + Salon 4 × landscape + format hints; no 21/9 video spans left.
+- PRODUCTION E2E after deploy: slug 12/12, texts 11/11 (after railway.env format fix), admin 32/32 — 55/55. E2E content commits synced via pull (fast-forward to 6a97fcd; 35613ff is in ancestry); live content.json on raw.githubusercontent re-checked: every video slot still reel/landscape after the CMS roundtrips, Salon films = 4.
+
+Stage Summary:
+- LIVE: https://adlene-portfolio-production-b8e6.up.railway.app — every video placeholder is a 9:16 vertical reel slot (Armoray / HolyStrips / Zero Trace / GemstoneWell / ACF 2026 coverage / ACF 2025 films), EXCEPT the National Salon "Films & Coverage" section which holds four 16:9 horizontal slots. Each dashed slot states its format. Photos untouched (4:3 halfs).
+- Admin: grid-placement dropdown explains each span; new videos default to 9:16 reel.
+- When the real videos are uploaded via /admin, SmartVideo fills the slot frame with object-cover — vertical films sit in the 9:16 frames, Salon films in the 16:9 frames, no layout jumps.
