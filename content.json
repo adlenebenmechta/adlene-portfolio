@@ -264,8 +264,8 @@
       "industry": "Events & Exhibitions",
       "location": "Algeria",
       "logo": "/media/logos/acf.svg",
-      "monogram": "ACF",
       "media": [],
+      "monogram": "ACF",
       "preview": {
         "alt": "ACF",
         "src": "",
@@ -290,15 +290,15 @@
         "Always-on social content"
       ],
       "description": "Armoray is an e-commerce performance brand with a community of more than five million trusted athletes and happy customers — available at armoray.com and on its Amazon storefront. I produce the brand's video ads and static creatives: concepts, scripts, filming and the final cuts, built to stop the scroll and convert across paid social and the brand's own channels.",
-      "id": "armoray-slug-e2e",
+      "id": "armoray",
       "index": "",
       "industry": "E-Commerce",
       "linkLabel": "Amazon Store",
       "linkUrl": "https://www.amazon.com/stores/ARMORAY/page/FCC26F19-5AC4-4005-B645-112A68B5B70C",
       "location": "Online — Worldwide",
       "logo": "/media/logos/armoray.svg",
-      "monogram": "A",
       "media": [],
+      "monogram": "A",
       "preview": {
         "alt": "Armoray",
         "src": "",
@@ -414,8 +414,8 @@
       "industry": "E-Commerce",
       "location": "Online — Worldwide",
       "logo": "/media/logos/holystrips.svg",
-      "monogram": "HS",
       "media": [],
+      "monogram": "HS",
       "preview": {
         "alt": "HolyStrips",
         "src": "",
@@ -529,8 +529,8 @@
       "industry": "E-Commerce",
       "location": "Online — Worldwide",
       "logo": "/media/logos/zero-trace.svg",
-      "monogram": "ZT",
       "media": [],
+      "monogram": "ZT",
       "preview": {
         "alt": "Zero Trace",
         "src": "",
@@ -643,8 +643,8 @@
       "industry": "E-Commerce",
       "location": "Online — Worldwide",
       "logo": "/media/logos/gemstonewell.svg",
-      "monogram": "GW",
       "media": [],
+      "monogram": "GW",
       "preview": {
         "alt": "GemstoneWell",
         "src": "",
@@ -740,8 +740,8 @@
       "industry": "Events & Public Institutions",
       "location": "Annaba, DZ",
       "logo": "/media/logos/salon-annaba.svg",
-      "monogram": "SA",
       "media": [],
+      "monogram": "SA",
       "preview": {
         "alt": "National Salon — Annaba",
         "src": "",
@@ -785,28 +785,28 @@
           "label": "Films & Coverage",
           "media": [
             {
-              "type": "video",
-              "src": "",
               "alt": "",
-              "span": "landscape"
+              "span": "landscape",
+              "src": "",
+              "type": "video"
             },
             {
-              "type": "video",
-              "src": "",
               "alt": "",
-              "span": "landscape"
+              "span": "landscape",
+              "src": "",
+              "type": "video"
             },
             {
-              "type": "video",
-              "src": "",
               "alt": "",
-              "span": "landscape"
+              "span": "landscape",
+              "src": "",
+              "type": "video"
             },
             {
-              "type": "video",
-              "src": "",
               "alt": "",
-              "span": "landscape"
+              "span": "landscape",
+              "src": "",
+              "type": "video"
             }
           ],
           "note": "Horizontal 16:9 video coverage published during the event."
