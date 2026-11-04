@@ -517,15 +517,15 @@ const seedProjects: Project[] = [
     sections: ecomSections(2, 3, 2),
   },
 
-  /* ── National Salon — Annaba ───────────────────────────────── */
+  /* ── Ministry of Youth — National Salon coverage (Annaba) ── */
   {
     id: "national-salon-annaba",
     index: "",
-    brand: "National Salon of Girls' Creativity & Women Entrepreneurs",
-    shortName: "The Salon",
-    logo: "/media/logos/salon-annaba.svg",
-    monogram: "SA",
-    tagline: "Sole content lead — Ministry of Youth official page.",
+    brand: "Ministry of Youth",
+    shortName: "Ministry of Youth",
+    logo: "/media/logos/ministry-of-youth.svg",
+    monogram: "MY",
+    tagline: "Sole content lead for the National Salon of Girls' Creativity — Annaba.",
     industry: "Events & Public Institutions",
     location: "Annaba, DZ",
     year: "2025",
@@ -539,7 +539,7 @@ const seedProjects: Project[] = [
       "Films & reels from the salon",
       "Real-time social coverage",
     ],
-    preview: { type: "image", src: "", alt: "National Salon — Annaba" },
+    preview: { type: "image", src: "", alt: "Ministry of Youth — National Salon, Annaba" },
     media: [],
     sections: [
       {

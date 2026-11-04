@@ -727,7 +727,7 @@
       "year": "2026"
     },
     {
-      "brand": "National Salon of Girls' Creativity & Women Entrepreneurs",
+      "brand": "Ministry of Youth",
       "deliverables": [
         "Official page content — planning to publishing",
         "Photography coverage",
@@ -739,11 +739,11 @@
       "index": "",
       "industry": "Events & Public Institutions",
       "location": "Annaba, DZ",
-      "logo": "/media/logos/salon-annaba.svg",
+      "logo": "/media/logos/ministry-of-youth.svg",
       "media": [],
-      "monogram": "SA",
+      "monogram": "MY",
       "preview": {
-        "alt": "National Salon — Annaba",
+        "alt": "Ministry of Youth — National Salon, Annaba",
         "src": "",
         "type": "image"
       },
@@ -843,8 +843,8 @@
         "Film & Reels",
         "Social Media"
       ],
-      "shortName": "The Salon",
-      "tagline": "Sole content lead — Ministry of Youth official page.",
+      "shortName": "Ministry of Youth",
+      "tagline": "Sole content lead for the National Salon of Girls' Creativity — Annaba.",
       "year": "2026"
     }
   ],
