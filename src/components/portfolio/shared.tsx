@@ -78,7 +78,9 @@ export function SectionLabel({ index, children, className = "" }: SectionLabelPr
   );
 }
 
-/** Brand wordmark card — the box visual while no preview image is uploaded */
+/** Brand logo card — the box visual while no preview image is uploaded.
+ *  The logo floats large on the studio sheen — no frame, no box edges,
+ *  so both transparent wordmarks and cut-out logos blend into the card. */
 export function BrandCard({ project }: { project: Project }) {
   return (
     <div className="absolute inset-0 flex items-center justify-center bg-[#0a0a0b] pb-[12%]">
@@ -87,16 +89,16 @@ export function BrandCard({ project }: { project: Project }) {
         aria-hidden="true"
         className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_42%,rgba(255,255,255,0.07),transparent_70%)]"
       />
-      {/* faint frame */}
+      {/* subtle vignette to seat the logo */}
       <div
         aria-hidden="true"
-        className="absolute inset-4 rounded-md border border-white/[0.06] md:absolute md:inset-5"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_75%_60%_at_50%_42%,transparent_55%,rgba(0,0,0,0.35))]"
       />
       <img
         src={mediaUrl(project.logo)}
         alt=""
         aria-hidden="true"
-        className="relative max-h-[26%] max-w-[58%] object-contain opacity-90 transition-transform duration-[1600ms] ease-out group-hover:scale-[1.06]"
+        className="relative max-h-[46%] max-w-[76%] object-contain opacity-90 transition-transform duration-[1600ms] ease-out group-hover:scale-[1.06]"
       />
     </div>
   );

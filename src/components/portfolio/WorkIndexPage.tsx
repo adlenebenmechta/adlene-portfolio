@@ -107,7 +107,7 @@ function WorkBox({
           </div>
 
           {/* bottom editorial block */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-1.5 p-5 md:p-6">
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col gap-2.5 p-5 md:p-6">
             {project.stat && (
               <p className="font-serif text-[1.45rem] font-semibold leading-none tracking-[-0.01em] text-white/95 md:text-[1.65rem]">
                 {project.stat}

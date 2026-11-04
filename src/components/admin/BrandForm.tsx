@@ -620,11 +620,11 @@ export function BrandForm({
             <img
               src={mediaUrl(p.logo)}
               alt=""
-              className="h-16 w-16 rounded-lg border border-white/10 bg-white/5 object-contain p-1.5"
+              className="h-16 w-16 rounded-lg border border-white/10 bg-[#0a0a0b] object-contain p-1.5"
             />
           )}
           <Uploader
-            label="Upload logo (SVG or PNG, square)"
+            label="Upload logo"
             accept=".svg,.png,.jpg,.jpeg,.webp"
             compact
             onDone={(url) => set("logo", url)}
@@ -637,6 +637,8 @@ export function BrandForm({
         </div>
         <p className="mt-2 text-[11px] text-white/30">
           The logo is also the box visual until an index preview image is uploaded.
+          Transparent PNG or SVG floats cleanly on the dark box — a JPG with its own
+          background shows as a square box around the logo.
         </p>
       </div>
 
