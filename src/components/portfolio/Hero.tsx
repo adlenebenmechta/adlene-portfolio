@@ -40,11 +40,13 @@ export function Hero({ texts }: { texts: PageTexts["home"] }) {
             {texts.heroIntro}
           </motion.p>
 
-          {/* line 2 — the name: one word per line, bold, in the text's own scale */}
+          {/* line 2 — the name: one word per line, bold, display scale
+              (a notch under the original 7rem, matching the lockup's
+              task-32 reduction) */}
           <motion.h1
             {...lineIn(0.5)}
-            className="mt-2.5 text-lg font-bold leading-[1.2] text-white md:text-xl"
-            style={{ textShadow: "0 2px 24px rgba(0,0,0,0.55)" }}
+            className="mt-3 text-[clamp(2.4rem,7vw,5.75rem)] font-bold leading-[1.02] tracking-[-0.015em] text-white"
+            style={{ textShadow: "0 4px 40px rgba(0,0,0,0.55)" }}
           >
             {texts.heroName.trim().split(/\s+/).map((word) => (
               <span key={word} className="block">
