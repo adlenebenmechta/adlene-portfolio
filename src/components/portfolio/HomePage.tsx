@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { PageShell } from "./PageShell";
 import { Hero } from "./Hero";
+import { TrustedBar } from "./TrustedBar";
 import { WorkGrid } from "./WorkGrid";
 import { AboutTeaser } from "./AboutTeaser";
 import { ContactCTA } from "./ContactCTA";
@@ -28,7 +29,12 @@ export function HomePage({ content }: { content: SiteContent }) {
       footerTexts={texts.footer}
       email={content.settings.email}
     >
-      <Hero texts={texts.home} />
+      {/* the opening film frame — hero text + the endless client strip
+          docked at the frame's bottom edge (visible on load, no scroll) */}
+      <div className="relative z-10 w-full">
+        <Hero texts={texts.home} />
+        <TrustedBar projects={content.projects} />
+      </div>
 
       {/* solid archive surface that slides over the film on scroll */}
       <div className="relative z-10 flex w-full flex-col items-center">

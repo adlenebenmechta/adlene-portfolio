@@ -4,7 +4,6 @@ import Link from "next/link";
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import type { Project, PageTexts } from "@/lib/site-content";
-import { TrustedBar } from "./TrustedBar";
 
 const MENU_LINKS = [
   { label: "Home", href: "/" },
@@ -29,14 +28,11 @@ export function Footer({
   return (
     <div className="relative z-10 w-full px-4 pb-10 sm:px-6 md:px-10 lg:px-16">
       <div className="mx-auto w-full max-w-[1400px]">
-        {/* the endless client strip — glides above the footer card */}
-        <TrustedBar projects={projects} />
-
         <motion.footer
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.35, ease: "easeOut" }}
-          className="liquid-glass w-full rounded-3xl p-6 mt-4 text-white/70 md:mt-5 md:p-10"
+          className="liquid-glass w-full rounded-3xl p-6 mt-32 text-white/70 md:mt-48 md:p-10"
         >
           <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12 mb-10">
             {/* Brand column */}

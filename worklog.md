@@ -692,3 +692,18 @@ Work Log:
 Stage Summary:
 - LIVE (after deploy): the endless "TRUSTED BY" strip now glides at the bottom of every page, just above the footer card — logos small and elegant; the top is clean under the menu again.
 - The user's name can no longer be replaced by test text: the texts E2E is fully invisible (real values + zero-width marker, exact-original revert). Test Brand E2E may still appear briefly ONLY when the admin suite is explicitly run (maintenance window).
+
+---
+Task ID: 29
+Agent: Super Z (main agent)
+Task: User (Arabic): "I didn't mean the very bottom — I mean the bottom of the video frame, between the video and the text; when someone enters the site the strip appears without needing to scroll down."
+
+Work Log:
+- RE-POSITIONED: the Trusted-by strip left the footer zone entirely (Footer restored to its original mt-32/md:mt-48 card rhythm, no bar) and now lives INSIDE the opening film frame: an absolute dock at the bottom edge of the hero section (min-h-svh), i.e. the last frame of the fullscreen showreel — exactly between the film and the archive below. Visible the moment the site opens at scrollY=0; scrolls away naturally with the film when the archive slides over.
+- HomePage: Hero + TrustedBar now share one `relative z-10 w-full` wrapper (w-full is load-bearing — motion.main is flex-col items-center, without it the wrapper shrinks to content width and the absolute bar inherits the wrong span; caught via geometry check, first measurement showed a 872px strip).
+- TrustedBar (hero-dock variant): outer motion.div absolute inset-x-0 bottom-5/md:bottom-6 + the site's page padding (px-4 sm:px-6 md:px-10 lg:px-16), inner strip mx-auto w-full max-w-[1400px] → edges align exactly with the footer card / work grid container. Static glass (blur 16px, white 0.05 + #050505/45 underlay) for legibility over the film. Entrance choreography: rises 14px + fades at delay 2.0s — after the curtain lifts (1.55-2.3s) and with the main reveal (1.72s), so the name lands first, then the client strip settles at the frame's bottom edge. Loop unchanged: 4 copies, -25% keyframe, 46s/copy, never pauses, 36 marks (9 brands), diamonds, edge masks.
+- TRAP NOTE: agent-browser reload restores scroll (scrollY=26) — always scrollTo(0,0) before "no-scroll visibility" measurements (cost a false 50px-offset debug round; computed bottom was exactly the designed 24px).
+- VERIFICATION (local): desktop 1600x1000 — fully visible at scrollY=0, 24px from viewport bottom, strip 1400px centered (100px margins), 849px clearance to the hero box link, 36/36 logos, animation trusted-marquee-scroll 46s infinite running, no client errors. Mobile 390x844 — fully visible without scroll, strip 358px fits screen, no overlap with hero content, 36/36 logos, running. Build clean; strip widths sanity-checked via pixel stats.
+
+Stage Summary:
+- LIVE (after deploy): entering the site shows the endless "TRUSTED BY" strip docked at the bottom edge of the showreel frame — no scrolling needed — gliding with all 9 client logos; the footer area is back to its original clean card.
