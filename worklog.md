@@ -743,3 +743,19 @@ Work Log:
 
 Stage Summary:
 - LIVE (after deploy): every project page (and ACF edition page) now opens with the brand's real logo in the header box instead of initials — compact logos in a square plaque, wordmarks in a widened plaque; initials survive only as a no-logo fallback.
+
+---
+Task ID: 32
+Agent: Super Z (main agent)
+Task: User (Arabic): "For 'Hi, my name is / Adlene Benmechta / and this is / my portfolio' — can you make it a bit smaller? And the background video loops but after a certain time a black screen blinks for about a second or less — can you fix this?"
+
+Work Log:
+- HERO DOWNSIZED (~13-17%, Hero.tsx): italic lines text-xl/2xl → text-lg/xl; the name clamp(2.9rem,8.5vw,7rem) → clamp(2.55rem,7.4vw,6.25rem) with mt-3 → mt-2.5; the portfolio box text-2xl/4xl → xl/3xl, padding px-7 py-4 / md:px-9 md:py-5 → px-6 py-3.5 / md:px-8 md:py-4, arrow 30 → 26, mt-8/10 → mt-7/8. Measured: desktop name 112→100px (h 98), box 36→30px (h 82→72); mobile 375 name 46.4→40.8px, box 24→20px (h 60) — still clearly the dominant element.
+- LOOP BLINK DIAGNOSIS: ffprobe — video is 1280x704@24, 19.958s, 480 frames, moov at front (faststart ok), keyframes only at 0s/10.4s; first/last frames are bright (lum 82-86) → source has NO black frames. Local canvas-polling of the native loop showed a clean 60ms wrap (luminance never dips) → the ~1s black blink is environment-side: some browsers repaint the element black on the end-of-media loop path, and if the media buffer is evicted the wrap becomes a visible re-buffer (prod served video with max-age=0 forcing network revalidation on every re-fetch). Poster ruled out (bright frame, lum 87).
+- SEAMLESS LOOP FIX (HomePage.tsx CinematicBackground): rAF guard seeks currentTime to 0 at duration-0.15 — the wrap now happens while the decoder is warm and the browser's native loop path never fires; native loop attribute kept as safety net (throttled-tab miss → video still wraps). NaN-duration guarded. Verified: max ct reached 19.807 local / 19.804 prod (never the 19.958 end), luminance across the wrap 85→84.9→82→85 (no black), seek ~55ms, no console errors.
+- CACHE HEADER (next.config.ts): /video.mp4 now serves Cache-Control: public, max-age=604800 — any re-buffer is served from the browser's disk cache instead of the network (kills the mobile re-fetch blink); note to bump the filename whenever the film file is replaced. Verified live: local + prod curl both return the header.
+- TRAP AVOIDED: while adding the useEffect/useRef imports I briefly turned the PageShell value import into `import type` — caught and reverted before build (would have failed the build).
+- VERIFICATION: build clean, eslint 0/0 on touched files; prod hero 100px name / 30px box; texts E2E smoke 12/12; VLM on prod screenshot — "elegantly balanced, cinematic rather than overwhelming, fully readable, no clipping, no overlap, no glitches". PRE-PUSH: no deletions, only 3 intended files.
+
+Stage Summary:
+- LIVE (after deploy f54e7e1): the hero lockup is a notch smaller and better proportioned; the showreel now wraps seamlessly — the guard pre-seeks before the end so the browser's black-flash loop path never runs, and the video is disk-cached for a week so re-buffering can't reach the network.
