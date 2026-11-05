@@ -34,7 +34,7 @@ export function Hero({ texts }: { texts: PageTexts["home"] }) {
           {/* line 1 */}
           <motion.p
             {...lineIn(0.35)}
-            className="text-xl italic text-white/85 md:text-2xl"
+            className="text-lg italic text-white/85 md:text-xl"
             style={{ textShadow: "0 2px 24px rgba(0,0,0,0.55)" }}
           >
             {texts.heroIntro}
@@ -43,7 +43,7 @@ export function Hero({ texts }: { texts: PageTexts["home"] }) {
           {/* line 2 — the name */}
           <motion.h1
             {...lineIn(0.5)}
-            className="mt-3 text-[clamp(2.9rem,8.5vw,7rem)] font-semibold leading-[0.98] tracking-[-0.015em] text-white"
+            className="mt-2.5 text-[clamp(2.55rem,7.4vw,6.25rem)] font-semibold leading-[0.98] tracking-[-0.015em] text-white"
             style={{ textShadow: "0 4px 40px rgba(0,0,0,0.55)" }}
           >
             {texts.heroName}
@@ -52,7 +52,7 @@ export function Hero({ texts }: { texts: PageTexts["home"] }) {
           {/* line 3 */}
           <motion.p
             {...lineIn(0.68)}
-            className="mt-3 text-xl italic text-white/85 md:text-2xl"
+            className="mt-2.5 text-lg italic text-white/85 md:text-xl"
             style={{ textShadow: "0 2px 24px rgba(0,0,0,0.55)" }}
           >
             {texts.heroLine}
@@ -61,15 +61,15 @@ export function Hero({ texts }: { texts: PageTexts["home"] }) {
           {/* line 4 — the boxed portfolio link */}
           <motion.div
             {...lineIn(0.86)}
-            className="mt-8 md:mt-10"
+            className="mt-7 md:mt-8"
           >
             <Link
               href="/work"
-              className="group inline-flex items-center gap-3 rounded-2xl border-2 border-white/70 bg-black/25 px-7 py-4 text-2xl font-medium text-white backdrop-blur-md transition-all duration-500 hover:border-white hover:bg-white hover:text-black md:gap-4 md:px-9 md:py-5 md:text-4xl"
+              className="group inline-flex items-center gap-3 rounded-2xl border-2 border-white/70 bg-black/25 px-6 py-3.5 text-xl font-medium text-white backdrop-blur-md transition-all duration-500 hover:border-white hover:bg-white hover:text-black md:gap-4 md:px-8 md:py-4 md:text-3xl"
             >
               {texts.heroBox}
               <ArrowUpRight
-                size={30}
+                size={26}
                 aria-hidden="true"
                 className="transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1"
               />

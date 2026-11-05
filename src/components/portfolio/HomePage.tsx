@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { PageShell } from "./PageShell";
 import { Hero } from "./Hero";
 import { TrustedBar } from "./TrustedBar";
@@ -62,6 +62,13 @@ export function HomePage({ content }: { content: SiteContent }) {
  * Fixed looping film background — full colour, unfiltered, uncovered.
  * No brightness filter, no dark veil, no vignette, no grain:
  * the video is shown exactly as the filmmaker made it.
+ *
+ * Seamless loop: instead of letting the browser's native loop path fire
+ * at the exact end (some browsers repaint the element black for a beat,
+ * and an evicted media buffer turns the wrap into a visible re-buffer),
+ * we seek back to 0 just BEFORE the end while the decoder is still warm.
+ * The native `loop` attribute stays on as a safety net — if the rAF
+ * guard ever misses (e.g. a throttled tab), the video still wraps.
  */
 function CinematicBackground({
   video,
@@ -70,8 +77,26 @@ function CinematicBackground({
   video: string;
   poster: string;
 }): ReactNode {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    let raf = 0;
+    const tick = () => {
+      // guard against NaN duration while metadata loads
+      if (v.duration && v.currentTime >= v.duration - 0.15) {
+        v.currentTime = 0;
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
   return (
     <video
+      ref={ref}
       className="fixed inset-0 z-[0] h-full w-full object-cover"
       autoPlay
       loop
