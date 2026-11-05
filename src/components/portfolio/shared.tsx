@@ -100,6 +100,37 @@ export function TitleLockup({
   );
 }
 
+/** The brand's own mark for page headers (case study + chapter) —
+ *  the real logo when one is uploaded: the plaque widens to fit
+ *  wordmarks so every logo reads clearly, with serif initials kept
+ *  only as a fallback for brands without a logo file. */
+export function BrandMark({ project }: { project: Project }) {
+  return (
+    <figure className="flex h-12 w-auto min-w-12 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.04] p-1.5 md:h-16 md:min-w-16 md:p-2">
+      {project.logo ? (
+        <img
+          src={mediaUrl(project.logo)}
+          alt={`${project.brand} logo`}
+          className="h-full w-auto max-w-[176px] object-contain md:max-w-[216px]"
+        />
+      ) : project.monogram ? (
+        <span
+          aria-label={project.brand}
+          className={`font-serif tracking-[0.18em] text-[#E8E4DC] ${
+            project.monogram.length >= 3
+              ? "text-base md:text-lg"
+              : project.monogram.length === 2
+                ? "text-xl md:text-2xl"
+                : "text-2xl md:text-3xl"
+          }`}
+        >
+          {project.monogram}
+        </span>
+      ) : null}
+    </figure>
+  );
+}
+
 /** Brand logo card — the box visual while no preview image is uploaded.
  *  The logo floats large on the studio sheen — no frame, no box edges,
  *  so both transparent wordmarks and cut-out logos blend into the card.
