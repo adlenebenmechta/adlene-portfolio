@@ -759,3 +759,16 @@ Work Log:
 
 Stage Summary:
 - LIVE (after deploy f54e7e1): the hero lockup is a notch smaller and better proportioned; the showreel now wraps seamlessly — the guard pre-seeks before the end so the browser's black-flash loop path never runs, and the video is disk-cached for a week so re-buffering can't reach the network.
+
+---
+Task ID: 33
+Agent: Super Z (main agent)
+Task: User (Arabic): "No — put Adlene on one line and Benmechta on another like it was, and make it a bit smaller, like the rest of the text, just bold."
+
+Work Log:
+- HERO NAME RELAYOUT (Hero.tsx): the display-serif name block (clamp 2.55rem-6.25rem semibold, one line) is gone — the name now renders one word per line via texts.heroName.split(/\s+/) mapped to block spans (CMS-safe: any name wraps word-per-line; key=word). Size matches the surrounding italic lines exactly (text-lg md:text-xl → 20px desktop / 18px mobile), hierarchy carried by weight instead of size: font-bold (700) vs the italics' regular. leading-[1.2] for a deliberate two-line stack, smaller text shadow matched to the text scale.
+- MEASURED (local + prod): lines ["Adlene","Benmechta"], fs 20px = introFs 20px, weight 700, h1 height 48px (2×24px lines); mobile 375 — 18px, 43px tall, fits viewport. VLM check: composition clean, no clipping/overlap.
+- UNCHANGED (deliberately): the boxed "my portfolio" CTA keeps its xl/3xl scale (now the lockup's largest element, CTA-forward), the loop guard + video cache from task 32 untouched. texts E2E smoke 12/12 (heroName still renders, just split across spans).
+
+Stage Summary:
+- LIVE (after deploy 83e4785): the opening lockup reads as one uniform small text block — italic intro, bold two-line name (Adlene / Benmechta), italic lead-in, then the portfolio box as the single dominant element.
