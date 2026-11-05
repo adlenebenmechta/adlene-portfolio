@@ -69,6 +69,13 @@ export function HomePage({ content }: { content: SiteContent }) {
  * we seek back to 0 just BEFORE the end while the decoder is still warm.
  * The native `loop` attribute stays on as a safety net — if the rAF
  * guard ever misses (e.g. a throttled tab), the video still wraps.
+ *
+ * Never-stall watchdog: browsers pause background films on their own
+ * (tab switch, power saving, mobile app switch, buffer eviction) and
+ * never resume them — the frame freezes into a still. Whenever ANYTHING
+ * pauses this film, we bring it straight back; the moment the page is
+ * visible/focused again, playback resumes. muted + playsInline keeps
+ * autoplay permission, so play() never needs a user gesture.
  */
 function CinematicBackground({
   video,
@@ -82,6 +89,8 @@ function CinematicBackground({
   useEffect(() => {
     const v = ref.current;
     if (!v) return;
+
+    /* 1) seamless early-seek wrap */
     let raf = 0;
     const tick = () => {
       // guard against NaN duration while metadata loads
@@ -91,7 +100,43 @@ function CinematicBackground({
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
+
+    /* 2) insist on playing — nothing may leave the film frozen */
+    let resumeTimer: ReturnType<typeof setTimeout> | undefined;
+    const resume = () => {
+      if (v.paused) v.play().catch(() => {/* retried by the next event */});
+    };
+    const onResumeSoon = () => {
+      clearTimeout(resumeTimer);
+      // tiny delay: lets seek-related micro-pauses settle before
+      // we re-issue play(), avoiding a play/pause tug-of-war
+      resumeTimer = setTimeout(resume, 80);
+    };
+    const onEnded = () => {
+      v.currentTime = 0;
+      resume();
+    };
+    const onVisible = () => {
+      if (!document.hidden) onResumeSoon();
+    };
+
+    v.addEventListener("pause", onResumeSoon);
+    v.addEventListener("ended", onEnded);
+    v.addEventListener("stalled", onResumeSoon);
+    document.addEventListener("visibilitychange", onVisible);
+    window.addEventListener("focus", onResumeSoon);
+    window.addEventListener("pageshow", onResumeSoon);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(resumeTimer);
+      v.removeEventListener("pause", onResumeSoon);
+      v.removeEventListener("ended", onEnded);
+      v.removeEventListener("stalled", onResumeSoon);
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener("focus", onResumeSoon);
+      window.removeEventListener("pageshow", onResumeSoon);
+    };
   }, []);
 
   return (
@@ -102,6 +147,7 @@ function CinematicBackground({
       loop
       muted
       playsInline
+      preload="auto"
       poster={mediaUrl(poster)}
       aria-hidden="true"
     >
