@@ -40,13 +40,17 @@ export function Hero({ texts }: { texts: PageTexts["home"] }) {
             {texts.heroIntro}
           </motion.p>
 
-          {/* line 2 — the name */}
+          {/* line 2 — the name: one word per line, bold, in the text's own scale */}
           <motion.h1
             {...lineIn(0.5)}
-            className="mt-2.5 text-[clamp(2.55rem,7.4vw,6.25rem)] font-semibold leading-[0.98] tracking-[-0.015em] text-white"
-            style={{ textShadow: "0 4px 40px rgba(0,0,0,0.55)" }}
+            className="mt-2.5 text-lg font-bold leading-[1.2] text-white md:text-xl"
+            style={{ textShadow: "0 2px 24px rgba(0,0,0,0.55)" }}
           >
-            {texts.heroName}
+            {texts.heroName.trim().split(/\s+/).map((word) => (
+              <span key={word} className="block">
+                {word}
+              </span>
+            ))}
           </motion.h1>
 
           {/* line 3 */}
