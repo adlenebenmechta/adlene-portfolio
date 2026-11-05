@@ -650,3 +650,26 @@ Stage Summary:
 - The reported bug is fixed at the root: pasting any web link where the page address goes now does the right thing automatically and explains itself — no more dashes-instead-of-slashes.
 - For future brands: paste the link in "Website — the brand name opens this link" (or anywhere in the page-address field — it will be moved for you); the page address is only the slug of /work/<address>.
 - Tooling added: add-brands-t26.py, make-brand-logos-t26.py, trim-thimar-logo-t26.py, verify-t26-local.py (BASE-parameterized), shot-t26.py (admin paste behavior, save-safe), shot-t26-grid.py.
+
+---
+Task ID: 27
+Agent: Super Z (main agent)
+Task: User (Arabic): "In the menu, I want to add a bar that moves and never stops, with 'Trusted by' written in it, and the logos arranged in a creative, professional way — always moving."
+
+Work Log:
+- Sandbox recovery: repo synced to origin/main; user had added Biox Carbon themselves (9 brands now). Tasks 25/26 (Thimar + Bona + admin link-paste fix) confirmed complete from worklog + content.json.
+- TRUSTEDBAR (src/components/portfolio/TrustedBar.tsx, new): a slim (44px) rounded glass strip docked mt-1.5 under the navbar pill, same insets (inset-x-4 top-4 / md:inset-x-6 lg:inset-x-10) so pill + strip read as one designed header system. Static "TRUSTED BY" label (tiny diamond + letterspaced caps) in its own left slot behind a hairline border-r; the endless row fills the rest: 9 client logos in equal rhythm cells (w-24/w-28), jewellery-style 3px rotated-diamond separators, each logo dimmed to 70% opacity and lit + slight scale on hover, links open the brand's case study (/work/<id>).
+- THE LOOP: 4 identical copies of the logo row inside one w-max track; pure-CSS keyframes translate3d(-25%) = exactly one copy → seamless infinite loop, GPU-composited, never pauses (user asked "لا تتوقف" — no hover-pause). 46s/copy ≈ 25-29 px/s (measured calm). 4 copies cover up to ~4K viewports without a gap. Edge dissolve via mask-image gradient on the track container. Dark underlay (bg-[#050505]/45) inside the glass keeps logos legible over any film frame; scrolled state mirrors the pill (blur 16px + bg intensify).
+- A11Y: duplicate copies aria-hidden + tabindex=-1 (first copy stays keyboard-reachable); global prefers-reduced-motion rule freezes the animation (accessibility, not a stop).
+- INTEGRATION: Navbar accepts projects (from PageShell, which every route already passes); TrustedBar hidden while the mobile hamburger menu is open (AnimatePresence exit) so the menu takes its space.
+- CLEARANCE: fixed strip bottom ≈126px mobile / 134px desktop → bumped first-content top padding on /work (WorkIndexPage), case studies (CaseStudy), chapters (ChapterPage), About, Contact to pt-36/md:pt-40 (md:pt-48 on Contact kept).
+- E2E SUITE DRIFT: e2e-admin-prod.py expected 8 projects → 9 (user's Biox Carbon).
+- SANDBOX TRAPS HIT & CLEARED: (1) a stale sandbox auto-start server (bun .next/standalone/server.js) survived pkill and kept port 3000 serving stale chunks (500s, hydration wiped the DOM) — killed by PID/fuser, clean restart. (2) THE BIG ONE: the local UUID commit carried on top of origin/main DELETED src/app/api/admin/upload/route.ts + src/lib/content-merge.ts + logo binaries (the exact task-22 failure mode the worklog warns about). Caught it pre-push via git diff HEAD origin/main — dropped the commit via reset --hard origin/main, re-applied only my 12 task-27 files from a patch, rebuilt, re-verified. Production never saw the deletion.
+- VERIFICATION: build clean (2 pre-existing tsc errors only); local verify-t27-local.py ALL PASS (10 routes × marquee present + 36 links each, 9 logos resolve, duplicates inert, /admin untouched) + qa-t27-dynamic.py 15/15 (animation name/running, real movement over time, calm pace, strip below pill, slim, label clear, content below strip, images loaded, fixed on scroll, glass intensify, mobile visible/in-viewport/hidden-while-menu/returns). VLM rounds: initial 45%-opacity critique → tuned to 70% + dark underlay + wider 12% fades + taller marks (max-h-[22px]/[26px], max-w 88/96px) → final VLM: "professional, no overlap/clipping/misalignment"; mobile VLM clean.
+- DEPLOY 5357f96 → 21303168 SUCCESS (single build). PRODUCTION: verify ALL PASS, dynamic 15/15, E2E slug 12/12 + texts 11/11 + admin 39/39 = 62/62 (incl. the 9-brand count and the upload-route exercise), VLM clean, live content.json intact post-roundtrips (9 brands, acf logo /media/logos/acf.png).
+
+Stage Summary:
+- LIVE on every page: under the menu pill, the "TRUSTED BY" strip glides endlessly with all 9 client logos (ACF, Armoray, HolyStrips, Zero Trace, GemstoneWell, Ministry of Youth, Thimar, Bona, Biox Carbon) — glass, diamonds, soft edge dissolves; each logo opens its work page; on mobile it yields to the hamburger menu and returns.
+- New brands added later via /admin appear in the strip automatically (logos read from content.json — no code change needed).
+- Watch-item REPEATED: stale sandbox commits can still carry deletions — ALWAYS `git diff HEAD origin/main` before pushing; and kill the auto-started standalone server by PID before local server work (pkill -f next-server misses it).
+- Tooling added: verify-t27-local.py (BASE-parameterized), qa-t27-dynamic.py (Playwright, BASE-parameterized).
