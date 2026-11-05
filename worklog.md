@@ -673,3 +673,22 @@ Stage Summary:
 - New brands added later via /admin appear in the strip automatically (logos read from content.json — no code change needed).
 - Watch-item REPEATED: stale sandbox commits can still carry deletions — ALWAYS `git diff HEAD origin/main` before pushing; and kill the auto-started standalone server by PID before local server work (pkill -f next-server misses it).
 - Tooling added: verify-t27-local.py (BASE-parameterized), qa-t27-dynamic.py (Playwright, BASE-parameterized).
+
+---
+Task ID: 28
+Agent: Super Z (main agent)
+Task: User (Arabic): "Put it at the bottom — better; the logos appear small. And why is my name sometimes written 'Test Name E2E' in its place?"
+
+Work Log:
+- MOVED THE MARQUEE TO THE BOTTOM: TrustedBar is no longer docked under the navbar pill (Navbar now takes no projects prop); it renders inside the Footer component, directly ABOVE the footer card, on every page. Same container width as the card (max-w-[1400px] + page px), so strip + card read as one designed bottom unit. Vertical rhythm: strip carries the big breathing gap (mt-28 md:mt-40), card drops to mt-4 md:mt-5 under it.
+- BOTTOM VARIANT OF THE STRIP: dropped the scrolled-glass / mobile-menu-yield props (AnimatePresence exit) — at the bottom it needs neither; static glass (blur 16px, bg 0.05 + dark underlay) keeps logos legible over any film frame. Logos stay small, jeweller-scale (max-h 24/28px — up 2px for legibility at the new spot, cells w-28/w-32), dimmed to 60%, lit + slight scale on hover, diamond separators, edge dissolves, endless 46s/copy pure-CSS loop (never pauses). Entrance: fade + rise, 0.9s @ 0.45s delay.
+- "TEST NAME E2E" MYSTERY — ROOT CAUSE: e2e-texts-test.py verified CMS text editing by writing VISIBLE fake values onto the live site (heroName "Test Name E2E", "EDITED HEADLINE…", "Edited tagline for E2E.") for the whole propagation window (~2-4 min incl. CDN cache), then reverting. Anyone visiting during a test run saw the fake name. That's the "sometimes".
+- E2E MADE INVISIBLE: the texts suite now appends a zero-width space (U+200B) marker to the REAL values (name stays "Adlene Benmechta" visually — zero visual width), polls for the marked variants in the HTML of /, /about, /work (hero + footer + curtain signature), adds a "no fake E2E text visible on /" guard check, and reverts to the exact captured originals (no more hardcoded revert strings). 12 checks. U+200B survives JSON, JS trim() and HTML rendering (React emits it raw), so every propagation check stays meaningful.
+- NOTE: e2e-admin-prod.py still adds a visible "Test Brand E2E" brand for ~2-5 min while it runs (inherent — a brand add must appear on /work to be verified). Run it only when the CMS API itself changes; this round only components + the texts suite changed, so it was skipped.
+- TRAP RE-HIT (known from task 27): the sandbox auto-start standalone server (PID 4177, started 13:41) held port 3000 and served a stale/new chunk mix → hydration "client-side exception". Killed by PID, clean restart. Also removed the stray "3000" marker file that ride-along commit fa1353e had added.
+- VERIFICATION: build clean, eslint 0/0 on touched files; local geometry via agent-browser: bar at y≈6606 of 7114 page (bottom), 44px tall, 1400px wide, 20px gap to footer card, below nav, 36/36 logos loaded (9 brands × 4 copies), sample marks 23-28px tall, animation trusted-marquee-scroll 46s infinite running, no client errors, "TRUSTED BY" label present.
+- PRE-PUSH SAFETY: git diff origin/main --diff-filter=D → no deletions (the task-27 trap does not recur).
+
+Stage Summary:
+- LIVE (after deploy): the endless "TRUSTED BY" strip now glides at the bottom of every page, just above the footer card — logos small and elegant; the top is clean under the menu again.
+- The user's name can no longer be replaced by test text: the texts E2E is fully invisible (real values + zero-width marker, exact-original revert). Test Brand E2E may still appear briefly ONLY when the admin suite is explicitly run (maintenance window).
