@@ -726,3 +726,20 @@ Stage Summary:
 - FOLLOW-UP (same task, prod VLM kept flagging the ministry seal): gamma-lifted the emblem PNG (lum 102 → 134 → 154) — still ghosted. Canvas-measured the rendered img: correct bright-gold pixels [208,140,85] at 35x34px — the asset was fine; an intricate 1200px seal at 34px is perceptual mush no brightening can fix. SOLUTION: strip-only wordmark — new /media/logos/ministry-of-youth-wordmark.svg ("MINISTRY OF YOUTH", tight viewBox 520x58, white, weight 600, ls 5) + MARQUEE_MARKS override map in TrustedBar (falls back to p.logo). The full seal keeps its place on /work cards and the case study where it renders large. Dual-frame VLM (t=4 AND t=10): PASS — "Ministry of Youth ... clearly legible" in both.
 - ENV RECOVERY: sandbox recycle between turns wiped gitignored env files — rebuilt .env.local (ADMIN_PASSWORD/GITHUB_TOKEN/DATABASE_URL) and scripts/railway.env (NOTE: RAILWAY_DOMAIN must be the BARE domain, the script prepends https:// — a https://-prefixed value made the health check read HTTP 000).
 - BROWSER-CACHE TRAP: old logo PNGs keep rendering in an open browser session even after deploy (max-age=0 + ETag revalidation needs a reload); fetch(url, {cache:'reload'}) + location.reload() forces the fresh bytes before screenshot-judging.
+
+---
+Task ID: 31
+Agent: Super Z (main agent)
+Task: User (Arabic): "When I enter one of the pages, e.g. Ministry of Youth, the box inside shows 'MY' — or 'A' for Armoray. I want them replaced with the original logo."
+
+Work Log:
+- ROOT CAUSE: the case-study and chapter header boxes preferred `project.monogram` (serif initials MY / A / ACF / HS…) over the uploaded logo — the <img> only rendered when monogram was empty, and all 9 brands carry monograms in content.json, so the real logos were never shown there (they were already live on /work cards and the marquee).
+- FIX (inverted priority + dedup): new shared `BrandMark` component in shared.tsx — shows `project.logo` FIRST; serif initials kept only as a fallback for a brand with no logo file. Replaced the two duplicated figure blocks (CaseStudy.tsx + ChapterPage.tsx, 24 lines each) with <BrandMark project={project} />.
+- PLAQUE GEOMETRY: the old fixed 48/64px square box would strangle wide wordmarks (GemstoneWell 8.3:1 → ~6px tall). BrandMark keeps h-12/h-16 + min-w-12/min-w-16 but lets width fit the logo (w-auto, p-1.5/p-2), img h-full w-auto object-contain capped max-w-[176px]/[216px] → square logos (Ministry 65x64, Bona 72x64) stay square, wordmarks get elegant wide plaques (ACF 224px, GemstoneWell 234px, Zero Trace 210px), portrait Biox centers in the min square.
+- VERIFICATION (local, standalone build): all 9 brand pages swept — img present + naturalWidth>0 + zero initials on every one; plaques 64-234px wide; 16px gap to the industry/year label kept; mobile 375px — GemstoneWell plaque 190px fits viewport, Ministry 49x48 at x=24 aligns with page padding. ACF chapter page (/work/acf/2026 + 2025) verified (ChapterPage path). VLM on Ministry desktop screenshot: real Algerian Ministry of Youth emblem (red/gold seal) identified, well-proportioned, centered, no overlap/cut-off.
+- ASSET NOTE (no action): ministry-of-youth.png is thin line-art (9.5% fully-opaque pixels) so it reads delicately at 46px plaque height — inherent to the seal, already VLM-identified correctly; the full seal renders large on /work cards and the marquee uses the wordmark override (task 30).
+- PRE-PUSH SAFETY: git diff origin/main --diff-filter=D → no deletions; only the 3 intended files touched.
+- DEPLOY: commit a4b0638 → Railway build SUCCESS → prod sweep (ministry, armoray, acf, bioxcarbon, acf/2025 chapter): all logos loaded, no initials. texts E2E smoke: 12/12 passed (no fake text visible, exact revert).
+
+Stage Summary:
+- LIVE (after deploy): every project page (and ACF edition page) now opens with the brand's real logo in the header box instead of initials — compact logos in a square plaque, wordmarks in a widened plaque; initials survive only as a no-logo fallback.
