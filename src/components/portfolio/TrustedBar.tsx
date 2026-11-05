@@ -17,10 +17,13 @@ import { EASE } from "./shared";
  * a 4-copy track = exactly one copy, so the loop never shows a seam).
  *
  * — never pauses: the motion is the feature ("تمشي ولا تتوقف")
- * — small, jeweller-scale marks: dimmed to 60%, lit on hover
+ * — same glass family as the navbar pill above (liquid-glass rim +
+ *   backdrop blur), tuned a touch denser (blur 20px, white 7%) so the
+ *   marks keep contrast even over the film's brightest frames
+ * — marks sized up to jeweller-statement scale (28/34px), base
+ *   opacity 85% (lit fully on hover) — no washed-out wordmarks
  * — a tiny rotated-diamond separator between logos, jewellery-style
  * — soft mask on both ends so marks drift in and out of the darkness
- * — aligned to the site's 1400px container, same edges as the footer card
  */
 
 /** number of identical copies inside the track — 4 keeps every viewport
@@ -43,19 +46,15 @@ export function TrustedBar({ projects }: { projects: Project[] }) {
       className="absolute inset-x-0 bottom-5 z-20 px-4 sm:px-6 md:bottom-6 md:px-10 lg:px-16"
     >
       <div
-        className="liquid-glass relative mx-auto flex h-11 w-full max-w-[1400px] items-stretch overflow-hidden rounded-full"
+        className="liquid-glass relative mx-auto flex h-12 w-full max-w-[1400px] items-stretch overflow-hidden rounded-full md:h-[52px]"
         style={{
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          backgroundColor: "rgba(255, 255, 255, 0.05)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          backgroundColor: "rgba(255, 255, 255, 0.06)",
+          backgroundImage:
+            "linear-gradient(rgba(5, 5, 5, 0.42), rgba(5, 5, 5, 0.42))",
         } as React.CSSProperties}
       >
-        {/* dark underlay — keeps the logos legible over the film frame */}
-        <span
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[#050505]/45"
-        />
-
         {/* ─── static label ─────────────────────────────────────── */}
         <div className="relative z-10 flex shrink-0 items-center gap-2.5 border-r border-white/10 pl-5 pr-4 md:pl-6 md:pr-5">
           <span
@@ -78,7 +77,7 @@ export function TrustedBar({ projects }: { projects: Project[] }) {
           }}
         >
           <div
-            className="trusted-marquee-track flex h-11 w-max items-center"
+            className="trusted-marquee-track flex h-12 w-max items-center md:h-[52px]"
             style={{ animationDuration: `${SPEED_S}s` }}
           >
             {Array.from({ length: COPIES }, (_, copy) => (
@@ -93,13 +92,13 @@ export function TrustedBar({ projects }: { projects: Project[] }) {
                       href={`/work/${p.id}`}
                       aria-label={`${p.brand} — view the work`}
                       tabIndex={copy > 0 ? -1 : undefined}
-                      className="flex h-11 w-28 shrink-0 items-center justify-center md:w-32"
+                      className="flex h-12 w-32 shrink-0 items-center justify-center md:h-[52px] md:w-36"
                     >
                       <img
                         src={mediaUrl(p.logo)}
                         alt=""
                         draggable={false}
-                        className="max-h-[24px] w-auto max-w-[96px] object-contain opacity-60 transition-[opacity,transform] duration-500 hover:scale-[1.07] hover:opacity-100 md:max-h-[28px] md:max-w-[104px]"
+                        className="max-h-[28px] w-auto max-w-[110px] object-contain opacity-85 transition-[opacity,transform] duration-500 hover:scale-[1.07] hover:opacity-100 md:max-h-[34px] md:max-w-[126px]"
                       />
                     </Link>
                     <span

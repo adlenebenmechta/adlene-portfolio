@@ -707,3 +707,19 @@ Work Log:
 
 Stage Summary:
 - LIVE (after deploy): entering the site shows the endless "TRUSTED BY" strip docked at the bottom edge of the showreel frame — no scrolling needed — gliding with all 9 client logos; the footer area is back to its original clean card.
+
+---
+Task ID: 30
+Agent: Super Z (main agent)
+Task: User (Arabic): "Some logos don't show well in the strip — can you make the strip's background similar to the top menu strip, and enlarge the logos a little?"
+
+Work Log:
+- GLASS REWORK (TrustedBar.tsx): removed the old opaque dark underlay (bg-#050505/45) that swallowed dark-colored marks; the strip is now the same glass family as the navbar pill (liquid-glass class → inset highlight + gradient hairline rim), tuned for a logo-carrying surface: backdrop blur 24px + white 6% tint + a 42% near-black inner veil (linear-gradient background-image). Measured result: strip-zone luminance is now 50-54/255 across ALL film frames (sampled every 2s of the 20s loop, seeked programmatically) — the panel no longer swings bright/dark with the video, so both white wordmarks AND dark/bronze marks keep contrast over any frame.
+- LOGOS ENLARGED: bar height 44 → 48px (mobile) / 52px (desktop); marks max-h 24/28 → 28/34px, max-w 104/118 → 110/126px, cells w-28/w-32 → w-32/w-36; base opacity 70% → 85% (hover 100% kept).
+- ASSET NORMALIZATION (3 brand marks, alpha-preserving lifts): GemstoneWell.svg rewritten — old viewBox wasted 78% of vertical space on padding and used thin light-gray type (rendered ~7px tall, invisible per VLM); new tight viewBox 480x58, font 44, weight 600, letter-spacing 4, pure #FFFFFF → renders as an elegant letterspaced white serif ~15px tall at full 126px width, legible on /work cards too. Ministry of Youth emblem brightened (per-pixel lift on inked pixels only: mean lum 102 → 134, bronze [149,88,46] → [201,114,56]) — was the "gold ghost" VLM flagged. Armoray orange gently lifted (lum 138 → 150) per VLM micro-note.
+- VLM ITERATIONS (5 rounds, each on a different frozen marquee position/film frame — the treadmill taught that per-frame fixes are a treadmill; the veil depth is the systemic fix): round 1 fail (glass too transparent) → round 2 pass-w/fix → rounds 3-4 fixed GemstoneWell + Ministry → round 5 flagged bright-sand frame → veil 0.26 → 0.42 + programmatic worst-frame sampling (video.currentTime seeks, PIL luminance per frame) → final VLM on the BRIGHTEST frame: PASS — "central logos readable with strong contrast, nothing invisible, glass premium, calm and expensive".
+- VERIFICATION (local): build clean; geometry — 52px bar, fully visible at scrollY=0 (no scroll needed, unchanged from task 29), 1400px centered, veil+blur confirmed in computed styles, 36/36 marks loaded (heights 28-34px), animation running, no client errors.
+- TRAP AVOIDED: agent-browser eval in loops must use IIFE (() => {…})() — bare const re-declares throw SyntaxError across calls.
+
+Stage Summary:
+- LIVE (after deploy): the Trusted-by strip keeps its position at the bottom edge of the opening film frame (visible on load, no scroll) but now sits on navbar-matching frosted glass with a calibrated dark veil that stays uniform over every video frame; logos are ~25% larger and every mark — white, colored, bronze — reads clearly (VLM-verified on the worst-case brightest frame).
