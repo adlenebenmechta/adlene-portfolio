@@ -786,3 +786,17 @@ Work Log:
 
 Stage Summary:
 - LIVE (after deploy 8518168): the opening lockup is back to its cinematic hierarchy — italic intro, the name stacked as two big bold lines (Adlene / Benmechta), italic lead-in, portfolio box — a notch smaller than the original 7rem, in step with the task-32 reduction of the whole lockup.
+
+---
+Task ID: 35
+Agent: Super Z (main agent)
+Task: User (Arabic): "Why does the video sometimes stop and become a still image? I absolutely don't want this — I want it to never stop."
+
+Work Log:
+- DIAGNOSIS: nothing in the app pauses the hero film (SmartVideo's inView pause only touches case-study videos). The freeze is browser-driven: tab switches, power saving (desktop Chrome/Firefox battery modes), mobile app switches and buffer stalls all pause a background film — and the browser never resumes it, leaving the last frame frozen as a still image. Pre-fix, the page had no resume path at all.
+- NEVER-STALL WATCHDOG (HomePage.tsx CinematicBackground): any 'pause' or 'stalled' event on the film is answered within 80ms with v.play() (muted+playsInline keeps autoplay permission — no gesture needed). 'ended' seeks to 0 and replays. visibilitychange (when visible again), window focus and pageshow all trigger resume — so coming back to the tab/phone instantly restarts the film. 80ms debounce prevents play/pause tug-of-war around seeks. preload="auto" added to reduce stall risk. The task-32 seamless early-seek wrap is untouched (guard re-verified: maxCt 19.806, zero paused frames across the wrap).
+- LIMIT (physics, not code): while a tab is genuinely hidden/backgrounded, the OS/browser suspends media decode — no website can keep a video decoding off-screen. What the watchdog guarantees: the film is ALWAYS rolling whenever the page is being looked at, and resumes within ~100ms of returning. Never a persistent frozen frame.
+- VERIFICATION: local — forced v.pause() → auto-resumed (paused=false by next probe); wrap clean, no console errors; mobile 375 playing with preload=auto. Prod — same forced-pause test: recovered, currentTime advancing; texts E2E smoke 12/12. Build clean, eslint 0/0; no deletions; single intended file.
+
+Stage Summary:
+- LIVE (after deploy 5b3897d): the showreel can no longer get stuck as a frozen image — whatever pauses it (browser power saving, tab/app switch, buffer hiccup), it starts rolling again within a tenth of a second, and the loop itself stays seamless.
