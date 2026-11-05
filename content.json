@@ -1060,39 +1060,6 @@
       "tagline": "",
       "website": "https://bioxcarbon.com/",
       "year": "2026"
-    },
-    {
-      "id": "test-brand-e2e",
-      "index": "06",
-      "brand": "Test Brand E2E",
-      "shortName": "Test",
-      "logo": "/gh/media/uploads/e2e-prod-797c9c-mw3lok0s.jpg",
-      "tagline": "Remote edit v3 — made outside the admin tab.",
-      "industry": "Testing",
-      "location": "Algiers, DZ",
-      "year": "2024",
-      "services": [
-        "Testing",
-        "Automation"
-      ],
-      "role": "Tester",
-      "description": "Exists only to verify the admin panel end-to-end on production.",
-      "deliverables": [
-        "A passing test"
-      ],
-      "preview": {
-        "type": "image",
-        "src": "/gh/media/uploads/e2e-prod-797c9c-mw3lok0s.jpg",
-        "alt": "Test brand preview"
-      },
-      "media": [
-        {
-          "type": "image",
-          "src": "/gh/media/uploads/e2e-prod-797c9c-mw3lok0s.jpg",
-          "alt": "Test media",
-          "span": "full"
-        }
-      ]
     }
   ],
   "settings": {
