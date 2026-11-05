@@ -33,8 +33,21 @@ const COPIES = 4;
 /** seconds for the row to travel exactly one copy — calm, editorial pace */
 const SPEED_S = 46;
 
+/** marquee-specific marks: intricate seals that turn to mush at 34px get a
+ *  clean letterspaced wordmark instead (the seal keeps shining at full size
+ *  on /work cards and case studies — this is a strip-only substitution) */
+const MARQUEE_MARKS: Record<string, string> = {
+  "national-salon-annaba": "/media/logos/ministry-of-youth-wordmark.svg",
+};
+
 export function TrustedBar({ projects }: { projects: Project[] }) {
-  const branded = projects.filter((p) => p.logo && p.id);
+  const branded = projects
+    .filter((p) => p.logo && p.id)
+    .map((p) =>
+      MARQUEE_MARKS[p.id]
+        ? { ...p, logo: MARQUEE_MARKS[p.id] }
+        : p,
+    );
   if (branded.length === 0) return null;
 
   return (
