@@ -772,3 +772,17 @@ Work Log:
 
 Stage Summary:
 - LIVE (after deploy 83e4785): the opening lockup reads as one uniform small text block — italic intro, bold two-line name (Adlene / Benmechta), italic lead-in, then the portfolio box as the single dominant element.
+
+---
+Task ID: 34
+Agent: Super Z (main agent)
+Task: User (Arabic): "No — you made it very [small] like this." (reacting to the 20px two-line name from task 33)
+
+Work Log:
+- MISREAD CORRECTED: task 33's "make it like the rest of the text, just bold" was taken literally (20px) and buried the name. Git archaeology settled the reference: in the ORIGINAL hero (commit 83ba547) the name sat at clamp(2.9rem,8.5vw,7rem) in a max-w-4xl container — at 112px "Adlene Benmechta" measured ~900px against ~852px of content width, so it NATURALLY WRAPPED to two big lines. That two-line display wrap is the "مثل ما كانت" the user meant — not a small-text lockup.
+- RESTORED DISPLAY SCALE (Hero.tsx): name = clamp(2.4rem, 7vw, 5.75rem) font-bold leading-[1.02] tracking-[-0.015em], one word per line (span-split kept). 92px desktop max = 7rem minus the same ~17% the rest of the lockup took in task 32 (italics 24→20, box 36→30); mobile min 38.4px vs the original 46.4px. mt-3 and the larger text shadow restored to match the scale.
+- MEASURED: desktop 1440 — 92px/700, h1 188px tall (2×94px lines), 329px clearance to the strip zone, no overlap; mobile 375 — 38.4px, 78px tall, fits width. VLM: "clearly the dominant text on the page, 3-4× the italic lines, no clipping/overlap/glitches".
+- VERIFICATION: build clean, eslint 0/0; prod confirms 92px/700 two lines; texts E2E smoke 12/12. PRE-PUSH: no deletions, single intended file.
+
+Stage Summary:
+- LIVE (after deploy 8518168): the opening lockup is back to its cinematic hierarchy — italic intro, the name stacked as two big bold lines (Adlene / Benmechta), italic lead-in, portfolio box — a notch smaller than the original 7rem, in step with the task-32 reduction of the whole lockup.
