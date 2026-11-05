@@ -34,7 +34,7 @@ export function ContactPage({
       {/* ─── CTA block ─────────────────────────────────────────────── */}
       <section
         aria-label="Contact"
-        className="mx-auto flex w-full max-w-[1400px] flex-col items-center px-6 pt-32 text-center md:px-10 md:pt-48 lg:px-16"
+        className="mx-auto flex w-full max-w-[1400px] flex-col items-center px-6 pt-36 text-center md:px-10 md:pt-48 lg:px-16"
       >
         <SectionLabel index="01" className="flex w-full justify-center">
           Contact

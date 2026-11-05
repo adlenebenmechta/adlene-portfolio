@@ -6,13 +6,16 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { navLinks } from "@/lib/portfolio-data";
+import type { Project } from "@/lib/site-content";
 import { EASE } from "./shared";
+import { TrustedBar } from "./TrustedBar";
 
 /**
  * Minimal centered navigation — no logo, no monogram.
  * Work · About · Contact · Let's Work Together, all centered.
+ * Right beneath the pill, the Trusted-by marquee glides endlessly.
  */
-export function Navbar() {
+export function Navbar({ projects = [] }: { projects?: Project[] }) {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -92,6 +95,9 @@ export function Navbar() {
           {open ? <X size={16} aria-hidden="true" /> : <Menu size={16} aria-hidden="true" />}
         </button>
       </motion.nav>
+
+      {/* the endless client strip — yields its spot when the mobile menu opens */}
+      <TrustedBar projects={projects} scrolled={scrolled} hidden={open} />
 
       {/* Mobile menu */}
       <AnimatePresence>

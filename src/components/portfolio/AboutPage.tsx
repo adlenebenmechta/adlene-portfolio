@@ -18,7 +18,7 @@ export function AboutPage({
       {/* ─── Intro ─────────────────────────────────────────────────── */}
       <section
         aria-label="About Adlene Benmechta"
-        className="mx-auto w-full max-w-[1400px] px-6 pt-28 md:px-10 md:pt-40 lg:px-16"
+        className="mx-auto w-full max-w-[1400px] px-6 pt-36 md:px-10 md:pt-40 lg:px-16"
       >
         <SectionLabel index="01">About</SectionLabel>
 

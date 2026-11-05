@@ -181,7 +181,7 @@ export function WorkIndexPage({
         aria-label="Work introduction"
         className="relative z-10 flex min-h-svh w-full items-end"
       >
-        <div className="mx-auto w-full max-w-[1600px] px-5 pb-14 pt-32 md:px-8 md:pb-16 md:pt-36 lg:px-10">
+        <div className="mx-auto w-full max-w-[1600px] px-5 pb-14 pt-36 md:px-8 md:pb-16 md:pt-40 lg:px-10">
           <motion.p
             {...lineIn(0.3)}
             className="text-[10px] uppercase tracking-[0.32em] text-white/60 md:text-[11px]"

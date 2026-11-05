@@ -137,6 +137,23 @@
 
 .text-balance { text-wrap: balance; }
 
+/* ─── Trusted-by marquee — endless, seamless loop ────────────────────
+ * The track holds 4 identical copies of the logo row; shifting by
+ * exactly one copy (-25% of its own width) lands on an identical
+ * frame, so the loop is invisible. Pure transform → GPU-composited,
+ * no layout work per frame. (prefers-reduced-motion freezes it via
+ * the global reduce rule at the bottom of this file.) */
+@keyframes trusted-marquee-scroll {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-25%, 0, 0); }
+}
+.trusted-marquee-track {
+  animation-name: trusted-marquee-scroll;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
 /* Custom scrollbar — thin, editorial */
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }

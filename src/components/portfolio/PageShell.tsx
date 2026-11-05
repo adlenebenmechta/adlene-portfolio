@@ -106,7 +106,7 @@ export function PageShell({
         </motion.div>
 
         {/* ─── Chrome ──────────────────────────────────────────────── */}
-        <Navbar />
+        <Navbar projects={projects ?? []} />
 
         {/* ─── Page content — rises in as the curtain lifts ─────────── */}
         <motion.main
