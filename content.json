@@ -290,7 +290,7 @@
         "Always-on social content"
       ],
       "description": "Armoray is an e-commerce performance brand with a community of more than five million trusted athletes and happy customers — available at armoray.com and on its Amazon storefront. I produce the brand's video ads and static creatives: concepts, scripts, filming and the final cuts, built to stop the scroll and convert across paid social and the brand's own channels.",
-      "id": "armoray-slug-e2e",
+      "id": "armoray",
       "index": "02",
       "industry": "E-Commerce",
       "linkLabel": "Amazon Store",
@@ -1040,26 +1040,26 @@
       "year": "2026"
     },
     {
+      "brand": "Biox Carbon ",
+      "deliverables": [],
+      "description": "",
       "id": "bioxcarbon",
       "index": "09",
-      "brand": "Biox Carbon ",
-      "shortName": "Biox",
-      "logo": "/gh/media/uploads/biox-logo-mw2uf12o.webp",
-      "tagline": "",
       "industry": "",
       "location": "",
-      "year": "2026",
-      "services": [],
-      "role": "",
-      "description": "",
-      "deliverables": [],
-      "preview": {
-        "type": "image",
-        "src": "",
-        "alt": ""
-      },
+      "logo": "/gh/media/uploads/biox-logo-mw2uf12o.webp",
       "media": [],
-      "website": "https://bioxcarbon.com/"
+      "preview": {
+        "alt": "",
+        "src": "",
+        "type": "image"
+      },
+      "role": "",
+      "services": [],
+      "shortName": "Biox",
+      "tagline": "",
+      "website": "https://bioxcarbon.com/",
+      "year": "2026"
     }
   ],
   "settings": {
