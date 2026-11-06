@@ -1060,6 +1060,28 @@
       "tagline": "",
       "website": "https://bioxcarbon.com/",
       "year": "2026"
+    },
+    {
+      "id": "wijhat",
+      "index": "10",
+      "brand": "Wijhat",
+      "shortName": "Wijhat",
+      "logo": "/gh/media/uploads/logo-wijhat-mw56akeq.png",
+      "tagline": "",
+      "industry": "",
+      "location": "",
+      "year": "2026",
+      "services": [],
+      "role": "",
+      "description": "",
+      "deliverables": [],
+      "preview": {
+        "type": "image",
+        "src": "",
+        "alt": ""
+      },
+      "media": [],
+      "website": "https://www.instagram.com/wiijhat/"
     }
   ],
   "settings": {
